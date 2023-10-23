@@ -1,0 +1,86 @@
+/*****************************
+Pagination CSS
+*****************************/
+
+.pagination {
+    background: #f6f6f6;
+    padding: 15px;
+  }
+  /*********************
+  Product Pagination
+  ********************/
+  
+  .product-pagintaion {
+    margin: 3rem 0 0;
+    background: #f6f6f6;
+  }
+  
+  .product-pagintaion .showing-product {
+    color: #2c2e3d;
+    text-transform: capitalize;
+    font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+  
+  .product-pagintaion .page-list {
+    width: 100%;
+    padding: 1rem;
+    -webkit-box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+    -o-box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-pagintaion .page-list li {
+    display: inline-block;
+    padding: .8rem;
+  }
+  
+  .product-pagintaion .page-list li a {
+    color: #2c2e3d;
+    font-size: 1.4rem;
+  }
+  
+  .product-pagintaion .page-list li.prev {
+    margin-right: 37%;
+  }
+  
+  .product-pagintaion .page-list li.next {
+    text-align: right;
+    float: right;
+  }
+  
+  .product-pagintaion .page-list li.current a {
+    color: #DB5C00;
+    font-size: 1.8rem;
+  }
+  
+  /*********************
+  Blog Pagination
+  ********************/
+  
+  .pagination li {
+    color: #2c2e3d;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  
+  .pagination li a {
+    color: #2c2e3d;
+    font-size: 1.4rem;
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+    line-height: 4rem;
+    border: 1px solid #ccc;
+    font-weight: 500;
+    display: block;
+    border-radius: 12px 0px;
+    background: #fff;
+  }
+  
+  .pagination li a:hover {
+    color: #DB5C00;
+    border-color: rgba(237, 237, 237, 0.6);
+  }
