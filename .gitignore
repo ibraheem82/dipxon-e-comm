@@ -1,0 +1,9 @@
+dipstore/__pycache__
+dipstore/migrations
+dipapp/__pycache__
+dipapp/migrations
+dipxon/__pycache__
+ibraheem
+db.sqlite3
+app-content.txt
+index.html
