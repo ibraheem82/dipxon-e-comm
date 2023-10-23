@@ -1,0 +1,358 @@
+{% load static %}
+<!-- Header area Start -->
+
+
+<header class="header zeref-header">
+    <div class="header-top zeref-header-top d-none d-md-block">
+        <div class="container">
+            <div class="row no-gutters align-items-center">
+                <div class="col-md-6 col-sm-12">
+                    <ul class="social borderd-social justify-content-center">
+                        <li class="social-item"><a href="facebook.html" class="zeref-social-link zeref-link-item"><i class="fa fa-facebook"></i></a></li>
+                        <li class="social-item"><a href="twitter.html" class="zeref-social-link zeref-link-item"><i class="fa fa-twitter"></i></a></li>
+                        <li class="social-item"><a href="youtube.html" class="zeref-social-link zeref-link-item"><i class="fa fa-youtube"></i></a></li>
+                        <li class="social-item"><a href="plus.google.html" class="zeref-social-link zeref-link-item"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="social-item"><a href="instagram.html" class="zeref-social-link zeref-link-item"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <!-- Header Top Nav Start -->
+                    <div class="language-currancy zeref-language-currancy d-flex justify-content-md-end justify-content-center">
+                        <div class="language-selector language-currancy-dropdown">
+                            <div class="dropdown zeref-top-dropdown">
+                                <a class="dropdown-toggle" id="zeref-language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{% static "assets/img/language/1.png" %} " alt="English"> English
+                                <i class="fa fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="zeref-language">
+                                <a class="dropdown-item" href="#"><img src="{% static "assets/img/language/1.png" %} " alt="English"> English</a>
+                                <a class="dropdown-item" href="#"><img src="{% static "assets/img/language/2.png" %} " alt="French"> French</a>
+                                <a class="dropdown-item" href="#"><img src="{% static "assets/img/language/3.png" %} " alt="German"> German</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="currency-selector language-currancy-dropdown">
+                            <div class="dropdown zeref-top-dropdown">
+                                <a class="dropdown-toggle" id="zeref-currency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                USD
+                                <i class="fa fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="zeref-currency">
+                                <a class="dropdown-item" href="#">&dollar; - Dollar</a>
+                                <a class="dropdown-item" href="#">&pound; - Pound</a>
+                                <a class="dropdown-item" href="#">&euro; - Euro</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Header Top Nav End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom zeref-header-bottom fixed-header">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-4 text-md-left">
+                    <a class="logo-box" href="index.html" style="font-style:nero;">
+                        <img src=" {% static "assets/img/logo-3.jpg" %} " alt="logo">
+                       
+                    </a>
+                </div>
+                <div class="col-lg-7 col-md-1 col-sm-1 col-1 justify-content-md-end">
+                    <div class="zeref-header-bottom-right justify-content-md-end">
+                        <nav class="main-navigation zeref-main-navigation">
+                            <!-- Mainmenu Start -->
+                            <ul class="mainmenu zeref-main-menu">
+                                <li class="zeref-mainmenu-itm menu-item-has-children">
+                                    <a href="index.html" class="zeref-mainmenu-link">Home</a>
+                                    {% comment %} <ul class="sub-menu">
+                                        <li class="menu-item-has-children">
+                                            <a href="index.html">Fashion</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="index.html">Fashion 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-2.html">Fashion 02</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-3.html">Fashion 03</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-4.html">Fashion 04</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                         <li class="menu-item-has-children">
+                                            <a href="index-5.html">Electronics</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="index-5.html">Electronics 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-6.html">Electronics 02</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-7.html">Electronics 03</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a href="index-8.html">Furniture</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="index-8.html">Furniture 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-9.html">Furniture 02</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-10.html">Furniture 03</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a href="index-11.html">Food</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="index-11.html">Food 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-12.html">Food 02</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-13.html">Food 03</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a href="index-14.html">Jewellery</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="index-14.html">Jewellery 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-15.html">Jewellery 02</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a href="index-16.html">Beauty</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="index-16.html">Beauty 01</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-17.html">Beauty 02</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="index-18.html" class="mainmenu-sub-link">Flower</a>
+                                        </li>
+                                        <li>
+                                            <a href="index-19.html" class="mainmenu-sub-link">Games & Sports</a>
+                                        </li>
+                                        <li>
+                                            <a href="index-20.html" class="mainmenu-sub-link">Kids & Toys</a>
+                                        </li>
+                                        <li>
+                                            <a href="index-21.html" class="mainmenu-sub-link">Medicine</a>
+                                        </li>
+                                    </ul> {% endcomment %}
+                                </li>
+                                <li class="zeref-mainmenu-itm menu-item-has-children">
+                                    <a href="shop.html" class="zeref-mainmenu-link">Categories</a>
+                                    <ul class="megamenu three-column">
+                                        <li>
+                                            <a href="#">Category 01</a>
+                                            <ul>
+                                                <li class="">
+                                                    <a href="index.html" class="">Fashion</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="index-5.html" class="">Electronics</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="index-8.html" class="">Furniture</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="index-11.html" class="">Food</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Category 02</a>
+                                            <ul>
+                                                <li class="">
+                                                    <a href="index-14.html" class="">Jewellery</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="index-16.html" class="">Beauty</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="index-18.html" class="">Flower</a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="index-19.html" class="">Games</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Category 03</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="index-20.html">Kids & Toys</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-21.html">Medicine</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-16.html">Cosmetics</a>
+                                                </li>
+                                                <li>
+                                                    <a href="index-19.html">Sports</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li class="zeref-mainmenu-itm menu-item-has-children">
+                                    <a href="shop.html" class="zeref-mainmenu-link">Shop</a>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item-has-children">
+                                            <a href="shop.html">Shop Grid</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="shop.html">Shop Grid Left Sidebar</a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-right-sidebar.html">Shop Grid Right Sidebar</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a href="shop-list-view.html">Shop List</a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="shop-list-view.html">Shop List Left Sidebar</a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="shop-no-sidebar.html" class="mainmenu-sub-link">Shop Without Sidebar</a>
+                                        </li>
+                                        <li>
+                                            <a href="single-product.html" class="mainmenu-sub-link">Single Products</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="zeref-mainmenu-itm menu-item-has-children">
+                                    <a href="#" class="zeref-mainmenu-link">Pages</a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="cart.html" class="mainmenu-sub-link">Cart</a>
+                                        </li>
+                                        <li>
+                                            <a href="wishlist.html" class="mainmenu-sub-link">Wishlist</a>
+                                        </li>
+                                        <li>
+                                            <a href="checkout.html" class="mainmenu-sub-link">Checkout</a>
+                                        </li>
+                                        <li>
+                                            <a href="login.html" class="mainmenu-sub-link">Login</a>
+                                        </li>
+                                        <li>
+                                            <a href="register.html" class="mainmenu-sub-link">Register</a>
+                                        </li>
+                                        <li>
+                                            <a href="about-us.html" class="mainmenu-sub-link">About Us</a>
+                                        </li>
+                                        <li>
+                                            <a href="contact-us.html" class="mainmenu-sub-link">Contact Us</a>
+                                        </li>
+                                        <li>
+                                            <a href="404.html" class="mainmenu-sub-link">404 Page</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="zeref-mainmenu-itm menu-item-has-children">
+                                    <a href="blog.html" class="zeref-mainmenu-link">Blog</a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="blog-left-sidebar.html">Blog With Left Sidebar</a>
+                                        </li>
+                                        <li>
+                                            <a href="blog-right-sidebar.html">Blog With right Sidebar</a>
+                                        </li>
+                                        <li>
+                                            <a href="blog.html">Blog Without Sidebar</a>
+                                        </li>
+                                        <li>
+                                            <a href="single-blog-left-sidebar.html">Blog Details Left Sidebar</a>
+                                        </li>
+                                        <li>
+                                            <a href="single-blog-right-sidebar.html">Blog Details Right Sidebar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- Mainmenu End -->
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-9 col-sm-8 col-7">
+                    <div class="zeref-header-bottom-right justify-content-md-end">
+                        <!-- Header Cart Start -->
+                        <div class="header-cart header-area-cart">
+                            <a class="zeref-cart-toggle" id="cartDropdown">
+                                <i class="fa fa-shopping-cart header-shop-icon"></i>
+                                <sup class="cart-badge">0</sup>
+                            </a>
+                            <div class="cart-dropdown">
+                                <div class="header-cart-content">
+                                    <a class="header-cart-close-btn" id="cart-close" href="#"><i class="fa fa-times"></i></a>
+                                    <div class="header-cart-item">
+                                        <div class="hcart-image">
+                                            <img src="assets/img/fashion/product/3.jpg" alt="product">
+                                        </div>
+                                        <div class="hcart-content">
+                                            <h4><a href="single-product.html">Man dress</a> </h4>
+                                            <p>1 X &dollar;100</p>
+                                        </div>
+                                    </div>
+                                    <ul class="header-cart-list">
+                                        <li class="header-cart-single">
+                                            <span class="header-cart-single--title">Subtotal</span>
+                                            <span class="cart-amount">$100.00</span>
+                                        </li>
+                                    </ul>
+                                    <div class="header-cart-btn">
+                                        <a href="cart.html" class="btn btn-checkout btn-style-3">Cart</a>
+                                        <a href="checkout.html" class="btn btn-checkout btn-style-3">Checkout</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Header Cart End -->
+                        <form class="head-form d-none d-sm-block">
+                          <input type="text" name="search" class="head-search" placeholder="Search">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mobile-menu mobile__menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header area End -->
