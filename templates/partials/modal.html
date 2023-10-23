@@ -1,0 +1,83 @@
+{% load static %}
+<!-- Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12">
+                        <div class="tab-content product-thumb-large">
+                            <div id="thumb1" class="tab-pane active show fade">
+                                <img src=" {% static "assets/img/fashion/product/1.jpg" %} " alt="product thumb">
+                            </div>
+                            <div id="thumb2" class="tab-pane fade">
+                                <img src=" {% static "assets/img/fashion/product/3.jpg" %} " alt="product thumb">
+                            </div>
+                            <div id="thumb3" class="tab-pane fade">
+                                <img src=" {% static "assets/img/fashion/product/9.jpg" %} " alt="product thumb">
+                            </div>
+                            <div id="thumb4" class="tab-pane fade">
+                                <img src=" {% static "assets/img/fashion/product/5.jpg" %} " alt="product thumb">
+                            </div>
+                        </div>
+                        <div class="product-thumbnail">
+                            <div class="thumb-menu owl-carousel" id="thumbmenu">
+                                <div class="thumb-menu-item">
+                                    <a href="#thumb1" data-toggle="tab" class="nav-link active">
+                                        <img src=" {% static "assets/img/fashion/product/1.jpg" %} " alt="product thumb">
+                                    </a>
+                                </div>
+                                <div class="thumb-menu-item">
+                                    <a href="#thumb2" data-toggle="tab" class="nav-link">
+                                        <img src=" {% static "assets/img/fashion/product/3.jpg" %} " alt="product thumb">
+                                    </a>
+                                </div>
+                                <div class="thumb-menu-item">
+                                    <a href="#thumb3" data-toggle="tab" class="nav-link">
+                                        <img src=" {% static "assets/img/fashion/product/9.jpg" %} " alt="product thumb">
+                                    </a>
+                                </div>
+                                <div class="thumb-menu-item">
+                                    <a href="#thumb4" data-toggle="tab" class="nav-link">
+                                        <img src=" {% static "assets/img/fashion/product/5.jpg" %} " alt="product thumb">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <h3 class="product-title">Lorem ipsum solets</h3>
+                        <div class="product-price">
+                            <span class="sale-price">&dollar; 15.00</span>
+                        </div>
+                        <p class="product-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore adipisci eligendi fuga reiciendis possimus et doloribus, quae explicabo! Dolore tenetur voluptate neque mollitia a hic, enim cumque natus repudiandae sequi? Sunt, ipsam! Temporibus facilis nam aperiam voluptatem ducimus, deserunt adipisci corrupti. Soluta ut asperiores est nihil porro. Obcaecati, velit repellendus.</p>
+                        <p><b>Availability:</b> In stock</p>
+                        <p><b>Condition:</b> New Product</p>
+                        <div class="product-varients">
+                            <div class="zeref-product-size pb--20">
+                                <span class="zeref-product-label"><b>Size: </b></span>
+                                <select class="zeref-product-select">
+                                    <option value="1">S</option>
+                                    <option value="2">M</option>
+                                    <option value="3">L</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="product-action-wrapper pb--20">
+                            <span><b>Quantity: </b></span>
+                            <div class="quantity">
+                                <input type="number" class="quantity-input" name="qty" id="qty" value="1">
+                            </div>
+                        </div>
+                        <a href="#" class="btn">Add to cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
