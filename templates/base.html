@@ -1,0 +1,98 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="this is a demo meta description">
+    <meta name="keywords" content="this is a demo meta keywords">
+    <title>DipXon - eCommerce</title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href=" {% static "assets/img/favicon.ico" %} ">
+    <link rel="apple-touch-icon" href=" {% static "assets/img/icon.html" %} ">
+
+
+
+    <!-- ************************* CSS ************************* -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href=" {% static "assets/css/bootstrap.min.css" %} ">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href=" {% static "assets/css/font-awesome.min.css" %} ">
+
+    <!-- All Plugins CSS css -->
+    <link rel="stylesheet" href=" {% static "assets/css/plugins.css" %} ">
+
+    <!-- style css -->
+    <link rel="stylesheet" href=" {% static "assets/css/main.css" %} ">
+
+    <!-- responsive css -->
+    <link rel="stylesheet" href=" {% static "assets/css/responsive.css" %} ">
+
+    <!-- modernizr JS
+    ============================================ -->
+    <script src=" {% static "assets/js/modernizr-2.8.3.min.js" %} "></script>
+
+</head>
+<body>
+    
+ 
+
+    <!-- Main Wrapper Start -->
+
+    <div class="wrapper">
+        {% include 'partials/header.html' %}
+
+        {% block content %}
+
+            
+            {% endblock  %}
+
+            <!-- FOOTER -->
+
+            {% include 'partials/footer.html' %}
+            {% include "partials/modal.html" %}
+
+
+        
+
+        
+        
+    </div>
+
+    <!-- Main Wrapper End -->
+
+    <!-- Scroll To Top -->
+    
+    <a class="scroll-to-top" href="#"><i class="fa fa-angle-double-up"></i></a>
+
+
+  
+
+
+    <!-- ************************* JS ************************* -->
+
+    <!-- jQuery JS -->
+    <script src=" {% static "assets/js/vendor/jquery.min.js" %} "></script>
+
+    <!-- Popper JS -->
+    <script src=" {% static "assets/js/popper.min.js" %} "></script>
+
+    <!-- Bootstrap JS -->
+    <script src=" {% static "assets/js/bootstrap.min.js" %} "></script>
+
+    <!-- Plugins JS -->
+    <script src=" {% static "assets/js/plugins.js" %} "></script>
+
+    <!-- Main JS -->
+    <script src=" {% static "assets/js/main.js" %} "></script></body>
+
+
+    
+</html>
