@@ -6,4 +6,5 @@ dipxon/__pycache__
 ibraheem
 db.sqlite3
 app-content.txt
-index.html
+accounts/migrations
+accounts/__pycache__
