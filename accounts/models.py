@@ -105,3 +105,21 @@ class UserProfile(models.Model):
     country = models.CharField(blank=True, max_length=20)
     ip_address = models.GenericIPAddressField(blank=True, null=True)
     location = models.CharField(blank=True, max_length=100)
+    
+    
+    def get_profile_picture_url(self):
+        if self.profile_picture:
+            return self.profile_picture.url
+        else:
+            # Set a default profile picture URL here.
+            return '/media/image/default_profile_picture.png'
+
+
+
+    def __str__(self):
+        return self.user.first_name
+
+
+
+    def full_address(self):
+        return f'{self.address_line_1} {self.address_line_2}'
