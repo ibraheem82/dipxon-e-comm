@@ -77,6 +77,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dipxon.wsgi.application'
 
+AUTH_USER_MODEL = 'accounts.Account'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
