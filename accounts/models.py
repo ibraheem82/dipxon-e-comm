@@ -103,8 +103,8 @@ class UserProfile(models.Model):
     city = models.CharField(blank=True, max_length=20)
     state = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)
-    ip_address = models.GenericIPAddressField(blank=True, null=True)
-    location = models.CharField(blank=True, max_length=100)
+    # ip_address = models.GenericIPAddressField(blank=True, null=True)
+    # location = models.CharField(blank=True, max_length=100)
     
     
     def get_profile_picture_url(self):
