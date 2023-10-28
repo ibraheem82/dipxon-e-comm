@@ -92,3 +92,14 @@ class Account(AbstractBaseUser):
     def has_module_perms(slef, add_label):
         return True
     
+
+
+class UserProfile(models.Model):
+    # ===> we are use [ OnetoOneField() ] because the it is also like a foreignkey but the difference is the [ OnetoOneField() ] is unique OnetoOneField() means you can have only one profile for just one account, but if you use a foreignkey you can have multiple profile for one user
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
+    address_line_1 = models.CharField(blank = True, max_length = 100)
+    address_line_2 = models.CharField(blank = True, max_length = 100)
+    profile_picture = models.ImageField(blank=True, upload_to = 'userprofile')
+    city = models.CharField(blank=True, max_length=20)
+    state = models.CharField(blank=True, max_length=20)
+    country = models.CharField(blank=True, max_length=20)
