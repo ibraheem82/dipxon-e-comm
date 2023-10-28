@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-import getpass
 
 # * Creation of user instance
 class MyAccountManager(BaseUserManager):
