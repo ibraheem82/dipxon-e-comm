@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts'
+    'accounts',
     'dipapp',
-    'dipstore'
 ]
 
 MIDDLEWARE = [
@@ -76,6 +75,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dipxon.wsgi.application'
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 
 # Database
@@ -125,6 +126,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'assets'
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
