@@ -1,10 +1,7 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from decimal import Decimal
-from django.core.files.base import ContentFile
 from PIL import Image
 from decimal import Decimal
-from io import BytesIO
 import os
 
 # Create your models here.
@@ -32,6 +29,7 @@ class Product(models.Model):
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
     
+    
     def save(self, *args, **kwargs):
         # Calculate discounted price before saving
         if self.discount_price > 0:
@@ -39,10 +37,38 @@ class Product(models.Model):
             discount = self.price * discount_percentage
             self.discounted_price = self.price - discount
         else:
-            # If discount is not provided, set discounted price same as regular price
+            # If discount is not provided, set discounted price the same as the regular price
             self.discounted_price = self.price
 
+        # Call the original save method
         super().save(*args, **kwargs)
+
+        # Resize and save image if it exists
+        if self.images and self.images.name:
+            product_name = self.product_name.replace(" ", "_").lower()
+
+            # Ensure the original image file exists before proceeding
+            if os.path.exists(self.images.path):
+                # Open the original image
+                img = Image.open(self.images.path)
+
+                # Resize the image
+                resized_img = img.resize((500, 666), resample=Image.LANCZOS)
+
+                # Use the product name as part of the filename
+                base_filename = f"{product_name}_image.png"
+
+                # Save the resized image in the same directory as the original image
+                output_path = os.path.join("media", "photos", "products", base_filename)
+                resized_img.save(output_path, "PNG")
+
+                # Update the images field with the new filename
+                self.images.name = os.path.join("photos", "products", base_filename)
+
+                # Call the original save method again to update the model with the new image filename
+                super().save(*args, **kwargs)
+
+
 
     def __str__(self):
         return self.product_name
