@@ -16,7 +16,11 @@ class Product(models.Model):
     discount_price = models.PositiveIntegerField()
     images         = models.ImageField(upload_to = 'photos/products')
     stock          = models.IntegerField()
-    is_available   = models.BooleanField(default=True)
+    is_available   = models.CharField(
+        max_length=20,
+        choices=AVAILABILITY_CHOICES,
+        default='available',
+    )
     # category      = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
