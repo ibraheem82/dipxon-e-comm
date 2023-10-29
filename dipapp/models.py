@@ -1,6 +1,11 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from decimal import Decimal
+from django.core.files.base import ContentFile
+from PIL import Image
+from decimal import Decimal
+from io import BytesIO
+import os
 
 # Create your models here.
 
