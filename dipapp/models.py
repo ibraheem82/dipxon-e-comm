@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 
 # Create your models here.
 
@@ -28,7 +29,8 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         # Calculate discounted price before saving
         if self.discount_price > 0:
-            discount = self.price * (self.discount_price / 100)
+            discount_percentage = Decimal(self.discount_price) / 100
+            discount = self.price * discount_percentage
             self.discounted_price = self.price - discount
         else:
             # If discount is not provided, set discounted price same as regular price
