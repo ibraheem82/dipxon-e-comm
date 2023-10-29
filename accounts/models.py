@@ -107,12 +107,12 @@ class UserProfile(models.Model):
     # location = models.CharField(blank=True, max_length=100)
     
     
-    def get_profile_picture_url(self):
-        if self.profile_picture:
-            return self.profile_picture.url
-        else:
-            # Set a default profile picture URL here.
-            return '/media/image/default_profile_picture.png'
+    # def get_profile_picture_url(self):
+    #     if self.profile_picture:
+    #         return self.profile_picture.url
+    #     else:
+    #         # Set a default profile picture URL here.
+    #         return '/media/image/default_profile_picture.png'
 
 
 
