@@ -1,0 +1,121 @@
+.slider-wrapper:hover .owl-prev {
+    left: 3rem;
+  }
+  
+  .slider-wrapper:hover .owl-next {
+    right: 3rem;
+  }
+  
+  .slider-wrapper .owl-prev {
+    left: 1.5rem;
+  }
+  
+  .slider-wrapper .owl-next {
+    right: 1.5rem;
+  }
+  
+  .slider-wrapper .owl-nav>div:hover {
+    background: #333333;
+  }
+  
+  .slider-wrapper .owl-dots {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+  }
+  
+  .slider-wrapper .owl-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 1rem;
+    font-size: 0;
+    margin: 0 4px;
+    cursor: pointer;
+    background: #000;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  
+  .slider-wrapper .owl-dot:hover {
+    background: #DB5C00;
+  }
+  
+  .slider-wrapper .owl-dot.active {
+    width: 3.2rem;
+    background: #DB5C00;
+  }
+  
+  .slider-wrapper .single-slider {
+    height: 61rem;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    background-position: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+  }
+  .slider-wrapper--3 .single-slider {
+    height: 49rem;
+  }
+
+  .full-slider .slider-wrapper .single-slider {
+    height: 100vh;
+  }
+  .slider-s3 .single-slider {
+    height: 61rem;
+  }
+  .slider-style-4 .single-slider {
+    height: 53rem;
+  }
+  .zeref-slider-wrapper .owl-dot:hover {
+    background: #ff6a00;
+  }
+  
+  .zeref-slider-wrapper .owl-dot.active {
+    background: #ff6a00;
+  }
+  
+  .slider-wrapper--3 .owl-dot:hover {
+    background: #DB5C00;
+  }
+  
+  .slider-wrapper--3 .owl-dot.active {
+    background: #DB5C00;
+  }
+  
+  .zeref-slider-text {
+    color: #2c2e3d;
+    font-size: 2.4rem;
+    text-transform: capitalize;
+    line-height: 1.25;
+    margin-bottom: 2rem;
+  }
+  
+  .slider-content--2 .zeref-slider-text {
+    font-size: 2rem;
+  }
+  .slider-content--2 {
+    padding-left: 3rem;
+  }
+  
+.banner-slide-wrapper {
+  background: #fff;
+  padding: 3rem 0; 
+}
+.sl-st-2 {
+  padding: 3rem 0 1rem 0;
+}
