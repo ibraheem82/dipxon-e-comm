@@ -14,7 +14,9 @@ gunicorn==21.2.0
 idna==3.4
 packaging==23.2
 Pillow==10.1.0
+psycopg2-binary==2.9.9
 PyJWT==2.8.0
+pyscopg2==66.0.2
 python-decouple==3.8
 pytz==2023.3.post1
 requests==2.31.0
