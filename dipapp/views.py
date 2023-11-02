@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Product
 
-# Create your views here.
 def home(request):
-    return render(request, 'dipapp/home.html')
+    # Get the first four products with their images
+    top_three_products = Product.objects.prefetch_related('images').all()[:4]
+    return render(request, 'dipapp/home.html', {'top_three_products': top_three_products})
