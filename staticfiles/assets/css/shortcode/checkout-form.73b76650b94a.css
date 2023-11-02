@@ -1,0 +1,182 @@
+  .custom-title h2 {
+    font-size: 25px;
+    margin-bottom: 25px;
+  }
+  .review-zeref-form-group {
+    margin-top: 1.2rem;
+  }
+  
+  .review-form-label {
+    font-size: 1.2rem;
+    margin-bottom: .4rem;
+    color: #2c2e3d;
+    font-weight: 700;
+    display: block;
+  }
+  
+  .review-zeref-input-form {
+    width: 100%;
+    height: 4rem;
+    padding: 0 .5rem;
+    background-color: #fff;
+    border: 1px solid #ededed;
+    color: #2c2e3d;
+  }
+  
+  .textarea-review {
+    height: 8rem;
+  }
+  
+  .review-note {
+    color: #555555;
+    margin-top: 1.2rem;
+  }
+  
+  .review-btn-group {
+    margin-top: 1.5rem;
+  }
+  
+  .review-btn-group span {
+    display: inline-block;
+    padding: 0 1rem;
+    color: #a2a2a2;
+  }
+  
+  /**********************
+  Form
+  **********************/
+  
+  .zeref-form-group {
+    margin-bottom: 2rem;
+  }
+  #zeref-subscribe-form .zeref-form-group {
+    margin-bottom: 0px !important;
+  }
+  
+  .form-label {
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+  
+  .zeref-input-form {
+    width: 100%;
+    height: 4.1rem;
+    border-radius: 6px;
+    padding: 1rem;
+    border: 1px solid rgba(182, 190, 203, 0.8);
+  }
+  
+  .zeref-input-form:focus {
+    background-color: #fff;
+    border-color: rgba(182, 190, 203, 0.6);
+  }
+  
+  .zeref-input-form--textarea {
+    height: 10rem;
+  }
+  
+  .form .password-btn {
+    padding: 0 1.5rem;
+    height: 4rem;
+    font-size: 1.3rem;
+    line-height: 4rem;
+    right: 1.5rem;
+    top: 0;
+    text-transform: capitalize;
+    border-radius: 0px 6px 6px 0px;
+    background: #333;
+    cursor: pointer;
+    position: absolute;
+    color: #fff;
+  }
+  
+  .form .zeref-checkbox-label {
+    line-height: 1.6;
+    padding-left: 3rem;
+  }
+  
+  .form .zeref-checkbox-label:before {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  
+  .form p {
+    color: #333333;
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+  
+  .form--contact .form-label {
+    margin-top: .5rem;
+  }
+  
+  .form__output {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    text-align: right;
+  }
+  
+  .form__output.error {
+    color: #ea4a30;
+  }
+  
+  .form__output.success {
+    color: #4cbb6c;
+  }
+  
+  .form--comment .zeref-input-form--textarea {
+    height: 20rem;
+  }
+  
+  .checkout-form .form-row .zeref-form-group {
+    margin-bottom: 0;
+  }
+  
+  .checkout-form .form-row .form-label {
+    margin-bottom: 1rem;
+  }
+  
+  .form-box {
+    -webkit-box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    -o-box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+    padding: 4rem;
+  }
+  
+  .form-box span {
+    display: inline-block;
+    color: #999999;
+    line-height: 1.6;
+  }
+  
+  .form-box span a {
+    display: inline-block;
+  }
+  
+  a.forgot-pass {
+    margin-bottom: 1rem;
+  }
+  
+  a.create-account-link {
+    padding-top: 1rem;
+    text-align: center;
+  }
+  
+  .country_select.nice-select {
+    width: 100%;
+    height: 4.5rem;
+    line-height: 4rem;
+    border-radius: 10px;
+    border: 1px solid rgba(182, 190, 203, 0.8);
+  }
+  
+  .country_select.nice-select:focus {
+    background-color: #fff;
+    border-color: rgba(182, 190, 203, 0.6);
+  }
+  

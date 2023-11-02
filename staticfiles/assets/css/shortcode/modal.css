@@ -1,0 +1,123 @@
+/*****************************
+  27. Modal CSS
+  *****************************/
+  
+  .modal {
+    display: block !important;
+    z-index: -9;
+    padding-right: 0 !important;
+  }
+  
+  .modal.show {
+    z-index: 1050;
+  }
+  
+  #productModal .modal-dialog {
+    margin: 5%;
+  }
+  
+  #productModal .modal-content {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  
+  #productModal .modal-header {
+    border: none;
+  }
+  
+  #productModal .modal-body {
+    padding: 0.5rem 5rem 5rem 5rem;
+  }
+  
+  #productModal .modal-footer {
+    padding: 2rem 0;
+  }
+  
+  .modal-header .close {
+    padding: 0;
+    color: #000;
+    opacity: .2;
+    text-shadow: 0 1px 0 #fff;
+    font-size: 28px;
+    background-color: transparent;
+    border: none;
+    margin: 5px 5px 5px auto;
+    cursor: pointer;
+  }
+  
+  .modal-header .close:hover {
+    opacity: 1;
+  }
+
+  .thumb-menu-item .nav-link {
+    padding: 1rem;
+  }
+  
+
+/***************************
+Review View Modal
+***************************/
+
+.review-modal .modal-dialog {
+  width: 70rem;
+  max-width: 70rem;
+  border-radius: 3px;
+  margin: 7rem auto;
+  background: #fff;
+}
+
+.review-modal .modal-content {
+  padding: 1.5rem;
+}
+
+.review-modal .modal-header {
+  display: block;
+  border-bottom: none;
+  padding: 0;
+}
+
+.review-modal .modal-header h2 {
+  background-color: #333333;
+  color: #fff;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.review-modal .product-img {
+  border: 1px solid #ededed;
+  margin-bottom: 1rem;
+}
+
+.review-modal .product-name {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-modal .product-description {
+  color: #555555;
+  line-height: 1.5;
+}
+
+.review-modal .your-rating {
+  padding-bottom: 1.5rem;
+  margin-top: .8rem;
+  border-bottom: 1px solid #ededed;
+}
+
+.review-modal .your-rating h5 {
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-right: 2.5rem;
+}
+
+.review-modal .your-rating .ratings {
+  display: inline-block;
+}
+
+.review-modal .your-rating .ratings i {
+  color: #f5a623;
+}
+
+

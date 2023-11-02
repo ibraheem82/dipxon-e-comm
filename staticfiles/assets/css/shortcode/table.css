@@ -1,0 +1,69 @@
+/*****************************
+Table CSS
+*****************************/
+
+  .order-table {
+    width: 100%;
+  }
+  
+  .order-table th, .order-table td {
+    font-size: 1.4rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #fff;
+  }
+  
+  .order-table tr.order-total td {
+    font-weight: 700;
+    border-bottom: none;
+  }
+  
+  .cart-table table td, .cart-table table th {
+    vertical-align: middle;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  
+  .cart-table table th {
+    text-transform: capitalize;
+    white-space: -moz-nowrap;
+    white-space: nowrap;
+    border-bottom: none;
+  }
+  
+  .cart-table table td h3 a {
+    color: #2c2e3d;
+    font-weight: 500;
+  }
+  
+  .cart-table table td i {
+    color: #2c2e3d;
+  }
+
+  .cart-table table td .remove {
+    color: red;
+    font-size: 20px;
+  }
+  
+  .cart-table .add-to-cart i {
+    color: #fff !important;
+  }
+  
+  .cart-table table td img {
+    width: 8rem;
+    max-width: 20rem;
+  }
+  
+  .cart-table table td .quantity {
+    margin: 0 auto;
+    -webkit-box-shadow: 0 0 0;
+    -moz-box-shadow: 0 0 0;
+    -ms-box-shadow: 0 0 0;
+    -o-box-shadow: 0 0 0;
+    box-shadow: 0 0 0;
+  }
+  
+  .cart-table table td.cart-product-price a {
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+  
