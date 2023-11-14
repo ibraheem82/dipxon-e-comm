@@ -18,6 +18,7 @@ class MyAccountManager(BaseUserManager):
         
         # * Creation of user instance  using the user model associated with the manager 
         user = self.model(
+            id=uuid.uuid4(),
              # what the 'normalize_email' does is that if you enter a capital letter inside your email it will change it so small letter everything will be normalized
             email = self.normalize_email(email),
             username = username,
