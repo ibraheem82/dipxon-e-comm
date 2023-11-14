@@ -92,7 +92,7 @@ class Account(AbstractBaseUser):
 #         # ===> if the user is the admin he has the permission to do all the changes
         return self.is_admin
     
-    def has_module_perms(slef, add_label):
+    def has_module_perms(slef, app_label):
         return True
     
 
