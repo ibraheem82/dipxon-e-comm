@@ -56,7 +56,7 @@ class MyAccountManager(BaseUserManager):
     
     # * creating a custom user model..
 class Account(AbstractBaseUser):
-    id                  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id                  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
     username            = models.CharField(max_length=50, unique=True)
@@ -98,7 +98,7 @@ class Account(AbstractBaseUser):
 
 
 class UserProfile(models.Model):
-    id              = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id              = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     # ===> we are use [ OnetoOneField() ] because the it is also like a foreignkey but the difference is the [ OnetoOneField() ] is unique OnetoOneField() means you can have only one profile for just one account, but if you use a foreignkey you can have multiple profile for one user
     user            = models.OneToOneField(Account, on_delete=models.CASCADE)
     address_line_1  = models.CharField(blank = True, max_length = 100)
