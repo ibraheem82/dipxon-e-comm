@@ -7,10 +7,21 @@ from django.urls import reverse
 
 
 class Category(models.Model):
+    SUBCATEGORY_CHOICES = [
+        ('Men', 'Men'),
+        ('Woman', 'Women'),
+        ('Kids', 'Kids'),
+    ]
     category_name = models.CharField(max_length=50, unique=True)
+    
     # ===> Url of the category
     slug = models.SlugField(max_length = 100,unique=True)
     description = models.TextField(max_length = 255, blank=True)
+    subcategory = models.CharField(
+        max_length=20,
+        choices=SUBCATEGORY_CHOICES,
+        default='subcategory_a',
+    )
     cat_image = models.ImageField(upload_to='photos/categories', blank=True)
 
 
