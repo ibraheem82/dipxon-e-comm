@@ -38,11 +38,11 @@ class MyAccountManager(BaseUserManager):
      # ------- Creating the SuperUser --------
     def create_superuser(self, first_name, last_name, username, email, password):
         user = self.create_user(
-            email = self.normalize_email(email),
-            username = username,
-            password = password,
-            first_name = first_name,
-            last_name = last_name,
+            email=self.normalize_email(email),
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
         )
         
         # Check if UserProfile already exists for the superuser
@@ -57,22 +57,20 @@ class MyAccountManager(BaseUserManager):
             user_profile.state = ''
             user_profile.country = ''
             user_profile.save()
-        
-        return user
-     # ===> giving the permisson
-     # ===> set it to true
+
+        # Set the permissions and save the user after updating the UserProfile
         user.is_admin = True
         user.is_active = True
         user.is_staff = True
         user.is_superadmin = True
         user.save(using=self._db)
-        # * Create a UserProfile for the user
-        UserProfile.objects.create(user=user)
+
         return user
+
     
     # * creating a custom user model..
 class Account(AbstractBaseUser):
-    id                  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    id = models.UUIDField(primary_key=True, editable=False, unique=True)
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
     username            = models.CharField(max_length=50, unique=True)
@@ -97,12 +95,12 @@ class Account(AbstractBaseUser):
     objects = MyAccountManager()
     
     def full_name(self):
-        return f'{self.id} {self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name}'
 
     
 #     # when we return an account object in the template we should return an email
     def __str__(self):
-        return self.user.id
+        return str(self.id)
     
     
     def has_perm(self, perm, obj=None):
