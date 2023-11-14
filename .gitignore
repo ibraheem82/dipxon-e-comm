@@ -8,3 +8,4 @@ db.sqlite3
 app-content.txt
 accounts/migrations
 accounts/__pycache__
+static
