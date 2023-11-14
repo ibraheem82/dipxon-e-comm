@@ -98,14 +98,15 @@ class Account(AbstractBaseUser):
 
 
 class UserProfile(models.Model):
+    id              = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # ===> we are use [ OnetoOneField() ] because the it is also like a foreignkey but the difference is the [ OnetoOneField() ] is unique OnetoOneField() means you can have only one profile for just one account, but if you use a foreignkey you can have multiple profile for one user
-    user = models.OneToOneField(Account, on_delete=models.CASCADE)
-    address_line_1 = models.CharField(blank = True, max_length = 100)
-    address_line_2 = models.CharField(blank = True, max_length = 100)
+    user            = models.OneToOneField(Account, on_delete=models.CASCADE)
+    address_line_1  = models.CharField(blank = True, max_length = 100)
+    address_line_2  = models.CharField(blank = True, max_length = 100)
     profile_picture = models.ImageField(blank=True, upload_to = 'userprofile', default='default_profile_picture.png')
-    city = models.CharField(blank=True, max_length=20)
-    state = models.CharField(blank=True, max_length=20)
-    country = models.CharField(blank=True, max_length=20)
+    city            = models.CharField(blank=True, max_length=20)
+    state           = models.CharField(blank=True, max_length=20)
+    country         = models.CharField(blank=True, max_length=20)
     # ip_address = models.GenericIPAddressField(blank=True, null=True)
     # location = models.CharField(blank=True, max_length=100)
 
