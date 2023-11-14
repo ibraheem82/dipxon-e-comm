@@ -44,6 +44,21 @@ class MyAccountManager(BaseUserManager):
             first_name = first_name,
             last_name = last_name,
         )
+        
+        # Check if UserProfile already exists for the superuser
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        
+        if not created:
+            # Update the existing UserProfile if it already exists
+            user_profile.address_line_1 = ''  # Update with the fields you want to modify
+            user_profile.address_line_2 = ''
+            user_profile.profile_picture = 'default_profile_picture.png'
+            user_profile.city = ''
+            user_profile.state = ''
+            user_profile.country = ''
+            user_profile.save()
+        
+        return user
      # ===> giving the permisson
      # ===> set it to true
         user.is_admin = True
