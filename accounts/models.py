@@ -56,7 +56,7 @@ class MyAccountManager(BaseUserManager):
     
     # * creating a custom user model..
 class Account(AbstractBaseUser):
-    id                  = UUIDField(primary_key=True, default=uuid.uuid4)
+    id                  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
     username            = models.CharField(max_length=50, unique=True)
