@@ -3,6 +3,7 @@ from decimal import Decimal
 from PIL import Image
 from decimal import Decimal
 import os
+from category.models import Category
 
 # Create your models here.
 
