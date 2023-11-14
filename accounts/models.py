@@ -88,7 +88,7 @@ class Account(AbstractBaseUser):
     
 #     # when we return an account object in the template we should return an email
     def __str__(self):
-        return self.email
+        return self.user.id
     
     
     def has_perm(self, perm, obj=None):
