@@ -18,6 +18,7 @@ class MyAccountManager(BaseUserManager):
         
         # * Creation of user instance  using the user model associated with the manager 
         user = self.model(
+            id=uuid.uuid4(),
              # what the 'normalize_email' does is that if you enter a capital letter inside your email it will change it so small letter everything will be normalized
             email = self.normalize_email(email),
             username = username,
@@ -37,26 +38,39 @@ class MyAccountManager(BaseUserManager):
      # ------- Creating the SuperUser --------
     def create_superuser(self, first_name, last_name, username, email, password):
         user = self.create_user(
-            email = self.normalize_email(email),
-            username = username,
-            password = password,
-            first_name = first_name,
-            last_name = last_name,
+            email=self.normalize_email(email),
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
         )
-     # ===> giving the permisson
-     # ===> set it to true
+        
+        # Check if UserProfile already exists for the superuser
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
+        
+        if not created:
+            # Update the existing UserProfile if it already exists
+            user_profile.address_line_1 = ''  # Update with the fields you want to modify
+            user_profile.address_line_2 = ''
+            user_profile.profile_picture = 'default_profile_picture.png'
+            user_profile.city = ''
+            user_profile.state = ''
+            user_profile.country = ''
+            user_profile.save()
+
+        # Set the permissions and save the user after updating the UserProfile
         user.is_admin = True
         user.is_active = True
         user.is_staff = True
         user.is_superadmin = True
         user.save(using=self._db)
-        # * Create a UserProfile for the user
-        UserProfile.objects.create(user=user)
+
         return user
+
     
     # * creating a custom user model..
 class Account(AbstractBaseUser):
-    id                  = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, editable=False, unique=True)
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
     username            = models.CharField(max_length=50, unique=True)
@@ -82,23 +96,24 @@ class Account(AbstractBaseUser):
     
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
     
 #     # when we return an account object in the template we should return an email
     def __str__(self):
-        return self.email
+        return str(self.id)
     
     
     def has_perm(self, perm, obj=None):
 #         # ===> if the user is the admin he has the permission to do all the changes
         return self.is_admin
     
-    def has_module_perms(slef, add_label):
+    def has_module_perms(slef, app_label):
         return True
     
 
 
 class UserProfile(models.Model):
-    id              = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id              = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     # ===> we are use [ OnetoOneField() ] because the it is also like a foreignkey but the difference is the [ OnetoOneField() ] is unique OnetoOneField() means you can have only one profile for just one account, but if you use a foreignkey you can have multiple profile for one user
     user            = models.OneToOneField(Account, on_delete=models.CASCADE)
     address_line_1  = models.CharField(blank = True, max_length = 100)
