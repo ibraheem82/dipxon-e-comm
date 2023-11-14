@@ -1,5 +1,5 @@
-dipstore/__pycache__
-dipstore/migrations
+category/__pycache__
+category/migrations
 dipapp/__pycache__
 dipapp/migrations
 dipxon/__pycache__
