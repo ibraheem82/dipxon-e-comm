@@ -3,6 +3,7 @@ from decimal import Decimal
 from PIL import Image
 from decimal import Decimal
 import os
+from category.models import Category
 
 # Create your models here.
 
@@ -24,7 +25,7 @@ class Product(models.Model):
         choices=AVAILABILITY_CHOICES,
         default='available',
     )
-    # category      = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category      = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
     
