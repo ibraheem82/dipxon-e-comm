@@ -7,7 +7,7 @@ class ProductImageInline(admin.TabularInline):
     extra = 1  # Number of empty forms to display for adding new images
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('product_name', 'price', 'stock', 'modified_date', 'is_available')
+    list_display = ('product_name', 'price', 'stock', 'modified_date', 'category', 'is_available')
     prepopulated_fields  = {'slug': ('product_name',)}
     inlines = [ProductImageInline]
     

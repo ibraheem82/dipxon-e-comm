@@ -25,7 +25,7 @@ class Product(models.Model):
         choices=AVAILABILITY_CHOICES,
         default='available',
     )
-    category      = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
     
