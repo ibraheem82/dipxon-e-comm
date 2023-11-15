@@ -197,22 +197,22 @@
                 <div class="col-12">
                     <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
                         {% for category in categories %}
-                            {% with displayed_subcategories=set() %}
-                                {% for subcategory, _ in category.SUBCATEGORY_CHOICES %}
-                                    {% if subcategory not in displayed_subcategories %}
-                                        <li class="nav-item" data-aos="fade-up" data-aos-delay="300">
-                                            <a class="nav-link {% if forloop.parentloop.first and forloop.first %}active{% endif %} mt-3" data-bs-toggle="tab" href="#tab-product-{{ category.id }}-{{ subcategory }}">
-                                                {{ subcategory }}
-                                            </a>
-                                        </li>
-                                        {% with _=displayed_subcategories.add(subcategory) %}
-                                        {% endwith %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endwith %}
+                            {% for subcategory, _ in category.SUBCATEGORY_CHOICES %}
+                                {% if subcategory in displayed_subcategories %}
+                                    <li class="nav-item" data-aos="fade-up" data-aos-delay="300">
+                                        <a class="nav-link {% if forloop.parentloop.first and forloop.first %}active{% endif %} mt-3" data-bs-toggle="tab" href="#tab-product-{{ category.id }}-{{ subcategory }}">
+                                            {{ subcategory }}
+                                        </a>
+                                    </li>
+                                    {% with displayed_subcategories|remove:subcategory as _ %}
+                                    {% endwith %}
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
                     </ul>
                 </div>
+                
+                
                 
                 
                 
