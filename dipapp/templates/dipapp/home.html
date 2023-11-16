@@ -194,23 +194,26 @@
             <!-- Section Title & Tab Start -->
             <div class="row">
                 <!-- Tab Start -->
-                <div class="col-12">
-                    <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
-                        {% for category in categories %}
-                            {% for subcategory, _ in category.SUBCATEGORY_CHOICES %}
-                                {% if subcategory in displayed_subcategories %}
-                                    <li class="nav-item" data-aos="fade-up" data-aos-delay="300">
-                                        <a class="nav-link {% if forloop.parentloop.first and forloop.first %}active{% endif %} mt-3" data-bs-toggle="tab" href="#tab-product-{{ category.id }}-{{ subcategory }}">
-                                            {{ subcategory }}
-                                        </a>
-                                    </li>
-                                    {% with displayed_subcategories|remove:subcategory as _ %}
-                                    {% endwith %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
+                
+<div class="col-12">
+    <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
+        {% for category in categories %}
+            {% for subcategory, _ in category.SUBCATEGORY_CHOICES %}
+                {% if subcategory in displayed_subcategories %}
+                    <li class="nav-item" data-aos="fade-up" data-aos-delay="300">
+                        <a class="nav-link {% if forloop.parentloop.first and forloop.first %}active{% endif %} mt-3" data-bs-toggle="tab" href="#tab-product-{{ category.id }}-{{ subcategory }}">
+                            {{ subcategory }}
+                        </a>
+                    </li>
+                    {% with displayed_subcategories|remove_from_list:subcategory as updated_subcategories %}
+        {% assign displayed_subcategories = updated_subcategories %}
+      {% endwith %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+
                 
                 
                 
