@@ -12,7 +12,7 @@ def home(request):
     context = {
         'products': products,
         'categories': categories,
-        'subcategory_choices' : subcategory_choices,
+        'gender_choices' : gender_choices,
         'user_country': user_country,
         'get_currency_symbol' : get_currency_symbol,
     }
