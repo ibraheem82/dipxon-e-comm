@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'dipapp',
-    'category'
+    'category',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
