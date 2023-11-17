@@ -7,22 +7,8 @@ from django.urls import reverse
 
 
 class Category(models.Model):
-    SUBCATEGORY_CHOICES = [
-        ('men', 'Men'),
-        ('woman', 'Women'),
-        ('kids', 'Kids'),
-    ]
     category_name = models.CharField(max_length=50, unique=True)
     description = models.TextField(max_length = 255, blank=True)
-    subcategory = models.CharField(
-        max_length=20,
-        choices=SUBCATEGORY_CHOICES,
-        default='men',
-    )
-
-
-
-
 
         
     # ===> overiding the name [category] in the django admin panel
