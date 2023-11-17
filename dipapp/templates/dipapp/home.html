@@ -223,13 +223,14 @@
             {% for product in products %}
             <div class="swiper-slide product-wrapper">
 
-                <!-- Single Product Start -->
-                <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
-                    <div class="thumb">
-                        <a href="single-product.html" class="image">
-                            <img class="first-image" src="{% static 'assets/images/products/medium-size/1.jpg' %}" alt="Product" />
-                            <img class="second-image" src="{% static 'assets/images/products/medium-size/5.jpg' %}" alt="Product" />
-                        </a>
+            <!-- Single Product Start -->
+            <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                <div class="thumb">
+                    <a href="single-product.html" class="image">
+                        {% for image in product.images.all %}
+                        <img class="{% if forloop.first %}first-image{% else %}second-image{% endif %}" src="{{ image.image.url }}" alt="Product" />
+                    {% endfor %}
+                    </a>
                         <div class="actions">
                             <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
                             <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
