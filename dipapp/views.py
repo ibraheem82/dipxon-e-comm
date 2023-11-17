@@ -7,6 +7,7 @@ def home(request):
     categories = Category.objects.all()
     subcategory_choices = Category.SUBCATEGORY_CHOICES
     user_country = get_user_country(request)
+    
     # Create the context dictionary
     context = {
         'products': products,
