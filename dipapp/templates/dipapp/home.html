@@ -239,9 +239,15 @@
 </span>
 
                     <div class="actions">
-                        <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                        <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                        <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
+                        <a href="#" class="action wishlist">
+                            <i class="pe-7s-like"></i>
+                        </a>
+                        <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ product.id }}">
+                            <i class="pe-7s-search"></i>
+                        </a>
+                        <a href="#" class="action compare">
+                            <i class="pe-7s-shuffle"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="content">
@@ -261,7 +267,7 @@
                     <span class="price">
                         <span class="new">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
                         {% if product.discount_price %}
-                        <span class="old">{{ symbol }}{{ product.discounted_price|floatformat:2|intcomma }}</span>
+                        <span class="old">{{ symbol }}{{ product.discount_price|floatformat:2|intcomma }}</span>
                         {% endif %}
                     </span>
                     {% endwith %}
