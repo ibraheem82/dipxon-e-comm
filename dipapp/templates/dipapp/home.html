@@ -197,13 +197,13 @@
                 <!-- Tab Start -->
                 <div class="col-12">
                     <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
-                      {% for choice in subcategory_choices %}
-        <li class="nav-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:300 }}">
-            <a class="nav-link {% if forloop.first %}active{% endif %} mt-3" data-bs-toggle="tab" href="#tab-product-{{ choice.0 }}">
-                {{ choice.1 }}
-            </a>
-        </li>
-    {% endfor %}
+                        {% for choice in gender_choices %}
+                        <li class="nav-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:300 }}">
+                            <a class="nav-link {% if choice.0 == selected_gender %}active{% endif %}" data-bs-toggle="tab" href="#tab-product-{{ choice.0 }}">
+                                {{ choice.1 }}
+                            </a>
+                        </li>
+                    {% endfor %}
                     </ul>
                 </div>
                 <!-- Tab End -->
@@ -214,14 +214,15 @@
             <div class="row">
                 <div class="col">
                     <div class="tab-content position-relative">
-                        <div class="tab-pane fade show active" id="tab-product-all">
+                        <div class="tab-pane fade show active"  id="tab-product-{{ selected_gender|default:'all' }}">
                             <div class="product-carousel">
                                 <div class="swiper-container">
-                                    <div class="swiper-wrapper">
+                                <div class="swiper-wrapper">
 
-            <!-- Product Start -->
-            {% for product in products %}
-            <div class="swiper-slide product-wrapper">
+        <!-- Product Start -->
+        {% for product in products %}
+        {% if product.product_gender == selected_gender or not selected_gender %}
+        <div class="swiper-slide product-wrapper">
 
             <!-- Single Product Start -->
             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
@@ -231,48 +232,55 @@
                         <img class="{% if forloop.first %}first-image{% else %}second-image{% endif %}" src="{{ image.image.url }}" alt="Product" />
                     {% endfor %}
                     </a>
-                        <div class="actions">
-                            <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
-                            <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
-                            <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <h4 class="sub-title"><a href="single-product.html">Studio Design</a></h4>
-                        <h5 class="title">
-                            <a href="single-product.html">{{ product.product_name }}</a>
-                        </h5>
-                        <span class="ratings">
-                                <span class="rating-wrap">
-                                    <span class="star" style="width: 100%"></span>
-                        </span>
-                        <span class="rating-num">(4)</span>
-                        </span>
-                       
+                    <span class="badges">
+    <span class="sale {% if product.is_available == 'available' %}in-stock{% elif product.is_available == 'out_of_stock' %}out-of-stock{% elif product.is_available == 'coming_soon' %}coming-soon{% elif product.is_available == 'new' %}new{% endif %}">
+        {{ product.get_is_available_display }}
+    </span>
+</span>
 
-                        {% with humanize.currency_symbol|default:"$" as symbol %}
-                        <span class="price">
-                          <span class="new">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
-                          {% if product.discount_price %}
-                            <span class="old">{{ symbol }}{{ product.discounted_price|floatformat:2|intcomma }}</span>
-                          {% endif %}
-                        </span>
-                        {% endwith %}
-                        
-
-
-
-
-                        <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
+                    <div class="actions">
+                        <a href="#" class="action wishlist"><i class="pe-7s-like"></i></a>
+                        <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="pe-7s-search"></i></a>
+                        <a href="#" class="action compare"><i class="pe-7s-shuffle"></i></a>
                     </div>
                 </div>
-              
-                <!-- Single Product End -->
+                <div class="content">
+                    <h4 class="sub-title"><a href="single-product.html">{{ product.category.category_name }}</a></h4>
+                    <h5 class="title">
+                        <a href="single-product.html">{{ product.product_name }}</a>
+                    </h5>
+                    <span class="ratings">
+                            <span class="rating-wrap">
+                                <span class="star" style="width: 100%"></span>
+                    </span>
+                    <span class="rating-num">(4)</span>
+                    </span>
+                    
 
+                    {% with humanize.currency_symbol|default:"$" as symbol %}
+                    <span class="price">
+                        <span class="new">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
+                        {% if product.discount_price %}
+                        <span class="old">{{ symbol }}{{ product.discounted_price|floatformat:2|intcomma }}</span>
+                        {% endif %}
+                    </span>
+                    {% endwith %}
+                    
+
+
+
+
+                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
+                </div>
             </div>
-            {% endfor %}
+            
+            <!-- Single Product End -->
 
-                                    </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+                                </div>
 
                                     <!-- Swiper Pagination Start -->
                                     <div class="swiper-pagination d-md-none"></div>
@@ -293,579 +301,6 @@
     </div>
     <!-- Product Section End -->
 
-    <!-- Banner Fullwidth Start -->
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12" data-aos="fade-up" data-aos-delay="300">
-                    <div class="banner">
-                        <div class="banner-image">
-                            <a href="shop-grid.html"><img src="{% static 'assets/images/banner/big-banner.jpg' %}" alt="Banner"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Banner Fullwidth End -->
-
-    <!-- Product List Start -->
-    <div class="section section-padding">
-        <div class="container">
-            <div class="row mb-n8">
-                <div class="col-md-6 col-lg-4 col-12 mb-8" data-aos="fade-up" data-aos-delay="300">
-                    <!-- Product List Title Start -->
-                    <div class="product-list-title">
-                        <h2 class="title pb-3 mb-0">Best Offer</h2>
-                        <span></span>
-                    </div>
-                    <!-- Product List Title End -->
-
-                    <!-- Product List Carousel Start -->
-                    <div class="product-list-carousel">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-
-                                <!-- Product List Wrapper Start -->
-                                <div class="swiper-slide product-list-wrapper mb-n6">
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/1.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h5>
-                                            <span class="price">
-													<span class="new">$38.00</span>
-                                            <span class="old">$42.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/2.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/3.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Basic Jogging Shorts</a></h5>
-                                            <span class="price">
-													<span class="new">$21.00</span>
-                                            <span class="old">$22.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 60%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/4.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/10.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Simple Woven Fabrics</a></h5>
-                                            <span class="price">
-													<span class="new">$86.00</span>
-                                            <span class="old">$90.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 80%"></span>
-                                            </span>
-                                            <span class="rating-num">(1)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                </div>
-                                <!-- Product List Wrapper End -->
-
-                                <!-- Product List Wrapper Start -->
-                                <div class="swiper-slide product-list-wrapper mb-n6">
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/6.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Make Thing Happen T-Shirt</a></h5>
-                                            <span class="price">
-													<span class="new">$66.50</span>
-                                            <span class="old">$70.55</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/4.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/10.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Simple Woven Fabrics</a></h5>
-                                            <span class="price">
-													<span class="new">$86.00</span>
-                                            <span class="old">$90.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 80%"></span>
-                                            </span>
-                                            <span class="rating-num">(1)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/1.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h5>
-                                            <span class="price">
-													<span class="new">$38.00</span>
-                                            <span class="old">$42.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                </div>
-                                <!-- Product List Wrapper End -->
-
-                            </div>
-
-                            <!-- Swiper Pagination Start -->
-                            <!-- <div class="swiper-pagination d-md-none"></div> -->
-                            <!-- Swiper Pagination End -->
-
-                            <!-- Next Previous Button Start -->
-                            <div class="swiper-product-list-next swiper-button-next"><i class="pe-7s-angle-right"></i></div>
-                            <div class="swiper-product-list-prev swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
-                            <!-- Next Previous Button End -->
-
-                        </div>
-                    </div>
-                    <!-- Product List Carousel End -->
-
-                </div>
-                <div class="col-md-6 col-lg-4 col-12 mb-8" data-aos="fade-up" data-aos-delay="500">
-                    <!-- Product List Title Start -->
-                    <div class="product-list-title">
-                        <h2 class="title pb-3 mb-0">New Products</h2>
-                        <span></span>
-                    </div>
-                    <!-- Product List Title End -->
-
-                    <!-- Product List Start -->
-                    <div class="product-list-carousel-2">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-
-                                <!-- Product List Wrapper Start -->
-                                <div class="swiper-slide product-list-wrapper mb-n6">
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/6.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Make Thing Happen T-Shirt</a></h5>
-                                            <span class="price">
-													<span class="new">$66.50</span>
-                                            <span class="old">$70.55</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/4.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/10.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Simple Woven Fabrics</a></h5>
-                                            <span class="price">
-													<span class="new">$86.00</span>
-                                            <span class="old">$90.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 80%"></span>
-                                            </span>
-                                            <span class="rating-num">(1)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/1.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h5>
-                                            <span class="price">
-													<span class="new">$38.00</span>
-                                            <span class="old">$42.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                </div>
-                                <!-- Product List Wrapper End -->
-
-                                <!-- Product List Wrapper Start -->
-                                <div class="swiper-slide product-list-wrapper mb-n6">
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/7.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/9.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Basic Lather Sneaker</a></h5>
-                                            <span class="price">
-													<span class="new">$65.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/11.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/10.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Handmade Shoulder Bag</a></h5>
-                                            <span class="price">
-													<span class="new">$86.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 80%"></span>
-                                            </span>
-                                            <span class="rating-num">(1)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/3.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Enjoy The Rest T-Shirt</a></h5>
-                                            <span class="price">
-													<span class="new">$44.00</span>
-                                            <span class="old">$48.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                </div>
-                                <!-- Product List Wrapper End -->
-
-                            </div>
-
-                            <!-- Swiper Pagination Start -->
-                            <!-- <div class="swiper-pagination d-md-none"></div> -->
-                            <!-- Swiper Pagination End -->
-
-                            <!-- Next Previous Button Start -->
-                            <div class="swiper-product-list-next swiper-button-next"><i class="pe-7s-angle-right"></i></div>
-                            <div class="swiper-product-list-prev swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
-                            <!-- Next Previous Button End -->
-                        </div>
-                    </div>
-                    <!-- Product List End -->
-                </div>
-                <div class="col-md-6 col-lg-4 col-12 mb-8" data-aos="fade-up" data-aos-delay="700">
-                    <!-- Product List Title Start -->
-                    <div class="product-list-title">
-                        <h2 class="title pb-3 mb-0">Best Sellers</h2>
-                        <span></span>
-                    </div>
-                    <!-- Product List Title End -->
-
-                    <!-- Product List Start -->
-                    <div class="product-list-carousel-3">
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-
-                                <!-- Product List Wrapper Start -->
-                                <div class="swiper-slide product-list-wrapper mb-n6">
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/7.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/9.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Basic Lather Sneaker</a></h5>
-                                            <span class="price">
-													<span class="new">$65.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/11.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/10.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Handmade Shoulder Bag</a></h5>
-                                            <span class="price">
-													<span class="new">$86.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 80%"></span>
-                                            </span>
-                                            <span class="rating-num">(1)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/3.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Enjoy The Rest T-Shirt</a></h5>
-                                            <span class="price">
-													<span class="new">$44.00</span>
-                                            <span class="old">$48.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                </div>
-                                <!-- Product List Wrapper End -->
-
-                                <!-- Product List Wrapper Start -->
-                                <div class="swiper-slide product-list-wrapper mb-n6">
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/1.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/5.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Brother Hoddies in Grey</a></h5>
-                                            <span class="price">
-													<span class="new">$38.00</span>
-                                            <span class="old">$42.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 100%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/2.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/3.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Basic Jogging Shorts</a></h5>
-                                            <span class="price">
-													<span class="new">$21.00</span>
-                                            <span class="old">$22.50</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 60%"></span>
-                                            </span>
-                                            <span class="rating-num">(4)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                    <!-- Single Product List Start -->
-                                    <div class="single-product-list product-hover mb-6">
-                                        <div class="thumb">
-                                            <a href="single-product.html" class="image">
-                                                <img class="first-image" src="{% static 'assets/images/products/small-product/4.jpg' %}" alt="Product" />
-                                                <img class="second-image" src="{% static 'assets/images/products/small-product/10.jpg' %}" alt="Product" />
-                                            </a>
-                                        </div>
-                                        <div class="content">
-                                            <h5 class="title"><a href="single-product.html">Simple Woven Fabrics</a></h5>
-                                            <span class="price">
-													<span class="new">$86.00</span>
-                                            <span class="old">$90.00</span>
-                                            </span>
-                                            <span class="ratings">
-													<span class="rating-wrap">
-														<span class="star" style="width: 80%"></span>
-                                            </span>
-                                            <span class="rating-num">(1)</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Single Product List End -->
-
-                                </div>
-                                <!-- Product List Wrapper End -->
-
-                            </div>
-
-                            <!-- Swiper Pagination Start -->
-                            <!-- <div class="swiper-pagination d-md-none"></div> -->
-                            <!-- Swiper Pagination End -->
-
-                            <!-- Next Previous Button Start -->
-                            <div class="swiper-product-list-next swiper-button-next"><i class="pe-7s-angle-right"></i></div>
-                            <div class="swiper-product-list-prev swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
-                            <!-- Next Previous Button End -->
-
-                        </div>
-                    </div>
-                    <!-- Product List End -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Product List End -->
 
     <!-- Banner Section Start -->
     <div class="section">
