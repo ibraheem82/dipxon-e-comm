@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from .models import Product, Category
-
-
-from django import template
+from .utils import get_user_country, get_currency_symbol
 
 def home(request):
     products = Product.objects.all()
