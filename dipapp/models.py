@@ -14,6 +14,11 @@ class Product(models.Model):
         ('coming_soon', 'Coming Soon'),
         ('new', 'New'), 
     ]
+    PRODUCT_CATEGORY_GENDER = [
+        ('men', 'Men'),
+        ('woman', 'Women'),
+        ('kids', 'Kids'),
+    ]
     product_name   = models.CharField(max_length=200, unique=True)
     slug           = models.SlugField(max_length = 200, unique= True)
     description    = models.TextField(max_length = 500, blank=True)
@@ -26,6 +31,11 @@ class Product(models.Model):
         default='available',
     )
     category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    product_gender = models.CharField(
+        max_length=20,
+        choices=PRODUCT_CATEGORY_GENDER,
+        default='men',
+    )
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
     
