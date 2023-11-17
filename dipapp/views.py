@@ -15,7 +15,9 @@ def home(request):
     context = {
         'products': products,
         'categories': categories,
-        'displayed_subcategories': displayed_subcategories,
+        'subcategory_choices' : subcategory_choices,
+        'user_country': user_country,
+        'get_currency_symbol' : get_currency_symbol,
     }
 
     # Render the template with the context data
