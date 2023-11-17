@@ -5,7 +5,7 @@ from .utils import get_user_country, get_currency_symbol
 def home(request):
     products = Product.objects.all()
     categories = Category.objects.all()
-    subcategory_choices = Category.SUBCATEGORY_CHOICES
+    gender_choices = Product.PRODUCT_CATEGORY_GENDER
     user_country = get_user_country(request)
     
     # Create the context dictionary
