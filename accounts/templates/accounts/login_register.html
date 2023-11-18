@@ -3,13 +3,12 @@
 {% load static %}
 {% block content %}
 
-
-{% if page == 'register' %}
     <!-- Login | Register Section Start -->
     <div class="section section-margin">
         <div class="container">
 
             <div class="row mb-n10">
+                {% if page == 'login' %}
                 <div class="col-lg-6 col-md-8 m-auto m-lg-0 pb-10">
                     <!-- Login Wrapper Start -->
                     <div class="login-wrapper">
@@ -17,7 +16,7 @@
                         <!-- Login Title & Content Start -->
                         <div class="section-content text-center mb-5">
                             <h2 class="title mb-2">Login</h2>
-                            <p class="desc-content">Please login using account detail bellow.</p>
+                            <p class="desc-content">Please login using account detail below.</p>
                         </div>
                         <!-- Login Title & Content End -->
 
@@ -56,11 +55,11 @@
                             </div>
                             <!-- Login Button End -->
 
-                            <!-- Lost Password & Creat New Account Start -->
+                            <!-- Lost Password & Create New Account Start -->
                             <div class="lost-password">
-                                <a href="login-register.html">Create Account</a>
+                                <a href="{% url 'register' %}">Create Account</a>
                             </div>
-                            <!-- Lost Password & Creat New Account End -->
+                            <!-- Lost Password & Create New Account End -->
 
                         </form>
                         <!-- Form Action End -->
@@ -68,6 +67,8 @@
                     </div>
                     <!-- Login Wrapper End -->
                 </div>
+                {% endif %}
+                {% if page == 'register' %}
                 <div class="col-lg-6 col-md-8 m-auto m-lg-0 pb-10">
                     <!-- Register Wrapper Start -->
                     <div class="register-wrapper">
@@ -75,7 +76,7 @@
                         <!-- Login Title & Content Start -->
                         <div class="section-content text-center mb-5">
                             <h2 class="title mb-2">Create Account</h2>
-                            <p class="desc-content">Please Register using account detail bellow.</p>
+                            <p class="desc-content">Please register using account detail below.</p>
                         </div>
                         <!-- Login Title & Content End -->
 
@@ -131,10 +132,11 @@
                     </div>
                     <!-- Register Wrapper End -->
                 </div>
+                {% endif %}
             </div>
 
         </div>
     </div>
     <!-- Login | Register Section End -->
-  
-    {% endblock  %}
+
+{% endblock %}
