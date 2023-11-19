@@ -112,19 +112,12 @@ variation_category_choice = (
 # ========> Variation model to choose size and color of products that you wants  <========
 
 class Variation(models.Model):
-    # ===> we are using 'ForeignKey' because we want to add the variations of each particular products that why we need the Product models as the foreignkey
-    # ===> 'on_delete=models.CASCADE' means that when a particular product is deleted, all the variation related to it should also be deleted
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    # ===> this will make a dropdown list in the admin panel
     variation_category = models.CharField(max_length=100, choices=variation_category_choice)
     variation_value = models.CharField(max_length=100)
-    # ===> incase we wann to disable any of the variation value
-    # ===> by default the variation should be active
     is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now=True)
 
-
-    # ===> we are telling this model that we have created a Variation model
     objects = VariationManager()
 
 
