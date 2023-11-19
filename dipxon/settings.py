@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'accounts',
     'dipapp',
     'category',
-    'carts'
+    'carts',
     'django.contrib.humanize'
 ]
 
