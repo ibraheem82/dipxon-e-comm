@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'accounts',
     'dipapp',
     'category',
+    'carts',
     'django.contrib.humanize'
 ]
 
@@ -164,6 +165,10 @@ STATICFILES_DIRS = [
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
