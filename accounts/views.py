@@ -15,6 +15,8 @@ from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponse
+from django.urls import reverse
+
 
 
 
@@ -76,8 +78,10 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-            return redirect('/accounts/login_register/?command=verification=' + email)
+            login_url = reverse('login') 
+            return redirect(f'{login_url}?command=verification={email}')
     else:
+        # f'{login_url}?command=verification={email}'
         form = RegistrationForm()
     context = {
         'form' : form,
@@ -93,6 +97,7 @@ def register(request):
 
 # ========> Login View <========
 def loginUser(request):
+    page = 'login'
     if request.method == 'POST':
         # ===> from the login form, the name values.
         email = request.POST['email']
@@ -123,14 +128,7 @@ def loginUser(request):
                         existing_variation = item.variations.all()
                         ex_var_list.append(list(existing_variation))
                         id.append(item.id)
-                        
-                        
-                       
-                        
-                        
-                        
-                        
-                
+
                     for pr in product_variation:
                         if pr in ex_var_list:
                             
@@ -169,8 +167,9 @@ def loginUser(request):
                 return redirect('dashboard')
         else:
             messages.error(request, 'Invalid login credentials')
-            return redirect('login')
-    return render(request, 'accounts/login.html')
+            login_page = page
+            return redirect(login_page)
+    return render(request, 'accounts/login_register.html')
 
 
 
