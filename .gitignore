@@ -11,3 +11,4 @@ app-content.txt
 accounts/migrations
 accounts/__pycache__
 media
+sent_emails
