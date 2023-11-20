@@ -28,7 +28,7 @@ class CartItem(models.Model):
     # ===> we also want to store the variation inside the cart
     # ===> we are using 'ManyToManyField' because many products can have same variations
     
-    variations = models.ManyToManyField(Variation, blank=True)
+    variations  = models.ManyToManyField(Variation, blank=True)
     cart        = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     quantity    = models.IntegerField()
     is_active   = models.BooleanField(default=True)

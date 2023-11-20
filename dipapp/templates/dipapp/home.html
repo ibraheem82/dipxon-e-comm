@@ -263,11 +263,11 @@
                     </span>
                     
 
-                    {% with humanize.currency_symbol|default:"$" as symbol %}
+                    {% with humanize.currency_symbol|default:"₦" as symbol %}
                     <span class="price">
-                        <span class="new">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
+                        <span class="new">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
                         {% if product.discount_price %}
-                        <span class="old">{{ symbol }}{{ product.discount_price|floatformat:2|intcomma }}</span>
+                        <span class="old">{{ symbol }} {{ product.discount_price|floatformat:2|intcomma }}</span>
                         {% endif %}
                     </span>
                     {% endwith %}
