@@ -54,7 +54,7 @@
                     <!-- Header Logo Start -->
                     <div class="col-xl-2 col-6">
                         <div class="header-logo">
-                            <a href="index.html"><img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo" /></a>
+                            <a href="{% url 'home' %}"><img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Header Logo End -->
@@ -64,11 +64,7 @@
                         <div class="main-menu position-relative">
                             <ul>
                                 <li class="has-children">
-                                    <a href="#"><span>Home</span> <i class="fa fa-angle-down"></i></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                    </ul>
+                                    <a href="{% url 'home' %}"><span>Home</span> <i class="fa fa-angle-down"></i></a>
                                 </li>
                                 <li class="has-children position-static">
                                     <a href="#"><span>Shop</span> <i class="fa fa-angle-down"></i></a>
