@@ -87,39 +87,3 @@ class ProductImage(models.Model):
 
             self.image.name = os.path.join("photos", "products", base_filename)
             super().save(*args, **kwargs)
-
-
-
-
-    # ===> variation_manager will allow you to modify the queryset
-class VariationManager(models.Manager):
-    def colors(self):
-        # ===> this will bring the colors
-        return super(VariationManager, self).filter(variation_category = 'color', is_active = True)
-
-    def sizes(self):
-        # ===> this will bring the sizes
-        return super(VariationManager, self).filter(variation_category = 'size', is_active = True)
-
-
-variation_category_choice = (
-    ('color', 'color'),
-    ('size', 'size'),
-)
-
-
-
-# ========> Variation model to choose size and color of products that you wants  <========
-
-class Variation(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation_category = models.CharField(max_length=100, choices=variation_category_choice)
-    variation_value = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
-    created_date = models.DateTimeField(auto_now=True)
-
-    objects = VariationManager()
-
-
-    def __str__(self):
-        return self.variation_value
