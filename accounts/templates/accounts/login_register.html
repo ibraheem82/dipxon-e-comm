@@ -21,26 +21,16 @@
                         <!-- Login Title & Content End -->
 
                         <!-- Form Action Start -->
-                        <form action="#" method="post">
-
-                            <!-- Input Email Start -->
-                            <div class="single-input-item mb-3">
-                                <input type="email" placeholder="Email or Username">
-                            </div>
-                            <!-- Input Email End -->
-
-                            <!-- Input Password Start -->
-                            <div class="single-input-item mb-3">
-                                <input type="password" placeholder="Enter your Password">
-                            </div>
-                            <!-- Input Password End -->
+                        <form action="{% url "login" %}" method="post">
+                            {% csrf_token %}
+                            {{ login_form.as_p }}
 
                             <!-- Checkbox/Forget Password Start -->
                             <div class="single-input-item mb-3">
                                 <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                     <div class="remember-meta mb-3">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                            <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe">
                                             <label class="custom-control-label" for="rememberMe">Remember Me</label>
                                         </div>
                                     </div>
