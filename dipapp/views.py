@@ -2,6 +2,13 @@ from django.shortcuts import render
 from .models import Product, Category
 from .utils import get_user_country, get_currency_symbol
 
+
+
+from django.shortcuts import get_object_or_404, redirect, render 
+from .models import Cart, CartItem, Product
+from django.http import JsonResponse
+
+
 def home(request):
     products = Product.objects.all()
     categories = Category.objects.all()
