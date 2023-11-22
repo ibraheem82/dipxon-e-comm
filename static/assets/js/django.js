@@ -7,6 +7,7 @@ function getCookie(name) {
 }
 // Function to add a product to the cart
 // Function to update the cart count
+// Function to update the cart count
 function updateCartCount() {
     const csrfToken = getCookie("csrftoken");
 
@@ -26,8 +27,15 @@ function updateCartCount() {
             // Update the cart count in the UI
             const cartCountElement = document.getElementById("cart-count");
             if (cartCountElement) {
-                cartCountElement.textContent = data.cart_count;
-                console.log('Updated cart count:', data.cart_count);
+                cartCountElement.innerHTML = data.total_items;  // Fix here
+                console.log('Updated cart count:', data.total_items);
+            }
+
+            // Update the grand total in the UI (replace "grand-total-id" with the actual ID)
+            const grandTotalElement = document.getElementById("grand-total-id");
+            if (grandTotalElement) {
+                grandTotalElement.textContent = data.grand_total;
+                console.log('Updated grand total:', data.grand_total);
             }
         } else {
             console.error("Error fetching cart count:", data.error);
