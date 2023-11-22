@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from .models import Product, Category
 from .utils import get_user_country, get_currency_symbol
@@ -7,19 +8,18 @@ from .utils import get_user_country, get_currency_symbol
 from django.shortcuts import get_object_or_404, redirect, render 
 from .models import Cart, CartItem, Product
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
     products = Product.objects.all()
     categories = Category.objects.all()
-    gender_choices = Product.PRODUCT_CATEGORY_GENDER
     user_country = get_user_country(request)
     
     # Create the context dictionary
     context = {
         'products': products,
         'categories': categories,
-        'gender_choices' : gender_choices,
         'user_country': user_country,
         'get_currency_symbol' : get_currency_symbol,
     }
@@ -50,6 +50,40 @@ def add_to_cart(request, product_id):
        "message": message,
    }
    return JsonResponse(response)
+
+logger = logging.getLogger(__name__)
+@login_required  # Ensure the user is logged in to access this view
+def get_cart_count(request):
+    try:
+        if request.user.is_authenticated:
+            cart = Cart.objects.get(user=request.user)
+            cart_items = cart.cartitem_set.all()
+
+            total_items = cart.get_total_items  # No parentheses
+            grand_total = cart.get_grandtotal()
+
+            cart_details = {
+                'success': True,
+                'total_items': total_items,
+                'grand_total': grand_total,
+                'cart_items': [
+                    {
+                        'product_name': item.product.product_name,
+                        'quantity': item.quantity,
+                        'total_price': item.get_total_price(),
+                    }
+                    for item in cart_items
+                ],
+            }
+
+            return JsonResponse(cart_details)
+        else:
+            return JsonResponse({'success': False, 'error': 'User is not authenticated'})
+    except Exception as e:
+        logger.error(f"Error in get_cart_count view: {e}")
+        return JsonResponse({'success': False, 'error': f'Internal server error: {str(e)}'})
+
+
 
 
 
