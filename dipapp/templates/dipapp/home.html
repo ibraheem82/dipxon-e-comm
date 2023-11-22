@@ -98,18 +98,18 @@
                 <!-- Tab End -->
             </div>
             <!-- Section Title & Tab End -->
-
+<!-- Product Start -->
+{% for product in products %}
             <!-- Products Tab Start -->
             <div class="row">
-                <div class="col">
-                    <div class="tab-content position-relative">
+                <div class="col-lg-9 text-center mx-auto">
+                    <div class="tab-content position-relative ">
                         <div class="tab-pane fade show active"  id="tab-product-all">
                             <div class="product-carousel">
                                 <div class="swiper-container">
                                 <div class="swiper-wrapper">
 
-        <!-- Product Start -->
-        {% for product in products %}
+        
        
         <div class="swiper-slide product-wrapper">
 
@@ -179,7 +179,7 @@
 
         </div>
       
-        {% endfor %}
+    
         
 
                                 </div>
@@ -199,6 +199,7 @@
                 </div>
             </div>
             <!-- Products Tab End -->
+            {% endfor %}
         </div>
     </div>
     <!-- Product Section End -->
