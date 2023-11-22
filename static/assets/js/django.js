@@ -1,7 +1,7 @@
 function addToCart(productId, event) {
     event.preventDefault();
     console.log('Adding to cart:', productId);  // Add this line for debugging
-    fetch(`/products/${productId}/add_to_cart/`, {
+    fetch(`products/${productId}/add_to_cart/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
