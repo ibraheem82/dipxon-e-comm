@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Cart, CartItem
 # Register your models here.
 
 class ProductImageInline(admin.TabularInline):
