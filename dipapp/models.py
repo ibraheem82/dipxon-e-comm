@@ -4,7 +4,9 @@ from PIL import Image
 from decimal import Decimal
 import os
 from category.models import Category
-
+from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 
 class Product(models.Model):
@@ -14,16 +16,12 @@ class Product(models.Model):
         ('coming_soon', 'Coming Soon'),
         ('new', 'New'), 
     ]
-    PRODUCT_CATEGORY_GENDER = [
-        ('men', 'Men'),
-        ('woman', 'Women'),
-        ('kids', 'Kids'),
-    ]
     product_name   = models.CharField(max_length=200, unique=True)
-    slug           = models.SlugField(max_length = 200, unique= True)
-    description    = models.TextField(max_length = 500, blank=True)
+    slug           = models.SlugField(max_length=200, unique=True)
+    description    = models.TextField(max_length=500, blank=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     discount_price = models.PositiveIntegerField(blank=True, null=True, default=0)
+    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Add this line
     stock          = models.IntegerField()
     is_available   = models.CharField(
         max_length=20,
@@ -31,15 +29,9 @@ class Product(models.Model):
         default='available',
     )
     category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-    product_gender = models.CharField(
-        max_length=20,
-        choices=PRODUCT_CATEGORY_GENDER,
-        default='men',
-    )
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
-    
-    
+
     def save(self, *args, **kwargs):
         # Check if discount_price is not None before comparison
         if self.discount_price is not None and self.discount_price > 0:
@@ -52,9 +44,10 @@ class Product(models.Model):
 
         # Call the original save method
         super().save(*args, **kwargs)
-        
+
     def __str__(self):
-        return self.product_name        
+        return self.product_name
+       
         
 class ProductImage(models.Model):
     MAX_IMAGES_PER_PRODUCT = 2
@@ -87,3 +80,41 @@ class ProductImage(models.Model):
 
             self.image.name = os.path.join("photos", "products", base_filename)
             super().save(*args, **kwargs)
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.user}'s Cart"
+
+    @property
+    def get_total_items(self):
+        return sum(item.quantity for item in self.cartitem_set.all())
+
+    def get_grandtotal(self):
+        total = 0
+        for item in self.cartitem_set.all():
+            total += item.get_total_price()
+        return total
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.product_name}"
+
+    def get_total_price(self):
+        if self.product.discounted_price is not None and self.product.discounted_price > 0:
+            unit_price = self.product.discounted_price
+        else:
+            unit_price = self.product.price
+
+        # Ensure that unit_price is not None
+        if unit_price is not None:
+            return self.quantity * unit_price
+        else:
+            return 0  # Or any other default value you prefer

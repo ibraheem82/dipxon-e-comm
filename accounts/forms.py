@@ -44,6 +44,35 @@ class RegistrationForm(forms.ModelForm):
        
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+            
+            
+            
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+
+class LoginForm(AuthenticationForm):
+    username = forms.EmailField(widget=forms.EmailInput(attrs={
+        'placeholder': 'Enter Email Address',
+        'class': 'form-control'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Enter Password',
+        'class': 'form-control',
+    }))
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['placeholder'] = 'Enter Email Address'
+        self.fields['password'].widget.attrs['placeholder'] = 'Enter Password'
+        
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
 
 class UserForm(forms.ModelForm):

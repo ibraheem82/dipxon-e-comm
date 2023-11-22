@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage
+from .models import Product, ProductImage, Cart, CartItem
 # Register your models here.
 
 class ProductImageInline(admin.TabularInline):
@@ -12,3 +12,15 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
     
 admin.site.register(Product, ProductAdmin)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('user', 'created_at')
+
+
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ('product', 'cart', 'quantity')
+
+
+
+
+admin.site.register(Cart, CartAdmin)
+admin.site.register(CartItem, CartItemAdmin)

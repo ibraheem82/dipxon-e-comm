@@ -9,7 +9,7 @@
 
             <div class="row mb-n10">
                 {% if page == 'login' %}
-                <div class="col-lg-6 col-md-8 m-auto m-lg-0 pb-10">
+                <div class="col-lg-6 col-md-8 m-auto pb-10">
                     <!-- Login Wrapper Start -->
                     <div class="login-wrapper">
 
@@ -21,26 +21,16 @@
                         <!-- Login Title & Content End -->
 
                         <!-- Form Action Start -->
-                        <form action="#" method="post">
-
-                            <!-- Input Email Start -->
-                            <div class="single-input-item mb-3">
-                                <input type="email" placeholder="Email or Username">
-                            </div>
-                            <!-- Input Email End -->
-
-                            <!-- Input Password Start -->
-                            <div class="single-input-item mb-3">
-                                <input type="password" placeholder="Enter your Password">
-                            </div>
-                            <!-- Input Password End -->
+                        <form action="{% url "login" %}" method="post">
+                            {% csrf_token %}
+                            {{ login_form.as_p }}
 
                             <!-- Checkbox/Forget Password Start -->
                             <div class="single-input-item mb-3">
                                 <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                     <div class="remember-meta mb-3">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                            <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe">
                                             <label class="custom-control-label" for="rememberMe">Remember Me</label>
                                         </div>
                                     </div>
@@ -51,7 +41,7 @@
 
                             <!-- Login Button Start -->
                             <div class="single-input-item mb-3">
-                                <button class="btn btn btn-dark btn-hover-primary rounded-0">Login</button>
+                                <button class="btn btn btn-dark  btn-hover-primary rounded-0" type="submit">Login</button>
                             </div>
                             <!-- Login Button End -->
 
