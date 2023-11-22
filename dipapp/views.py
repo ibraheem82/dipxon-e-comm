@@ -26,3 +26,51 @@ def home(request):
 
     # Render the template with the context data
     return render(request, 'dipapp/home.html', context)
+
+
+
+
+
+def add_to_cart(request, product_id):
+   product = get_object_or_404(Product, pk=product_id)
+   cart, created = Cart.objects.get_or_create(user=request.user)
+   cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+   if not created:
+       cart_item.quantity += 1
+       cart_item.save()
+       message = f"Quantity of {product.product_name} increased in your cart."
+   else:
+       message = f"{product.product_name} added to your cart."
+
+   # Create a response to send to the client
+   response = {
+       "success": True,
+       "product_name": product.product_name,
+       "message": message,
+   }
+   return JsonResponse(response)
+
+
+
+
+def remove_from_cart(request, product_id):
+    product = get_object_or_404(Product, pk=product_id) 
+    cart = Cart.objects.get(user=request.user)
+    cart_item = CartItem.objects.get(cart=cart, product=product)
+
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+
+    return redirect('cart')
+
+
+def cart(request):
+    cart = Cart.objects.get(user=request.user)
+    context = {
+        'cart': cart
+    }
+    return render(request, 'cart.html', context)
