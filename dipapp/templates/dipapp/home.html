@@ -165,7 +165,13 @@
 
 
 
-                    <button class="btn btn-sm btn-outline-dark btn-hover-primary">Add To Cart</button>
+                    <form action="{% url 'add_to_cart' product.id %}" method="POST" class="add-to-cart-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-dark btn-hover-primary" onclick="addToCart({{ product.id }}, event)">
+                          Add To Cart
+                        </button>
+                      </form>
+                  
                 </div>
             </div>
             
@@ -174,6 +180,7 @@
         </div>
       
         {% endfor %}
+        
 
                                 </div>
 
