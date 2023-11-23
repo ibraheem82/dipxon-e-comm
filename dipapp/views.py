@@ -108,3 +108,6 @@ def cart(request):
         'cart': cart
     }
     return render(request, 'cart.html', context)
+
+def shop(request):
+    return render(request, 'dipapp/shop.html')
