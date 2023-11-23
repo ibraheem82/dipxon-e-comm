@@ -90,7 +90,7 @@
                     <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
                         <div class="section-title m-0" data-aos="fade-in" data-aos-delay="300">
                             <div class="section-title mt-4 mb-4 text-left" data-aos="fade-in" data-aos-delay="300">
-                                <h1 class="title">All Products</h1>
+                                <h1 class="title">Our Products</h1>
                               </div>
                               
                     </ul>
@@ -99,20 +99,23 @@
             </div>
             <!-- Section Title & Tab End -->
 <!-- Product Start -->
-{% for product in products %}
             <!-- Products Tab Start -->
             <div class="row">
-                <div class="col-lg-9 text-center mx-auto">
+                
+                <div class="col">
+                    
                     <div class="tab-content position-relative ">
+                        
                         <div class="tab-pane fade show active"  id="tab-product-all">
-                            <div class="product-carousel">
-                                <div class="swiper-container">
-                                <div class="swiper-wrapper">
+                           
+            <div class="product-carousel">
+                <div class="swiper-container">
+                <div class="swiper-wrapper">
 
         
-       
+                    {% for product in products %}
         <div class="swiper-slide product-wrapper">
-
+            
             <!-- Single Product Start -->
             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                 <div class="thumb">
@@ -176,8 +179,10 @@
             </div>
             
             <!-- Single Product End -->
+           
 
         </div>
+        {% endfor %}
       
     
         
@@ -194,12 +199,16 @@
                                     <!-- Next Previous Button End -->
                                 </div>
                             </div>
+                            
                         </div>
+                        
                     </div>
+                    
                 </div>
+                
             </div>
             <!-- Products Tab End -->
-            {% endfor %}
+            
         </div>
     </div>
     <!-- Product Section End -->
