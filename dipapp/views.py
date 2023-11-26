@@ -1,6 +1,6 @@
 import logging
 from django.shortcuts import render
-from .models import Product, Category
+from .models import Product, Category, ProductGallery
 from .utils import get_user_country, get_currency_symbol
 
 
