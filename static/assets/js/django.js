@@ -50,6 +50,13 @@ function updateCartCount() {
 function addToCart(productId, event) {
     event.preventDefault();
 
+    // Disable the button to prevent multiple clicks
+    document.getElementById('addToCartBtn').disabled = true;
+
+    // Show the loading spinner and hide the button text
+    document.getElementById('addToCartText').style.display = 'none';
+    document.getElementById('addToCartLoader').classList.remove('hidden');
+
     const csrfToken = getCookie("csrftoken");
 
     // Now, add the product to the cart
@@ -74,6 +81,14 @@ function addToCart(productId, event) {
     })
     .catch((error) => {
         console.error("Error during AJAX request:", error);
+    })
+    .finally(() => {
+        // Re-enable the button
+        document.getElementById('addToCartBtn').disabled = false;
+
+        // Hide the loading spinner and show the button text
+        document.getElementById('addToCartText').style.display = 'inline-block';
+        document.getElementById('addToCartLoader').classList.add('hidden');
     });
 }
 
