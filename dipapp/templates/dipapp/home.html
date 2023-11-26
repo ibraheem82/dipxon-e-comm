@@ -119,7 +119,7 @@
             <!-- Single Product Start -->
             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                 <div class="thumb">
-                    <a href="single-product.html" class="image">
+                    <a href="{% url "product_detail" slug=product.slug %}" class="image">
                         {% for image in product.images.all %}
                         <img class="{% if forloop.first %}first-image{% else %}second-image{% endif %}" src="{{ image.image.url }}" alt="Product" />
                     {% endfor %}
