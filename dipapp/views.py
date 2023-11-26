@@ -102,12 +102,12 @@ def remove_from_cart(request, product_id):
     return redirect('cart')
 
 
-def cart(request):
-    cart = Cart.objects.get(user=request.user)
-    context = {
-        'cart': cart
-    }
-    return render(request, 'cart.html', context)
+def product_detail(request, slug):
+    single_product = get_object_or_404(Product, slug=slug)
+    title = f"{single_product.product_name} - Single Product Detail"
+    # Fetch the product gallery for the current product
+    product_gallery = ProductGallery.objects.filter(product=single_product)
+    return render(request, 'dipapp/product_detail.html', {'single_product': single_product, 'title': title, 'product_gallery': product_gallery})
 
 def shop(request):
     return render(request, 'dipapp/shop.html')
