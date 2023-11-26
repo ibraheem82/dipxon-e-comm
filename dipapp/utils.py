@@ -20,8 +20,6 @@ def get_currency_symbol(country_code):
     return '₦'  # Default to '₦' if not found
 
 def get_user_country(request):
-    global request_counter
-    request_counter += 1  # Increment the request counter
 
     api_key = os.getenv('IPSTACK_API_KEY')  # Change to your ipstack API key
     if api_key is None:
