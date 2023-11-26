@@ -5,8 +5,8 @@ from decimal import Decimal
 import os
 from category.models import Category
 from django.db import models
-from django.contrib.auth.models import User
-from django.conf import settings
+from accounts.models import Account
+from django.utils.html import mark_safe
 # Create your models here.
 
 class Product(models.Model):
