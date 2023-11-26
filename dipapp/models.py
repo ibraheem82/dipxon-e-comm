@@ -83,7 +83,7 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.user}'s Cart"
@@ -118,3 +118,24 @@ class CartItem(models.Model):
             return self.quantity * unit_price
         else:
             return 0  # Or any other default value you prefer
+        
+        
+        
+class ProductGallery(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    images = models.ImageField(upload_to='gallery/images/products', max_length=255)
+    caption = models.CharField(max_length=255, blank=True, null=True, help_text='Optional caption for the image')
+
+    def __str__(self):
+        return f"{self.product.product_name} - {self.caption or 'No Caption'}"
+
+    def image_tag(self):
+        return mark_safe('<img src="{}" style="max-height: 470px; max-width: 470px;" />'.format(self.images.url))
+
+    image_tag.short_description = 'Image Preview'
+
+
+
+    class Meta:
+        verbose_name = 'Product Gallery'
+        verbose_name_plural = 'Product Galleries'
