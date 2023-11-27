@@ -21,7 +21,17 @@ class Product(models.Model):
     description    = models.TextField(max_length=500, blank=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     discount_price = models.PositiveIntegerField(blank=True, null=True, default=0)
-    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Add this line
+    
+    # -> This line defines the constructor method for the Product model. The constructor method is called whenever a new product instance is created.
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.discount_price is not None and self.discount_price > 0:
+          discount_percentage = Decimal(self.discount_price) / 100
+          discount = self.price * discount_percentage
+          self.discount_price = self.price - discount
+            
+            
     stock          = models.IntegerField()
     is_available   = models.CharField(
         max_length=20,
@@ -31,19 +41,6 @@ class Product(models.Model):
     category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        # Check if discount_price is not None before comparison
-        if self.discount_price is not None and self.discount_price > 0:
-            discount_percentage = Decimal(self.discount_price) / 100
-            discount = self.price * discount_percentage
-            self.discounted_price = self.price - discount
-        else:
-            # If discount is not provided or is None, set discounted price the same as the regular price
-            self.discounted_price = self.price
-
-        # Call the original save method
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.product_name
