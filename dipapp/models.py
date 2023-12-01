@@ -4,7 +4,10 @@ from PIL import Image
 from decimal import Decimal
 import os
 from category.models import Category
-
+from django.db import models
+from accounts.models import Account
+from django.utils.html import mark_safe
+import uuid
 # Create your models here.
 
 class Product(models.Model):
@@ -15,10 +18,11 @@ class Product(models.Model):
         ('new', 'New'), 
     ]
     product_name   = models.CharField(max_length=200, unique=True)
-    slug           = models.SlugField(max_length = 200, unique= True)
-    description    = models.TextField(max_length = 500, blank=True)
+    slug           = models.SlugField(max_length=200, unique=True)
+    description    = models.TextField(max_length=500, blank=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     discount_price = models.PositiveIntegerField(blank=True, null=True, default=0)
+            
     stock          = models.IntegerField()
     is_available   = models.CharField(
         max_length=20,
@@ -26,25 +30,13 @@ class Product(models.Model):
         default='available',
     )
     category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
-    
-    
-    def save(self, *args, **kwargs):
-        # Check if discount_price is not None before comparison
-        if self.discount_price is not None and self.discount_price > 0:
-            discount_percentage = Decimal(self.discount_price) / 100
-            discount = self.price * discount_percentage
-            self.discounted_price = self.price - discount
-        else:
-            # If discount is not provided or is None, set discounted price the same as the regular price
-            self.discounted_price = self.price
 
-        # Call the original save method
-        super().save(*args, **kwargs)
-        
     def __str__(self):
-        return self.product_name        
+        return self.product_name
+       
         
 class ProductImage(models.Model):
     MAX_IMAGES_PER_PRODUCT = 2
@@ -77,3 +69,61 @@ class ProductImage(models.Model):
 
             self.image.name = os.path.join("photos", "products", base_filename)
             super().save(*args, **kwargs)
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    cart_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.user}'s Cart"
+
+    @property
+    def grandtotal(self):
+        total = 0
+        for item in self.cartitem_set.all():
+            total += item.get_total_price()
+        return total
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.product_name}"
+
+    def get_total_price(self):
+        if self.product.discount_price is not None and self.product.discount_price > 0:
+            unit_price = self.product.discount_price
+        else:
+            unit_price = self.product.price
+
+        # Ensure that unit_price is not None
+        if unit_price is not None:
+            return self.quantity * unit_price
+        else:
+            return 0  # Or any other default value you prefer
+        
+        
+        
+class ProductGallery(models.Model):
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    images = models.ImageField(upload_to='gallery/images/products', max_length=255)
+    caption = models.CharField(max_length=255, blank=True, null=True, help_text='Optional caption for the image')
+
+    def __str__(self):
+        return f"{self.product.product_name} - {self.caption or 'No Caption'}"
+
+    def image_tag(self):
+        return mark_safe('<img src="{}" style="max-height: 470px; max-width: 470px;" />'.format(self.images.url))
+
+    image_tag.short_description = 'Image Preview'
+
+
+
+    class Meta:
+        verbose_name = 'Product Gallery'
+        verbose_name_plural = 'Product Galleries'

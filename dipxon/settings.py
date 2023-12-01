@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'dipapp',
-    'category'
+    'category',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -163,6 +168,10 @@ STATICFILES_DIRS = [
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

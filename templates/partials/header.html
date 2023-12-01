@@ -54,7 +54,7 @@
                     <!-- Header Logo Start -->
                     <div class="col-xl-2 col-6">
                         <div class="header-logo">
-                            <a href="index.html"><img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo" /></a>
+                            <a href="{% url 'home' %}"><img src="{% static 'assets/images/logo/logo.png' %}" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Header Logo End -->
@@ -64,10 +64,9 @@
                         <div class="main-menu position-relative">
                             <ul>
                                 <li class="has-children">
-                                    <a href="#"><span>Home</span> <i class="fa fa-angle-down"></i></a>
-                                    <ul class="sub-menu">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
+                                    <a href="{% url 'home' %}"><span>Home</span> </a>
+                                    <ul class="dropdown">
+                              
                                     </ul>
                                 </li>
                                 <li class="has-children position-static">
@@ -162,12 +161,12 @@
                             </a>
                             <!-- Wishlist Header Action Button End -->
 
-                            <!-- Shopping Cart Header Action Button Start -->
-                            <a href="javascript:void(0)" class="header-action-btn header-action-btn-cart">
-                                <i class="pe-7s-shopbag"></i>
-                                <span class="header-action-num">3</span>
-                            </a>
-                            <!-- Shopping Cart Header Action Button End -->
+<!-- Shopping Cart Header Action Button Start -->
+<a href="javascript:void(0)" class="header-action-btn header-action-btn-cart">
+    <i class="pe-7s-shopbag"></i>
+    <span id="cart-count" class="header-action-num"></span>
+</a>
+<!-- Shopping Cart Header Action Button End -->
 
                             <!-- Mobile Menu Hambarger Action Button Start -->
                             <a href="javascript:void(0)" class="header-action-btn header-action-btn-menu d-xl-none d-lg-block">
@@ -203,10 +202,9 @@
                 <nav>
                     <ul class="mobile-menu">
                         <li class="has-children">
-                            <a href="#">Home <i class="fa fa-angle-down"></i></a>
+                            <a href="{% url 'home' %}">Home </a>
                             <ul class="dropdown">
-                                <li><a href="index.html">Home One</a></li>
-                                <li><a href="index-2.html">Home Two</a></li>
+                              
                             </ul>
                         </li>
                         <li class="has-children">

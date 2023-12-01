@@ -1,7 +1,10 @@
 {% load static %}
+{% load humanize %}
+
 <!-- Modal -->
 <!-- Modal Start  -->
-<div class="modalquickview modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+{% for product in products %}
+<div class="modalquickview modal fade" id="exampleModalCenter{{ product.id }}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <button class="btn close" data-bs-dismiss="modal">×</button>
@@ -14,24 +17,11 @@
                         <!-- Single Product Image Start -->
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-                                <a class="swiper-slide" href="#">
-                                    <img class="w-100" src="{% static 'assets/images/products/large-size/1.jpg' %}" alt="Product">
-                                </a>
-                                <a class="swiper-slide" href="#">
-                                    <img class="w-100" src="{% static 'assets/images/products/large-size/2.jpg' %}" alt="Product">
-                                </a>
-                                <a class="swiper-slide" href="#">
-                                    <img class="w-100" src="{% static 'assets/images/products/large-size/3.jpg' %}" alt="Product">
-                                </a>
-                                <a class="swiper-slide" href="#">
-                                    <img class="w-100" src="{% static 'assets/images/products/large-size/4.jpg' %}" alt="Product">
-                                </a>
-                                <a class="swiper-slide" href="#">
-                                    <img class="w-100" src="{% static 'assets/images/products/large-size/5.jpg' %}" alt="Product">
-                                </a>
-                                <a class="swiper-slide" href="#">
-                                    <img class="w-100" src="{% static 'assets/images/products/large-size/6.jpg' %}" alt="Product">
-                                </a>
+                                {% for image in product.images.all %}
+                <a class="swiper-slide" href="#">
+                    <img class="w-100" src="{{ image.image.url }}" alt="Product">
+                </a>
+            {% endfor %}
                             </div>
 
                             <!-- Swiper Pagination Start -->
@@ -56,15 +46,25 @@
 
                         <!-- Product Head Start -->
                         <div class="product-head mb-3">
-                            <h2 class="product-title">Sample product</h2>
+                            <h2 class="product-title">{{ product.product_name }}</h2>
                         </div>
                         <!-- Product Head End -->
 
                         <!-- Price Box Start -->
+                        {% with humanize.currency_symbol|default:"₦" as symbol %}
                         <div class="price-box mb-2">
-                            <span class="regular-price">$80.00</span>
-                            <span class="old-price"><del>$90.00</del></span>
+                            
+                            <span class="regular-price">
+                                {{ symbol }} {{ product.price|floatformat:2|intcomma }}
+                            </span>
+                            
+                            {% if product.discount_price %}
+                                <span class="old-price">
+                                    <del>{{ symbol }} {{ product.discount_price|floatformat:2|intcomma }}</del>
+                                </span>
+                            {% endif %}
                         </div>
+                        {% endwith %}
                         <!-- Price Box End -->
 
                         <!-- Rating Start -->
@@ -78,12 +78,12 @@
 
                         <!-- SKU Start -->
                         <div class="sku mb-3">
-                            <span>SKU: 12345</span>
+                            <span>SKU: {{ product.id }}</span>
                         </div>
                         <!-- SKU End -->
 
                         <!-- Description Start -->
-                        <p class="desc-content mb-5">I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.</p>
+                        <p class="desc-content mb-5">{{ product.description }}</p>
                         <!-- Description End -->
 
                         <!-- Product Meta Start -->
@@ -170,4 +170,5 @@
         </div>
     </div>
 </div>
+{% endfor %}
 <!-- Modal End  -->
