@@ -5,8 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Counter variable to track the number of requests
-request_counter = 0
+
 
 def get_currency_symbol(country_code):
     try:
@@ -20,15 +19,13 @@ def get_currency_symbol(country_code):
     return '₦'  # Default to '₦' if not found
 
 def get_user_country(request):
-    global request_counter
-    request_counter += 1  # Increment the request counter
 
     api_key = os.getenv('IPSTACK_API_KEY')  # Change to your ipstack API key
     if api_key is None:
         raise Exception('IPSTACK_API_KEY environment variable not set')
 
     ip = request.META.get('HTTP_X_REAL_IP', request.META.get('REMOTE_ADDR'))
-    print(f"Request #{request_counter}: IP - {ip}")
+    print(f"Request: IP - {ip}")
 
     # Check if the IP address is 127.0.0.1
     if ip == '127.0.0.1':

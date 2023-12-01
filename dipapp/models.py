@@ -7,6 +7,7 @@ from category.models import Category
 from django.db import models
 from accounts.models import Account
 from django.utils.html import mark_safe
+import uuid
 # Create your models here.
 
 class Product(models.Model):
@@ -21,7 +22,7 @@ class Product(models.Model):
     description    = models.TextField(max_length=500, blank=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     discount_price = models.PositiveIntegerField(blank=True, null=True, default=0)
-    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Add this line
+            
     stock          = models.IntegerField()
     is_available   = models.CharField(
         max_length=20,
@@ -29,21 +30,9 @@ class Product(models.Model):
         default='available',
     )
     category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        # Check if discount_price is not None before comparison
-        if self.discount_price is not None and self.discount_price > 0:
-            discount_percentage = Decimal(self.discount_price) / 100
-            discount = self.price * discount_percentage
-            self.discounted_price = self.price - discount
-        else:
-            # If discount is not provided or is None, set discounted price the same as the regular price
-            self.discounted_price = self.price
-
-        # Call the original save method
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.product_name
@@ -84,15 +73,14 @@ class ProductImage(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    cart_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.user}'s Cart"
 
     @property
-    def get_total_items(self):
-        return sum(item.quantity for item in self.cartitem_set.all())
-
-    def get_grandtotal(self):
+    def grandtotal(self):
         total = 0
         for item in self.cartitem_set.all():
             total += item.get_total_price()
@@ -108,8 +96,8 @@ class CartItem(models.Model):
         return f"{self.quantity} x {self.product.product_name}"
 
     def get_total_price(self):
-        if self.product.discounted_price is not None and self.product.discounted_price > 0:
-            unit_price = self.product.discounted_price
+        if self.product.discount_price is not None and self.product.discount_price > 0:
+            unit_price = self.product.discount_price
         else:
             unit_price = self.product.price
 
