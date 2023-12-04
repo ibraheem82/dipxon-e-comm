@@ -100,24 +100,29 @@
             <!-- Section Title & Tab End -->
 <!-- Product Start -->
             <!-- Products Tab Start -->
+            
             <div class="row">
-                
+               
                 <div class="col">
                     
-                    <div class="tab-content position-relative ">
+                    <div class="tab-content position-relative">
                         
                         <div class="tab-pane fade show active"  id="tab-product-all">
-                           
+                     
+                            
             <div class="product-carousel">
                 <div class="swiper-container">
+                    {% for product in products %}
                 <div class="swiper-wrapper">
 
         
-                    {% for product in products %}
+                    
         <div class="swiper-slide product-wrapper">
             
             <!-- Single Product Start -->
+           
             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
+                
                 <div class="thumb">
                     <a href="{% url "product_detail" slug=product.slug %}" class="image">
                         {% for image in product.images.all %}
@@ -143,7 +148,9 @@
                     </div>
                 </div>
                 <div class="content">
-                    <h4 class="sub-title"><a href="single-product.html">{{ product.category.category_name }}</a></h4>
+                    <h4 class="sub-title">
+                        <a href="single-product.html">{{ product.category.category_name }}</a>
+                    </h4>
                     <h5 class="title">
                         <a href="single-product.html">{{ product.product_name }}</a>
                     </h5>
@@ -158,8 +165,8 @@
                     {% with humanize.currency_symbol|default:"₦" as symbol %}
                     <span class="price">
                         <span class="new">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
-                        {% if product.discount_price %}
-                        <span class="old">{{ symbol }} {{ product.discount_price|floatformat:2|intcomma }}</span>
+                        {% if product.old_price %}
+                        <span class="old">{{ symbol }} {{ product.old_price|floatformat:2|intcomma }}</span>
                         {% endif %}
                     </span>
                     {% endwith %}
@@ -168,28 +175,26 @@
 
 
 
-                    <form action="{% url 'add_to_cart' product.id %}" method="POST" class="add-to-cart-form">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-dark btn-hover-primary" onclick="addToCart({{ product.id }}, event);" id="addToCartBtn">
+                        <button type="submit" class="btn btn-sm btn-outline-dark btn-hover-primary" id="addToCartBtn">
                             <span id="addToCartText">Add To Cart</span>
-                            <span id="addToCartLoader" class="loader hidden"></span>
-                        </button>
-                        </button>
-                      </form>
                   
                 </div>
             </div>
+           
+            
             
             <!-- Single Product End -->
            
 
         </div>
-        {% endfor %}
+        
+        
       
     
         
 
                                 </div>
+                                {% endfor %}
 
                                     <!-- Swiper Pagination Start -->
                                     <div class="swiper-pagination d-md-none"></div>
@@ -199,17 +204,22 @@
                                     <div class="swiper-product-button-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
                                     <div class="swiper-product-button-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
                                     <!-- Next Previous Button End -->
-                                </div>
-                            </div>
+                </div>
+            </div>
+            
+            
                             
                         </div>
                         
                     </div>
+                   
                     
                 </div>
                 
+                
             </div>
             <!-- Products Tab End -->
+            
             
         </div>
     </div>
