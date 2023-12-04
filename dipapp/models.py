@@ -1,11 +1,9 @@
 from django.db import models
-from decimal import Decimal
 from PIL import Image
-from decimal import Decimal
 import os
 from category.models import Category
 from django.db import models
-from accounts.models import Account
+from accounts.models import Customer
 from django.utils.html import mark_safe
 import uuid
 # Create your models here.
@@ -21,7 +19,7 @@ class Product(models.Model):
     slug           = models.SlugField(max_length=200, unique=True)
     description    = models.TextField(max_length=500, blank=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
-    discount_price = models.PositiveIntegerField(blank=True, null=True, default=0)
+    old_price = models.PositiveIntegerField(blank=True, null=True, default=0)
             
     stock          = models.IntegerField()
     is_available   = models.CharField(
@@ -67,12 +65,17 @@ class ProductImage(models.Model):
             output_path = os.path.join("media", "photos", "products", base_filename)
             resized_img.save(output_path, "PNG")
 
+            # Delete the original image file after saving the resized image
+            os.remove(self.image.path)
+
+            # Update the image field with the resized image path
             self.image.name = os.path.join("photos", "products", base_filename)
             super().save(*args, **kwargs)
 
 
+
 class Cart(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     cart_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
@@ -94,18 +97,6 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.product_name}"
-
-    def get_total_price(self):
-        if self.product.discount_price is not None and self.product.discount_price > 0:
-            unit_price = self.product.discount_price
-        else:
-            unit_price = self.product.price
-
-        # Ensure that unit_price is not None
-        if unit_price is not None:
-            return self.quantity * unit_price
-        else:
-            return 0  # Or any other default value you prefer
         
         
         
