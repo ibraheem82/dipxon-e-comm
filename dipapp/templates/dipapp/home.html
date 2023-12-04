@@ -106,13 +106,14 @@
                 <div class="col">
                     
                     <div class="tab-content position-relative">
-                        
+                        {% for product in products %}
                         <div class="tab-pane fade show active"  id="tab-product-all">
                      
                             
             <div class="product-carousel">
                 <div class="swiper-container">
-                    {% for product in products %}
+                    
+
                 <div class="swiper-wrapper">
 
         
@@ -120,7 +121,7 @@
         <div class="swiper-slide product-wrapper">
             
             <!-- Single Product Start -->
-           
+            
             <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
                 
                 <div class="thumb">
@@ -179,8 +180,9 @@
                             <span id="addToCartText">Add To Cart</span>
                   
                 </div>
+                
             </div>
-           
+            
             
             
             <!-- Single Product End -->
@@ -188,13 +190,7 @@
 
         </div>
         
-        
-      
-    
-        
-
-                                </div>
-                                {% endfor %}
+                </div>
 
                                     <!-- Swiper Pagination Start -->
                                     <div class="swiper-pagination d-md-none"></div>
@@ -210,6 +206,7 @@
             
                             
                         </div>
+                        {% endfor %}
                         
                     </div>
                    
