@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.all()[:5]
     categories = Category.objects.all()
     user_country = get_user_country(request)
     
@@ -110,4 +110,9 @@ def product_detail(request, slug):
     return render(request, 'dipapp/product_detail.html', {'single_product': single_product, 'title': title, 'product_gallery': product_gallery})
 
 def shop(request):
-    return render(request, 'dipapp/shop.html')
+    products = Product.objects.all()
+    context = {
+        'products': products
+    }
+
+    return render(request, 'dipapp/shop.html', context)
