@@ -1,120 +1,105 @@
+
+<!doctype html>
 {% load static %}
 {% load humanize %}
-<!DOCTYPE html>
-<html lang="en">
-
+<html class="no-js" lang="en">
 
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title> {% block title %} Page {% endblock  %} DipXon - Fashion eCommerce</title>
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="{% static "assets/images/favicon.ico" %} assets/images/favicon.ico">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
-    <!-- Vendor CSS (Icon Font) -->
-
-    <link rel="stylesheet" href="{% static 'assets/css/vendor/fontawesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/vendor/pe-icon-7-stroke.min.css' %}">
-
-
-    <!-- Plugins CSS (All Plugins Files) -->
-
-    <link rel="stylesheet" href="{% static 'assets/css/plugins/swiper-bundle.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/plugins/animate.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/plugins/aos.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/plugins/nice-select.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/plugins/jquery-ui.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/css/plugins/lightgallery.min.css' %}" />
-
-
-    <!-- Main Style CSS -->
-
-
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
-
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %} Page {% endblock  %} DipXon - Fashion Company </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
     
+    <!-- CSS 
+    ========================= -->
+    <!--bootstrap min css-->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!--owl carousel min css-->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <!--slick min css-->
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <!--magnific popup min css-->
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <!--font awesome css-->
+    <link rel="stylesheet" href="{% static 'assets/css/font.awesome.css' %}">
+    <!--ionicons css-->
+    <link rel="stylesheet" href="{% static 'assets/css/ionicons.min.css' %}">
+    <!--7 stroke icons css-->
+    <link rel="stylesheet" href="{% static 'assets/css/pe-icon-7-stroke.css' %}">
+    <!--animate css-->
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <!--jquery ui min css-->
+    <link rel="stylesheet" href="{% static 'assets/css/jquery-ui.min.css' %}">
+    <!--plugins css-->
+    <link rel="stylesheet" href="{% static 'assets/css/plugins.css' %}">
+    
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    
+    <!--modernizr min js here-->
+    <script src="{% static 'assets/js/vendor/modernizr-3.7.1.min.js' %}"></script>
 </head>
 
 <body>
+  
    
     {% include 'partials/header.html' %}
-    <div id="alert-container"></div>
-        {% block content %}
+    {% block content %}
 
-            
-            {% endblock  %}
+        
+        {% endblock  %}
 
-            <!-- FOOTER -->
-
-
-            {% include 'partials/scroll.html' %}
-            {% include 'partials/modal.html' %}
-            {% include 'partials/footer.html' %}
+        <!-- FOOTER -->
 
 
-    <!-- Scripts -->
-    <!-- Scripts -->
-    <!-- Global Vendor, plugins JS -->
+        {% include 'partials/newsletter.html' %}
+        {% include 'partials/modal.html' %}
+        {% include 'partials/footer.html' %}
+ 
+    
 
-    <!-- Vendors JS -->
-    <script>
-      var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-            },
-            992: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-            },
-            1200: {
-                slidesPerView: 4,  // Adjust the number of slides per view for desktop
-                spaceBetween: 40,
-            },
-        },
-    });
-  </script>
-  
+ 
+    
+   
+ 
+    
+   
+    
 
+    
+<!-- JS
+============================================ -->
+<!--jquery min js-->
+<script src="{% static 'assets/js/vendor/jquery-3.4.1.min.js' %}"></script>
+<!--popper min js-->
+<script src="{% static 'assets/js/popper.js' %}"></script>
+<!--bootstrap min js-->
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<!--owl carousel min js-->
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<!--slick min js-->
+<script src="{% static 'assets/js/slick.min.js' %}"></script>
+<!--magnific popup min js-->
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+<!--jquery countdown min js-->
+<script src="{% static 'assets/js/jquery.countdown.js' %}"></script>
+<!--jquery ui min js-->
+<script src="{% static 'assets/js/jquery.ui.js' %}"></script>
+<!--jquery elevatezoom min js-->
+<script src="{% static 'assets/js/jquery.elevatezoom.js' %}"></script>
+<!--isotope packaged min js-->
+<script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script>
+<!-- Plugins JS -->
+<script src="{% static 'assets/js/plugins.js' %}"></script>
 
-    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.2.min.js' %}"></script>
-    <script src="{% static 'assets/js/vendor/modernizr-3.11.2.min.js' %}"></script>
-
-
-    <!-- Plugins JS -->
-
-
-    <script src="{% static 'assets/js/plugins/countdown.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/aos.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/nice-select.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/jquery.ajaxchimp.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/jquery-ui.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/lightgallery-all.min.js' %}"></script>
-    <script src="{% static 'assets/js/plugins/thia-sticky-sidebar.min.js' %}"></script>
+<!-- Main JS -->
+<script src="{% static 'assets/js/main.js' %}"></script>
 
 
-
-    <!--Main JS-->
-    <script src="{% static 'assets/js/django.js' %}"></script>
-    <script src="{% static 'assets/js/main.js' %}"></script>
 
 </body>
 
