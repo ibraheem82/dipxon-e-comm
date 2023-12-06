@@ -42,40 +42,6 @@
     </section>
     <!--slider area end-->
     
-    <!--banner area start-->
-    <div class="banner_area mb-95">
-        <div class="container">
-            <div class="row no-gutters">
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="{% static 'assets/img/bg/banner1.jpg' %}" alt=""></a>
-                            <div class="banner_text1">
-                                <div class="banner_text1_inner">
-                            		<h3>Men’s <br> Collections</h3>
-                            		<a href="shop.html">shop now</a>
-                            	</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="{% static 'assets/img/bg/banner2.jpg' %}" alt=""></a>
-                            <div class="banner_text1">
-                                <div class="banner_text1_inner">
-									<h3>Women’s <br> Collections</h3>
-									<a href="shop.html">shop now</a>
-                            	</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--banner area end-->
     
     <!--categories product area start-->
     <div class="categories_product_area   mb-92">
@@ -211,33 +177,37 @@
                             </span>
                         </div>
                         <div class="action_links">
-                            <ul>
-                                <li class="quick_button">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view">
-                                        <span class="pe-7s-search"></span>
-                                    </a>
-                                </li>
-                                <li class="wishlist">
-                                    <a href="wishlist.html" title="Add to Wishlist">
-                                    <span class="pe-7s-like">
+            <ul>
+                <li class="quick_button">
+                    <a href="#product/name/{{ product.product_name }}" data-bs-toggle="modal" data-bs-target="#modal_box{{ product.product_id }}" title="{{ product.id }}">
+                        <span class="pe-7s-search"></span>
+                    </a>
+                </li>
+                <li class="wishlist">
+                    <a href="wishlist.html" title="Add to Wishlist">
+                    <span class="pe-7s-like">
 
-                                </span>
-                            </a>
-                        </li>
-                                <li class="compare">
-                                    <a href="#" title="Add to Compare">
-                                        <span class="pe-7s-edit"></span>
-                                    </a>
-                        </li>                                                 
-                            </ul>
+                </span>
+            </a>
+        </li>
+                <li class="compare">
+                    <a href="#" title="Add to Compare">
+                        <span class="pe-7s-edit"></span>
+                    </a>
+        </li>                                                 
+            </ul>
                         </div>
                     </div>
                         <figcaption class="product_content">
                             <div class="product_content_inner">
                                 <h4 class="product_name"><a href="product-details.html">{{ product.product_name }}</a></h4>
                                 <div class="price_box"> 
-                                    <span class="old_price">$84.00</span>
-                                    <span class="current_price">$79.00</span>
+                                    {% with humanize.currency_symbol|default:"₦" as symbol %}
+                                    {% if product.old_price %}
+                                    <span class="old_price">{{ symbol }} {{ product.old_price|floatformat:2|intcomma }}</span>
+                                    {% endif %}
+                                    <span class="current_price">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
+                                    {% endwith %}
                                 </div>
                             </div>
                             <div class="add_to_cart">
