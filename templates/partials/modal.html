@@ -2,7 +2,8 @@
 {% load humanize %}
 
    <!-- modal area start-->
-   <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+   {% for product in products %}
+   <div class="modal fade" id="modal_box{{ product.product_id }}" tabindex="-1" role="dialog"  aria-hidden="true" alt="{{ product.id }}">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -57,14 +58,14 @@
                         <div class="col-lg-7 col-md-7 col-sm-12">
                             <div class="modal_right">
                                 <div class="modal_title mb-10">
-                                    <h2>Donec Ac Tempus</h2> 
+                                    <h2>{{ product.product_name }}</h2> 
                                 </div>
                                 <div class="modal_price mb-10">
                                     <span class="new_price">$64.99</span>    
                                     <span class="old_price" >$78.99</span>    
                                 </div>
                                 <div class="modal_description mb-15">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>    
+                                    <p>{{ product.description }} </p>    
                                 </div> 
                                 <div class="variants_selects">
                                     <div class="variants_size">
@@ -112,4 +113,5 @@
         </div>
     </div>
 </div>
+{% endfor %}
 <!-- modal area end-->
