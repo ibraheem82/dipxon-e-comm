@@ -102,24 +102,3 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.product_name}"
-        
-        
-        
-class ProductGallery(models.Model):
-    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    images = models.ImageField(upload_to='gallery/images/products', max_length=255)
-    caption = models.CharField(max_length=255, blank=True, null=True, help_text='Optional caption for the image')
-
-    def __str__(self):
-        return f"{self.product.product_name} - {self.caption or 'No Caption'}"
-
-    def image_tag(self):
-        return mark_safe('<img src="{}" style="max-height: 470px; max-width: 470px;" />'.format(self.images.url))
-
-    image_tag.short_description = 'Image Preview'
-
-
-
-    class Meta:
-        verbose_name = 'Product Gallery'
-        verbose_name_plural = 'Product Galleries'
