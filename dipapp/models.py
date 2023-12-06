@@ -7,6 +7,7 @@ from django.db import models
 from accounts.models import Customer
 from django.utils.html import mark_safe
 import uuid
+from django.utils import formats
 # Create your models here.
 
 class Product(models.Model):
@@ -19,7 +20,7 @@ class Product(models.Model):
     product_name   = models.CharField(max_length=200, unique=True)
     slug           = models.SlugField(max_length=200, unique=True)
     description    = models.TextField(max_length=500, blank=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price in Dollars')
+    price = models.FloatField()
     old_price = models.PositiveIntegerField(blank=True, null=True, default=0)
             
     stock          = models.IntegerField()
@@ -34,18 +35,8 @@ class Product(models.Model):
     modified_date  = models.DateTimeField(auto_now=True)
     
     
-    def save(self, *args, **kwargs):
-        # Assuming the product's price is initially in Nigerian Naira
-        initial_price_in_naira = self.price
-        exchange_rate = 800  # 1 Dollar is 800 Naira
-
-        # Convert the initial price to dollars
-        self.price = initial_price_in_naira / exchange_rate
-
-        super().save(*args, **kwargs)
-    
     def __str__(self):
-        return f"${self.product.product_name} - {self.price:.2f}"
+       return self.product_name
     
     def get_url(self):
         return reverse('product_details', args = [self.category.slug, self.slug])      
@@ -61,7 +52,7 @@ class ProductImage(models.Model):
 
     def save(self, *args, **kwargs):
         # Check the number of existing images for the product
-        existing_images_count = self.product.images.count()
+        existing_images_count = self.product.product_images.count()
 
         if existing_images_count >= self.MAX_IMAGES_PER_PRODUCT:
             # If the maximum number of images is reached, don't save the new image
