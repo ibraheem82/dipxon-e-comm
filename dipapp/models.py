@@ -2,6 +2,7 @@ from django.db import models
 from PIL import Image
 import os
 from category.models import Category
+from django.urls import reverse
 from django.db import models
 from accounts.models import Customer
 from django.utils.html import mark_safe
@@ -18,7 +19,7 @@ class Product(models.Model):
     product_name   = models.CharField(max_length=200, unique=True)
     slug           = models.SlugField(max_length=200, unique=True)
     description    = models.TextField(max_length=500, blank=True)
-    price          = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price in Dollars')
     old_price = models.PositiveIntegerField(blank=True, null=True, default=0)
             
     stock          = models.IntegerField()
@@ -31,15 +32,28 @@ class Product(models.Model):
     product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
+    
+    
+    def save(self, *args, **kwargs):
+        # Assuming the product's price is initially in Nigerian Naira
+        initial_price_in_naira = self.price
+        exchange_rate = 800  # 1 Dollar is 800 Naira
 
+        # Convert the initial price to dollars
+        self.price = initial_price_in_naira / exchange_rate
+
+        super().save(*args, **kwargs)
+    
     def __str__(self):
-        return self.product_name
-       
+        return f"${self.product.product_name} - {self.price:.2f}"
+    
+    def get_url(self):
+        return reverse('product_details', args = [self.category.slug, self.slug])      
         
 class ProductImage(models.Model):
-    MAX_IMAGES_PER_PRODUCT = 2
+    MAX_IMAGES_PER_PRODUCT = 5
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
     image   = models.ImageField(upload_to='photos/products')
 
     def __str__(self):
