@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 def home(request):
     products = Product.objects.all()[:5]
-    categories = Category.objects.all()
+    categories = Category.objects.all()[:4]
     user_country = get_user_country(request)
     
     # Create the context dictionary
