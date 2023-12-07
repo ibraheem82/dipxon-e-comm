@@ -2,216 +2,243 @@
 {% load static %}
 {% load humanize %}
 {% block content %}
-       <!-- Hero/Intro Slider Start -->
-       <div class="section">
-        <div class="hero-slider">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <!-- Single Hero Slider Item Start -->
-                    <div class="hero-slide-item-two swiper-slide">
-
-                        <!-- Hero Slider Background Image Start-->
-                        <div class="hero-slide-bg">
-                            <img src="{% static 'assets/images/slider/slide-2.jpg' %}" alt="" />
-                        </div>
-                        <!-- Hero Slider Background Image End-->
-
-                        <!-- Hero Slider Container Start -->
-                        <div class="container">
-
-                            <div class="row">
-                                <div class="hero-slide-content col-lg-8 col-xl-6 col-12 text-lg-center text-left">
-                                    <h2 class="title">
-                                        Fashion New <br />
-											Collection
-                                    </h2>
-                                    <p>Up to 70% off selected Product</p>
-                                    <a href="shop-grid.html" class="btn btn-lg btn-primary btn-hover-dark">Shop Now</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- Hero Slider Container End -->
-
-                    </div>
-                    <!-- Single Hero Slider Item End -->
-
-                    <!-- Single Hero Slider Item Start -->
-                    <div class="hero-slide-item-two swiper-slide">
-
-                        <!-- Hero Slider Background Image Start -->
-                        <div class="hero-slide-bg">
-                            <img src="{% static 'assets/images/slider/slide-2-2.jpg' %}" alt="" />
-                        </div>
-                        <!-- Hero Slider Background Image End -->
-
-                        <!-- Hero Slider Container Start -->
-                        <div class="container">
-                            <div class="row">
-                                <div class="hero-slide-content col-lg-8 col-xl-6 col-12 text-lg-center text-left">
-                                    <h2 class="title">
-                                        Trend Fashion <br />
-											Collection
-                                    </h2>
-                                    <p>Up to 30% off selected Product</p>
-                                    <a href="shop-grid.html" class="btn btn-lg btn-primary btn-hover-dark">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Hero Slider Container End -->
-
-                    </div>
-                    <!-- Single Hero Slider Item End -->
-                </div>
-
-                <!-- Swiper Pagination Start -->
-                <div class="swiper-pagination d-md-none"></div>
-                <!-- Swiper Pagination End -->
-
-                <!-- Swiper Navigation Start -->
-                <div class="home-slider-prev swiper-button-prev main-slider-nav d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
-                <div class="home-slider-next swiper-button-next main-slider-nav d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
-                <!-- Swiper Navigation End -->
-
-            </div>
-        </div>
-    </div>
-    <!-- Hero/Intro Slider End -->
-
-
-
-    <!-- Product Section Start -->
-    <div class="section section-padding mt-0">
-        <div class="container">
-            <!-- Section Title & Tab Start -->
-            <div class="row">
-                <!-- Tab Start -->
-                <div class="col-12">
-                    <ul class="product-tab-nav nav justify-content-center mb-10 title-border-bottom mt-n3">
-                        <div class="section-title m-0" data-aos="fade-in" data-aos-delay="300">
-                            <div class="section-title mt-4 mb-4 text-left" data-aos="fade-in" data-aos-delay="300">
-                                <h1 class="title">Our Products</h1>
-                              </div>
-                              
-                    </ul>
-                </div>
-                <!-- Tab End -->
-            </div>
-            <!-- Section Title & Tab End -->
-<!-- Product Start -->
-            <!-- Products Tab Start -->
-            <div class="row">
-                
-                <div class="col">
-                    
-                    <div class="tab-content position-relative ">
-                        
-                        <div class="tab-pane fade show active"  id="tab-product-all">
-                           
-            <div class="product-carousel">
-                <div class="swiper-container">
-                <div class="swiper-wrapper">
-
-        
-                    {% for product in products %}
-        <div class="swiper-slide product-wrapper">
-            
-            <!-- Single Product Start -->
-            <div class="product product-border-left mb-10" data-aos="fade-up" data-aos-delay="300">
-                <div class="thumb">
-                    <a href="{% url "product_detail" slug=product.slug %}" class="image">
-                        {% for image in product.images.all %}
-                        <img class="{% if forloop.first %}first-image{% else %}second-image{% endif %}" src="{{ image.image.url }}" alt="Product" />
-                    {% endfor %}
-                    </a>
-            <span class="badges">
-                <span class="sale {% if product.is_available == 'available' %}in-stock{% elif product.is_available == 'out_of_stock' %}out-of-stock{% elif product.is_available == 'coming_soon' %}coming-soon{% elif product.is_available == 'new' %}new{% endif %}">
-                    {{ product.get_is_available_display }}
-                </span>
-                    </span>
-
-                    <div class="actions">
-                        <a href="#" class="action wishlist">
-                            <i class="pe-7s-like"></i>
-                        </a>
-                        <a href="#" class="action quickview" data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ product.id }}">
-                            <i class="pe-7s-search"></i>
-                        </a>
-                        <a href="#" class="action compare">
-                            <i class="pe-7s-shuffle"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="content">
-                    <h4 class="sub-title"><a href="single-product.html">{{ product.category.category_name }}</a></h4>
-                    <h5 class="title">
-                        <a href="single-product.html">{{ product.product_name }}</a>
-                    </h5>
-                    <span class="ratings">
-                            <span class="rating-wrap">
-                                <span class="star" style="width: 100%"></span>
-                    </span>
-                    <span class="rating-num">(4)</span>
-                    </span>
-                    
-
-                    {% with humanize.currency_symbol|default:"₦" as symbol %}
-                    <span class="price">
-                        <span class="new">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
-                        {% if product.discount_price %}
-                        <span class="old">{{ symbol }} {{ product.discount_price|floatformat:2|intcomma }}</span>
-                        {% endif %}
-                    </span>
-                    {% endwith %}
-                    
-
-
-
-
-                    <form action="{% url 'add_to_cart' product.id %}" method="POST" class="add-to-cart-form">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-dark btn-hover-primary" onclick="addToCart({{ product.id }}, event);" id="addToCartBtn">
-                            <span id="addToCartText">Add To Cart</span>
-                            <span id="addToCartLoader" class="loader hidden"></span>
-                        </button>
-                        </button>
-                      </form>
-                  
-                </div>
-            </div>
-            
-            <!-- Single Product End -->
-           
-
-        </div>
-        {% endfor %}
       
-    
-        
-
-                                </div>
-
-                                    <!-- Swiper Pagination Start -->
-                                    <div class="swiper-pagination d-md-none"></div>
-                                    <!-- Swiper Pagination End -->
-
-                                    <!-- Next Previous Button Start -->
-                                    <div class="swiper-product-button-next swiper-button-next swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-right"></i></div>
-                                    <div class="swiper-product-button-prev swiper-button-prev swiper-button-white d-md-flex d-none"><i class="pe-7s-angle-left"></i></div>
-                                    <!-- Next Previous Button End -->
-                                </div>
+    <!--slider area start-->
+    <section class="slider_section mb-100">
+        <div class="slider_area owl-carousel">
+            <div class="single_slider d-flex align-items-center" data-bgimg="{% static "assets/img/slider/slider1.jpg" %} ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="slider_content">
+                                <h2>Get 30% Off &amp; Free Shipping </h2>
+                                <h1>SUmmer sale</h1>
+                                <p>
+								An exclusive selection of this season’s trends. <span>Exclusively online </span>
+							     </p>
+                                <a href="{% url "shop" %}">Shop Now +</a>
                             </div>
-                            
                         </div>
-                        
                     </div>
-                    
                 </div>
-                
             </div>
-            <!-- Products Tab End -->
-            
+            <div class="single_slider d-flex align-items-center" data-bgimg="{% static "assets/img/slider/slider2.jpg" %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="slider_content">
+                                <h2>Big sale up to 20% off </h2>
+                                <h1>london style </h1>
+                                <p>
+								An exclusive selection of this season’s trends. <span>Exclusively online </span>
+							     </p>
+                                <a href="{% url "shop" %}">Shop Now </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <!--slider area end-->
+    
+    
+    <!--categories product area start-->
+    <div class="categories_product_area   mb-92">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title">
+                       <h2>Top Categories</h2>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+               <div class="product_carousel product_column4 owl-carousel">
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category1.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">t-shirt</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category3.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">jacket</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category4.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">Dress</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+               </div>
+           </div>   
+        </div> 
     </div>
-    <!-- Product Section End -->
+    <!--categories product area end-->
+    
+    <!--product area start-->
+    <div class="product_area  mb-95">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title product_shop_title">
+                       <h2>Featured products </h2>
+                    </div>
+                    <div class="product_shop_collection">
+                    	<a href="shop.html">Shop all collection</a>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+               <div class="product_carousel product_column5 owl-carousel">
+                {% for product in products %}
+                   <div class="col-lg-3">
+                       <div class="product_items">
+                            <article class="single_product">
+
+                
+                <figure>
+                    
+                    <div class="product_thumb">
+                        {% for image in product.product_images.all %}
+                        <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{% url "product_detail" slug=product.slug %}">
+                            <img src="{{ image.image.url }}" alt="{{ product.product_name }}">
+                        </a>
+                    {% endfor %}
+
+                        <div class="label_product">
+                            <span class="label_sale {% if product.is_available == 'available' %}in-stock{% elif product.is_available == 'out_of_stock' %}out-of-stock{% elif product.is_available == 'coming_soon' %}coming-soon{% elif product.is_available == 'new' %}new{% endif %}">
+                                {{ product.get_is_available_display }}
+                            </span>
+                        </div>
+                        <div class="action_links">
+            <ul>
+                <li class="quick_button">
+                    <a href="#product/name/{{ product.product_name }}" data-bs-toggle="modal" data-bs-target="#modal_box{{ product.product_id }}" title="{{ product.id }}">
+                        <span class="pe-7s-search"></span>
+                    </a>
+                </li>
+                <li class="wishlist">
+                    <a href="{% url "product_detail" slug=product.slug %}" title="Add to Wishlist">
+                    <span class="pe-7s-like">
+
+                </span>
+            </a>
+        </li>
+                <li class="compare">
+                    <a href="{% url "product_detail" slug=product.slug %}" title="Add to Compare">
+                        <span class="pe-7s-edit"></span>
+                    </a>
+        </li>                                                 
+            </ul>
+                        </div>
+                    </div>
+                        <figcaption class="product_content">
+                            <div class="product_content_inner">
+                                <h4 class="product_name">
+                                    <a href="{% url "product_detail" slug=product.slug %}">{{ product.product_name }}</a>
+                                </h4>
+                                {% with humanize.currency_symbol|default:"₦" as symbol %}
+                                <div class="price_box"> 
+                                    
+                                    {% if product.old_price %}
+                                    <span class="old_price">{{ symbol }} {{ product.old_price|floatformat:2|intcomma }}</span>
+                                    {% endif %}
+                                    <span class="current_price">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
+                                    
+                                </div>
+                                {% endwith %}
+                            </div>
+                            <div class="add_to_cart">
+                                <a href="cart.html">Add to cart</a>
+                            </div>
+                        </figcaption>
+                        
+                </figure>
+                
+
+
+
+
+
+
+                    </article>
+                        </div>
+                   </div>
+                   {% endfor %}
+                   
+               </div>
+           </div>   
+        </div> 
+    </div>
+    <!--product area end-->
+   
+
+    
+
 {% endblock  %}

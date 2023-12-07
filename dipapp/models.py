@@ -1,12 +1,10 @@
 from django.db import models
-from decimal import Decimal
 from PIL import Image
-from decimal import Decimal
 import os
 from category.models import Category
+from django.urls import reverse
 from django.db import models
-from accounts.models import Account
-from django.utils.html import mark_safe
+from accounts.models import Customer
 import uuid
 # Create your models here.
 
@@ -20,8 +18,8 @@ class Product(models.Model):
     product_name   = models.CharField(max_length=200, unique=True)
     slug           = models.SlugField(max_length=200, unique=True)
     description    = models.TextField(max_length=500, blank=True)
-    price          = models.DecimalField(max_digits=10, decimal_places=2)
-    discount_price = models.PositiveIntegerField(blank=True, null=True, default=0)
+    price = models.FloatField()
+    old_price = models.PositiveIntegerField(blank=True, null=True, default=0)
             
     stock          = models.IntegerField()
     is_available   = models.CharField(
@@ -33,15 +31,18 @@ class Product(models.Model):
     product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
-
+    
+    
     def __str__(self):
-        return self.product_name
-       
+       return self.product_name
+    
+    def get_url(self):
+        return reverse('product_details', args = [self.category.slug, self.slug])      
         
 class ProductImage(models.Model):
-    MAX_IMAGES_PER_PRODUCT = 2
+    MAX_IMAGES_PER_PRODUCT = 5
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
     image   = models.ImageField(upload_to='photos/products')
 
     def __str__(self):
@@ -49,7 +50,7 @@ class ProductImage(models.Model):
 
     def save(self, *args, **kwargs):
         # Check the number of existing images for the product
-        existing_images_count = self.product.images.count()
+        existing_images_count = self.product.product_images.count()
 
         if existing_images_count >= self.MAX_IMAGES_PER_PRODUCT:
             # If the maximum number of images is reached, don't save the new image
@@ -67,12 +68,17 @@ class ProductImage(models.Model):
             output_path = os.path.join("media", "photos", "products", base_filename)
             resized_img.save(output_path, "PNG")
 
+            # Delete the original image file after saving the resized image
+            os.remove(self.image.path)
+
+            # Update the image field with the resized image path
             self.image.name = os.path.join("photos", "products", base_filename)
             super().save(*args, **kwargs)
 
 
+
 class Cart(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     cart_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
@@ -94,36 +100,3 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.product_name}"
-
-    def get_total_price(self):
-        if self.product.discount_price is not None and self.product.discount_price > 0:
-            unit_price = self.product.discount_price
-        else:
-            unit_price = self.product.price
-
-        # Ensure that unit_price is not None
-        if unit_price is not None:
-            return self.quantity * unit_price
-        else:
-            return 0  # Or any other default value you prefer
-        
-        
-        
-class ProductGallery(models.Model):
-    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    images = models.ImageField(upload_to='gallery/images/products', max_length=255)
-    caption = models.CharField(max_length=255, blank=True, null=True, help_text='Optional caption for the image')
-
-    def __str__(self):
-        return f"{self.product.product_name} - {self.caption or 'No Caption'}"
-
-    def image_tag(self):
-        return mark_safe('<img src="{}" style="max-height: 470px; max-width: 470px;" />'.format(self.images.url))
-
-    image_tag.short_description = 'Image Preview'
-
-
-
-    class Meta:
-        verbose_name = 'Product Gallery'
-        verbose_name_plural = 'Product Galleries'
