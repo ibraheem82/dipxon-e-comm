@@ -9,6 +9,8 @@ from django.urls import reverse
 class Category(models.Model):
     category_name = models.CharField(max_length=50, unique=True)
     description = models.TextField(max_length = 255, blank=True)
+    slug = models.SlugField(max_length = 100,unique=True)
+    cat_image = models.ImageField(upload_to='photos/categories', blank=True)
 
         
     # ===> overiding the name [category] in the django admin panel
