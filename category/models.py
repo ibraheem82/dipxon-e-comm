@@ -9,8 +9,8 @@ from django.utils.text import slugify
 
 class Category(models.Model):
     category_name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length = 100,unique=True, blank=True)
     description = models.TextField(max_length = 255, blank=True)
-    slug = models.SlugField(max_length = 100,unique=True)
     cat_image = models.ImageField(upload_to='photos/categories', blank=True)
     
     def save(self, *args, **kwargs):
@@ -35,4 +35,4 @@ class Category(models.Model):
     
     
     def __str__(self):
-        return self.category_name
+        return f"{self.category_name} {self.slug}"
