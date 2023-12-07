@@ -5,9 +5,7 @@ from category.models import Category
 from django.urls import reverse
 from django.db import models
 from accounts.models import Customer
-from django.utils.html import mark_safe
 import uuid
-from django.utils import formats
 # Create your models here.
 
 class Product(models.Model):
