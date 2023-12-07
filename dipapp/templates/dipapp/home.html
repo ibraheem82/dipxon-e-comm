@@ -166,7 +166,7 @@
                     
                     <div class="product_thumb">
                         {% for image in product.product_images.all %}
-                        <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{{ image.image.url }}">
+                        <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{% url "product_detail" slug=product.slug %}">
                             <img src="{{ image.image.url }}" alt="{{ product.product_name }}">
                         </a>
                     {% endfor %}
@@ -200,15 +200,19 @@
                     </div>
                         <figcaption class="product_content">
                             <div class="product_content_inner">
-                                <h4 class="product_name"><a href="product-details.html">{{ product.product_name }}</a></h4>
+                                <h4 class="product_name">
+                                    <a href="{% url "product_detail" slug=product.slug %}">{{ product.product_name }}</a>
+                                </h4>
+                                {% with humanize.currency_symbol|default:"₦" as symbol %}
                                 <div class="price_box"> 
-                                    {% with humanize.currency_symbol|default:"₦" as symbol %}
+                                    
                                     {% if product.old_price %}
                                     <span class="old_price">{{ symbol }} {{ product.old_price|floatformat:2|intcomma }}</span>
                                     {% endif %}
                                     <span class="current_price">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
-                                    {% endwith %}
+                                    
                                 </div>
+                                {% endwith %}
                             </div>
                             <div class="add_to_cart">
                                 <a href="cart.html">Add to cart</a>
