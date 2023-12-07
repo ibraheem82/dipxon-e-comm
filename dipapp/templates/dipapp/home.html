@@ -55,86 +55,29 @@
             </div> 
             <div class="row">
                <div class="product_carousel product_column4 owl-carousel">
+                   {% for category in categories %}
                    <div class="col-lg-3">
                         <article class="single_categories">
                             <figure>
                                 <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category1.jpg' %}" alt=""></a>
+                                    {% if category.cat_image %}
+                            <img src="{{ category.cat_image.url }}" alt="{{ category.category_name }}">
+                        {% else %}
+                            <!-- Provide a default image or placeholder if no image is available -->
+                            <img src="{% static 'path/to/default/image.jpg' %}" alt="{{ category.category_name }}">
+                        {% endif %}
                                 </div>
                                 <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">t-shirt</a></h4>
+                                    <h4 class="product_name"><a href="shop.html">{{ category.category_name }}</a></h4>
                                    <div class="product_collection">
-										<p>13 Products</p>
+										<p>{{ category.product_set.count }} Products</p>
 										<a href="shop.html">+ Shop Collection</a>
                                     </div>
                                 </figcaption>
                             </figure>
                         </article>
                    </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category3.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">jacket</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category4.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">Dress</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
+                   {% endfor %}
                </div>
            </div>   
         </div> 
