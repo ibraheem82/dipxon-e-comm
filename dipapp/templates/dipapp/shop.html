@@ -60,19 +60,17 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 ">
                             <div class="single_product">
                                 <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product1.jpg' %}" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product2.jpg' %}" alt=""></a>
+                                    {% for image in product.product_images.all %}
+                                    <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="product-details.html">
+                                        <img src="{{ image.image.url }}" alt="{{ product.product_name }}">
+                                    </a>
+                                    {% endfor %}
 									<div class="label_product">
 										<span class="label_sale">Sale</span>
 									</div>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
+									
                                 </div>
+                                
                                 <div class="product_content grid_content">
                                     <div class="product_content_inner">
 										<h4 class="product_name"><a href="product-details.html">{{ product.product_name }}</a></h4>
