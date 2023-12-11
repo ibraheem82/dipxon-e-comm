@@ -119,40 +119,19 @@
                                 {{ product.get_is_available_display }}
                             </span>
                         </div>
-                        <div class="action_links">
-            <ul>
-                <li class="quick_button">
-                    <a href="#product/name/{{ product.product_name }}" data-bs-toggle="modal" data-bs-target="#modal_box{{ product.product_id }}" title="{{ product.id }}">
-                        <span class="pe-7s-search"></span>
-                    </a>
-                </li>
-                <li class="wishlist">
-                    <a href="{% url "product_detail" slug=product.slug %}" title="Add to Wishlist">
-                    <span class="pe-7s-like">
-
-                </span>
-            </a>
-        </li>
-                <li class="compare">
-                    <a href="{% url "product_detail" slug=product.slug %}" title="Add to Compare">
-                        <span class="pe-7s-edit"></span>
-                    </a>
-        </li>                                                 
-            </ul>
-                        </div>
                     </div>
                         <figcaption class="product_content">
                             <div class="product_content_inner">
                                 <h4 class="product_name">
                                     <a href="{% url "product_detail" slug=product.slug %}">{{ product.product_name }}</a>
                                 </h4>
-                                {% with humanize.currency_symbol|default:"₦" as symbol %}
+                                {% with humanize.currency_symbol|default:"$" as symbol %}
                                 <div class="price_box"> 
                                     
                                     {% if product.old_price %}
-                                    <span class="old_price">{{ symbol }} {{ product.old_price|floatformat:2|intcomma }}</span>
+                                    <span class="old_price">{{ symbol }}{{ product.old_price|floatformat:2|intcomma }}</span>
                                     {% endif %}
-                                    <span class="current_price">{{ symbol }} {{ product.price|floatformat:2|intcomma }}</span>
+                                    <span class="current_price">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
                                     
                                 </div>
                                 {% endwith %}
