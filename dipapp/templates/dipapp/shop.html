@@ -61,13 +61,15 @@
                             <div class="single_product">
                                 <div class="product_thumb">
                                     {% for image in product.product_images.all %}
-                                    <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="product-details.html">
+                                    <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{% url 'product_details' product_id=product.product_id %}">
                                         <img src="{{ image.image.url }}" alt="{{ product.product_name }}">
                                     </a>
                                     {% endfor %}
-									<div class="label_product">
-										<span class="label_sale">Sale</span>
-									</div>
+                                    <div class="label_product">
+                                        <span class="label_sale {% if product.is_available == 'available' %}in-stock{% elif product.is_available == 'out_of_stock' %}out-of-stock{% elif product.is_available == 'coming_soon' %}coming-soon{% elif product.is_available == 'new' %}new{% endif %}">
+                                            {{ product.get_is_available_display }}
+                                        </span>
+                                    </div>
 									
                                 </div>
                                 
