@@ -109,7 +109,7 @@
                     
                     <div class="product_thumb">
                         {% for image in product.product_images.all %}
-                        <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="">
+                        <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{% url 'product_details' product_id=product.product_id %}">
                             <img src="{{ image.image.url }}" alt="{{ product.product_name }}">
                         </a>
                     {% endfor %}
@@ -135,9 +135,6 @@
                                     
                                 </div>
                                 {% endwith %}
-                            </div>
-                            <div class="add_to_cart">
-                                <a href="cart.html">Add to cart</a>
                             </div>
                         </figcaption>
                         
