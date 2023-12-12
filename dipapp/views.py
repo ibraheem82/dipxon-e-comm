@@ -2,6 +2,7 @@ import logging
 from django.shortcuts import render
 from .models import Product, Category
 from .utils import get_user_country, get_currency_symbol
+from django.views import View
 
 
 
@@ -28,7 +29,21 @@ def home(request):
     return render(request, 'dipapp/home.html', context)
 
 
+class ProductDetailView(View):
+    template_name = 'dipapp/product_detail.html'
 
+    def get(self, request, product_id):
+        product = get_object_or_404(Product, product_id=product_id)
+        return render(request, self.template_name, {'product': product})
+    
+    
+class ProductsByCategoryView(View):
+    template_name = 'dipapp/products_by_category.html'
+
+    def get(self, request, category_id):
+        category = Category.objects.get(unique_id=category_id)
+        products = Product.objects.filter(category=category)
+        return render(request, self.template_name, {'category': category, 'products': products})
 
 
 def add_to_cart(request, product_id):
@@ -102,10 +117,6 @@ def remove_from_cart(request, product_id):
     return redirect('cart')
 
 
-def product_detail(request, slug):
-    single_product = get_object_or_404(Product, slug=slug)
-    title = f"{single_product.product_name} - Single Product Detail"
-    return render(request, 'dipapp/product_detail.html', {'single_product': single_product, 'title': title})
 
 def shop(request):
     products = Product.objects.all()
