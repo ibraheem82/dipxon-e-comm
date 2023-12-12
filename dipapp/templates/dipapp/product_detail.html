@@ -103,7 +103,7 @@ e
                            </ul>
                         </div> -->
                         <div class="product_meta">
-                            <span>Category: <a href="#">{{ product.category.category_name }}</a></span>
+                            <span>Category: <a href="{% url 'products_by_category' category_id=product.category.unique_id %}">{{ product.category.category_name }}</a></span>
                         </div>
                         
                     </form>
@@ -115,12 +115,4 @@ e
     </div>    
 </div>
 <!--product details end-->
-
-
-
     {% endblock  %}
-
-
-
-
-

@@ -71,7 +71,7 @@
                                     <h4 class="product_name"><a href="shop.html">{{ category.category_name }}</a></h4>
                                    <div class="product_collection">
 										<p>{{ category.product_set.count }} Products</p>
-										<a href="shop.html">+ Shop Collection</a>
+										<a href="{% url 'products_by_category' category_id=category.unique_id %}">+ Shop Collection</a>
                                     </div>
                                 </figcaption>
                             </figure>
@@ -93,7 +93,7 @@
                        <h2>Featured products </h2>
                     </div>
                     <div class="product_shop_collection">
-                    	<a href="shop.html">Shop all collection</a>
+                    	<a href="{% url "shop" %}">Shop all collection</a>
                     </div>
                 </div>
             </div> 
