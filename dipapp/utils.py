@@ -16,7 +16,7 @@ def get_currency_symbol(country_code):
                 return currency.symbol
     except Exception as e:
         print(f"Error getting currency symbol: {e}")
-    return '₦'  # Default to '₦' if not found
+    return '$'  # Default to '$' if not found
 
 def get_user_country(request):
 
@@ -29,8 +29,8 @@ def get_user_country(request):
 
     # Check if the IP address is 127.0.0.1
     if ip == '127.0.0.1':
-        print("IP address is localhost. Returning Naira.")
-        return 'NG'  # Return 'NG' for Nigeria, which corresponds to Naira
+        print("IP address is localhost. Returning Dollar. $")
+        return 'US'  # Return 'US' for United State, which corresponds to Naira
 
     try:
         response = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}')
@@ -44,7 +44,7 @@ def get_user_country(request):
         if country_code is None:
             # Handle the case where country information is not available
             print("Country information not available.")
-            return 'NG'  # Return 'NG' for Nigeria, which corresponds to Naira
+            return 'US'  # Return 'US' for United State, which corresponds to Naira
 
         return country_code  # Return the country code, not the entire dictionary
 

@@ -77,7 +77,7 @@
                                 <div class="product_content grid_content">
                                     <div class="product_content_inner">
 										<h4 class="product_name"><a href="product-details.html">{{ product.product_name }}</a></h4>
-                                        {% with humanize.currency_symbol|default:"₦" as symbol %}
+                                        {% with humanize.currency_symbol|default:"$" as symbol %}
 										<div class="price_box"> 
                                             {% if product.old_price %}
 											<span class="old_price">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="product_content list_content">
                                     <h4 class="product_name"><a href="product-details.html">{{ product.product_name }}</a></h4>
-                                    {% with humanize.currency_symbol|default:"₦" as symbol %}
+                                    {% with humanize.currency_symbol|default:"$" as symbol %}
 									<div class="price_box">
                                         {% if product.old_price %}
 										<span class="old_price">
