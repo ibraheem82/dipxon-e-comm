@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{title}} -> Detail{% endblock %}
+{% block title %}{{ product.product_name }}{% endblock %}
 {% load static %}
 {% load humanize %}
 {% block content %}
@@ -10,8 +10,8 @@
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li>product details</li>
+                        <li><a href="{% url 'home' %}">home</a></li>
+                        <li>{{product.product_name}}</li>
                     </ul>
                 </div>
             </div>
@@ -55,7 +55,6 @@
                                 <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig3.jpg" data-zoom-image="  assets/img/product/productbig3.jpg">
                                     <img src="{% static 'assets/img/product/productbig3.jpg' %}" alt="zo-th-1"/>
                                 </a>
-e
                             </li>
                         </ul>
                     </div>
@@ -73,7 +72,8 @@ e
                         {% with humanize.currency_symbol|default:"$" as symbol %}
                         <div class="price_box">
                             {% if product.old_price %}
-                            <span class="old_price">{{ symbol }}{{ product.old_price|floatformat:2|intcomma }}</span>
+                            <span class="old_price">
+                                {{ symbol }}{{ product.old_price|floatformat:2|intcomma }}</span>
                             {% endif %}
                             <span class="current_price">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
                         </div>
@@ -103,7 +103,11 @@ e
                            </ul>
                         </div> -->
                         <div class="product_meta">
-                            <span>Category: <a href="{% url 'products_by_category' category_id=product.category.unique_id %}">{{ product.category.category_name }}</a></span>
+                            <span>Category: 
+                                <a href="{% url 'products_by_category' category_id=product.category.unique_id %}">
+                                    {{ product.category.category_name }}
+                                </a>
+                            </span>
                         </div>
                         
                     </form>
