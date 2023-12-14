@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{title}} -> Detail{% endblock %}
+{% block title %}{{ product.product_name }}{% endblock %}
 {% load static %}
 {% load humanize %}
 {% block content %}
@@ -10,8 +10,8 @@
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li>product details</li>
+                        <li><a href="{% url 'home' %}">home</a></li>
+                        <li>{{product.product_name}}</li>
                     </ul>
                 </div>
             </div>
@@ -28,31 +28,31 @@
                 <div class="product-details-tab">
                     <div id="img-1" class="zoomWrapper single-zoom">
                         <a href="#">
-                            <img id="zoom1" src="{% static 'assets/img/product/productbig4.jpg' %}" data-zoom-image="assets/img/product/productbig1.jpg" alt="big-1">
+                            <img id="zoom1" src="{% static 'assets/img/product/productbig4.jpg' %}" data-zoom-image="{% static 'assets/img/product/productbig1.jpg' %}" alt="big-1">
                         </a>
                     </div>
                     <div class="single-zoom-thumb">
                         <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
                             <li>
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig4.jpg" data-zoom-image="assets/img/product/productbig4.jpg">
+                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig4.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig4.jpg' %} ">
                                     <img src="{% static 'assets/img/product/productbig4.jpg' %}" alt="zo-th-1"/>
                                 </a>
 
                             </li>
                             <li >
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig1.jpg" data-zoom-image="assets/img/product/productbig1.jpg">
+                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig1.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig1.jpg' %} ">
                                     <img src="{% static 'assets/img/product/productbig1.jpg' %}" alt="zo-th-1"/>
                                 </a>
 
                             </li>
                             <li >
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig2.jpg" data-zoom-image="assets/img/product/productbig2.jpg">
+                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig2.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig2.jpg' %} ">
                                     <img src="{% static 'assets/img/product/productbig2.jpg' %}" alt="zo-th-1"/>
                                 </a>
 
                             </li>
                             <li >
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image="assets/img/product/productbig3.jpg" data-zoom-image="  assets/img/product/productbig3.jpg">
+                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig3.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig3.jpg' %} ">
                                     <img src="{% static 'assets/img/product/productbig3.jpg' %}" alt="zo-th-1"/>
                                 </a>
 
@@ -63,19 +63,26 @@
             </div>
             <div class="col-lg-7 col-md-7">
                 <div class="product_d_right">
-                   <form action="#">
+                   <form action="">
                         <div class="productd_title_nav">
-                            <h1><a href="#">Lorem ipsum dolor sit amet elit</a></h1>
+                            <h1>
+                                <a href="#">{{product.product_name}}</a>
+                            </h1>
                         </div>
                         
-                        <div class="price_box"> 
-                            <span class="old_price">$56.00</span>
-                            <span class="current_price">$48.00</span>
+                        {% with humanize.currency_symbol|default:"$" as symbol %}
+                        <div class="price_box">
+                            {% if product.old_price %}
+                            <span class="old_price">
+                                {{ symbol }}{{ product.old_price|floatformat:2|intcomma }}</span>
+                            {% endif %}
+                            <span class="current_price">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
                         </div>
+                        {% endwith %}
                         <div class="product_desc">
-                            <p>eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in </p>
+                            <p>{{product.description}}</p>
                         </div>
-                        <div class="product_variant color">
+                        <!-- <div class="product_variant color">
                             <h3>Available Options</h3>
                             <label>color</label>
                             <ul>
@@ -84,20 +91,24 @@
                                 <li class="color3"><a href="#"></a></li>
                                 <li class="color4"><a href="#"></a></li>
                             </ul>
-                        </div>
+                        </div> -->
                         <div class="product_variant quantity">
                             <label>quantity</label>
                             <input min="1" max="100" value="1" type="number">
                             <button class="button" type="submit">add to cart</button>  
                             
                         </div>
-                        <div class=" product_d_action">
+                        <!-- <div class=" product_d_action">
                            <ul>
                                <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
                            </ul>
-                        </div>
+                        </div> -->
                         <div class="product_meta">
-                            <span>Category: <a href="#">Clothing</a></span>
+                            <span>Category: 
+                                <a href="{% url 'products_by_category' category_id=product.category.unique_id %}">
+                                    {{ product.category.category_name }}
+                                </a>
+                            </span>
                         </div>
                         
                     </form>
@@ -109,12 +120,4 @@
     </div>    
 </div>
 <!--product details end-->
-
-
-
     {% endblock  %}
-
-
-
-
-

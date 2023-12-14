@@ -85,18 +85,33 @@ class Cart(models.Model):
     def __str__(self):
         return f"{self.user}'s Cart"
 
+    # grandtotal property: Calculates the total price of all items in the cart. It first retrieves all associated cart items using cartitems_set.all(). Then, it uses list comprehension to sum the subtotal of each item.
     @property
     def grandtotal(self):
-        total = 0
-        for item in self.cartitem_set.all():
-            total += item.get_total_price()
+        cartitems = self.cartitems_set.all()
+        total = sum([item.subtotal for item in cartitems])
         return total
-
+    
+    
+    # cartquantity property: Calculates the total quantity of all items in the cart. Similar to grandtotal, it retrieves all cart items and uses list comprehension to sum their quantity.
+    @property
+    def cartquantity(self):
+        cartitems = self.cartitems_set.all()
+        total = sum([item.quantity for item in cartitems])
+        return total
+    
+    
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE) 
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.quantity} x {self.product.product_name}"
+    
+    # The subtotal property calculates the total price of a specific item in the cart based on its quantity and price
+    @property
+    def subtotal(self):
+        total = self.quantity * self.product.price    
+        return total

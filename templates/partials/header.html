@@ -20,37 +20,11 @@
             <div id="menu" class="text-left ">
                 <ul class="offcanvas_main_menu">
                     <li class="menu-item-has-children active">
-                        <a href="#{% url "home" %}>Home</a>
-                        <ul class="sub-menu">
-                            <li><a href="index.html">Home 1</a></li>
-                            <li><a href="index-2.html">Home 2</a></li>
-                            <li><a href="index-3.html">Home 3</a></li>
-                        </ul>
+                        <a href="{% url "home" %}">Home</a>
+
                     </li>
     <li class="menu-item-has-children">
         <a href="#">Shop</a>
-        <ul class="sub-menu">
-            <li class="menu-item-has-children">
-                <a href="#">Shop Layouts</a>
-                <ul class="sub-menu">
-                    <li><a href="shop.html">shop</a></li>
-                    <li><a href="shop-fullwidth.html">Full Width</a></li>
-                </ul>
-            </li>
-            <li class="menu-item-has-children">
-                <a href="#">other Pages</a>
-                <ul class="sub-menu">
-                    <li><a href="cart.html">cart</a></li>
-                    <li><a href="wishlist.html">Wishlist</a></li>
-                </ul>
-            </li>
-            <li class="menu-item-has-children">
-                <a href="#">Product Types</a>
-                <ul class="sub-menu">
-                    <li><a href="product-details.html">product details</a></li>
-                </ul>
-            </li>
-        </ul>
     </li>
     <li class="menu-item-has-children">
         <a href="#">blog</a>
@@ -94,14 +68,10 @@
     <div class="main_menu menu_position"> 
         <nav>  
             <ul>
-                <li><a class="active"  href="{% url "home" %}">home<i class="fa fa-angle-down"></i></a>
-                    <ul class="sub_menu">
-                        <li><a href="index.html">Home shop 1</a></li>
-                        <li><a href="index-2.html">Home shop 2</a></li>
-                        <li><a href="index-3.html">Home shop 3</a></li>
-                    </ul>
+                <li><a class="active"  href="{% url "home" %}">home</a>
+                
                 </li>
-        <li class="mega_items"><a href="shop.html">shop<i class="fa fa-angle-down"></i></a> 
+        <li class="mega_items"><a href="{% url "shop" %}">shop<i class="fa fa-angle-down"></i></a> 
             <div class="mega_menu">
                 <ul class="mega_menu_inner">
                     <li><a href="#">Shop Layouts</a>
@@ -146,11 +116,7 @@
                 <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
                     <ul class="sub_menu pages">
                         <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">services</a></li>
-                        <li><a href="faq.html">Frequently Questions</a></li>
-                        <li><a href="contact.html">contact</a></li>
-                        <li><a href="login.html">login</a></li>
-                        <li><a href="404.html">Error 404</a></li>
+                      
                     </ul>
                 </li>
             </ul>  
