@@ -44,7 +44,7 @@ def get_user_country(request):
         if country_code is None:
             # Handle the case where country information is not available
             print("Country information not available.")
-            return 'US'  # Return 'US' for United State, which corresponds to Naira
+            return 'US'  # Return 'US' for United State, which corresponds to dollar
 
         return country_code  # Return the country code, not the entire dictionary
 
