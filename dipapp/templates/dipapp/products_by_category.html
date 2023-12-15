@@ -59,10 +59,14 @@
                         <div class="col-12 ">
                             <div class="single_product">
                                 <div class="product_thumb">
-                                    <a class="primary_img" href="{% url 'product_details' product_id=product.product_id %}"><img src="{% static 'assets/img/product/product1.jpg' %}" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product2.jpg' %}" alt=""></a>
+                                    {% for image in product.product_images.all %}
+                                    <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{% url 'product_details' product_id=product.product_id %}">
+                                        <img src="{{ image.image.url }}" alt="">
+                                    </a>
+                                    {% endfor %}
+                        
 									<div class="label_product">
-										<span class="label_sale">Sale</span>
+										<span class="label_sale {% if product.is_available == 'available' %}in-stock{% elif product.is_available == 'out_of_stock' %}out-of-stock{% elif product.is_available == 'coming_soon' %}coming-soon{% elif product.is_available == 'new' %}new{% endif %}">{{ product.get_is_available_display }}</span>
 									</div>
 									
                                 </div>
