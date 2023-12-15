@@ -28,35 +28,19 @@
                 <div class="product-details-tab">
                     <div id="img-1" class="zoomWrapper single-zoom">
                         <a href="#">
-                            <img id="zoom1" src="{% static 'assets/img/product/productbig4.jpg' %}" data-zoom-image="{% static 'assets/img/product/productbig1.jpg' %}" alt="big-1">
+                            <img id="zoom1" src="{{ product.product_images.first.image.url }}" data-zoom-image="{{ product.product_images.first.image.url }}" alt="{{ product.product_name }}">
                         </a>
                     </div>
                     <div class="single-zoom-thumb">
                         <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
+                            {% for image in product.product_images.all %}
                             <li>
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig4.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig4.jpg' %} ">
-                                    <img src="{% static 'assets/img/product/productbig4.jpg' %}" alt="zo-th-1"/>
-                                </a>
-
+                              <a href="#" class="elevatezoom-gallery {% if forloop.first %}active{% endif %}" data-image="{{ image.image.url }}" alt="zo-th-{{ forloop.counter }}">
+                                <img src="{{ image.image.url }}" alt="zo-th-{{ forloop.counter }}"/>
+                              </a>
                             </li>
-                            <li >
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig1.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig1.jpg' %} ">
-                                    <img src="{% static 'assets/img/product/productbig1.jpg' %}" alt="zo-th-1"/>
-                                </a>
-
-                            </li>
-                            <li >
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig2.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig2.jpg' %} ">
-                                    <img src="{% static 'assets/img/product/productbig2.jpg' %}" alt="zo-th-1"/>
-                                </a>
-
-                            </li>
-                            <li >
-                                <a href="#" class="elevatezoom-gallery active" data-update="" data-image=" {% static 'assets/img/product/productbig3.jpg' %} " data-zoom-image=" {% static 'assets/img/product/productbig3.jpg' %} ">
-                                    <img src="{% static 'assets/img/product/productbig3.jpg' %}" alt="zo-th-1"/>
-                                </a>
-
-                            </li>
+                          {% endfor %}
+                          
                         </ul>
                     </div>
                 </div>
