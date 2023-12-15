@@ -10,7 +10,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Cart, CartItem, Product
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -38,6 +37,16 @@ class ProductDetailView(View):
     def get(self, request, product_id):
         product = get_object_or_404(Product, product_id=product_id)
         return render(request, self.template_name, {'product': product})
+    
+    
+class ProductsByCategoryView(View):
+    template_name = 'dipapp/products_by_category.html'
+
+    def get(self, request, category_id):
+        category = Category.objects.get(unique_id=category_id)
+        products = Product.objects.filter(category=category)
+        return render(request, self.template_name, {'category': category, 'products': products})
+
 
 def add_to_cart(request, product_id):
     try:
@@ -95,7 +104,6 @@ def add_to_cart(request, product_id):
         'success': False,
         'message': "Invalid quantity entered."
         })
-
 
 
 
