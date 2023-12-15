@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from accounts.models import Customer
 
 
 def home(request):
@@ -47,21 +48,15 @@ class ProductsByCategoryView(View):
         products = Product.objects.filter(category=category)
         return render(request, self.template_name, {'category': category, 'products': products})
 
-
 def add_to_cart(request, product_id):
     try:
         product = Product.objects.get(pk=product_id)
 
-        # Get or create cart based on user authentication
-        if request.user.is_authenticated:
-            cart, created = Cart.objects.get_or_create(user=request.user, completed=False)
-        else:
-            cart_id = request.session.get('cart_id')
-            if not cart_id:
-                cart = Cart.objects.create()
-                request.session['cart_id'] = str(cart.cart_id)
-            else:
-                cart = get_object_or_404(Cart, cart_id=cart_id)
+        # Get or create Customer instance
+        customer, created = Customer.objects.get_or_create(user=request.user)
+
+        # Get or create cart based on customer
+        cart, created = Cart.objects.get_or_create(user=customer, completed=False)
 
         # Get desired quantity from form
         quantity = int(request.POST.get('quantity', 1))
@@ -84,26 +79,28 @@ def add_to_cart(request, product_id):
 
         cart_item.save()
 
-    # Prepare successful response data
+        # Prepare successful response data
         data = {
-        'success': True,
-        'message': f"{quantity} {product.product_name}(s) added to your cart.",
-        'cart_quantity': cart_item.quantity,  # Include updated cart quantity for the product
+            'success': True,
+            'message': f"{quantity} {product.product_name}(s) added to your cart.",
+            'cart_quantity': cart_item.quantity,  # Include updated cart quantity for the product
         }
 
-        return JsonResponse(data)
+        return JsonResponse(data, safe=True)
 
     except ObjectDoesNotExist:
         return JsonResponse({
-        'success': False,
-        'message': "Product not found."
+            'success': False,
+            'message': "Product not found."
         })
 
-    except ValueError:
+    except ValueError as ve:
         return JsonResponse({
-        'success': False,
-        'message': "Invalid quantity entered."
+            'success': False,
+            'message': f"Invalid quantity entered: {ve}"
         })
+
+
 
 
 
