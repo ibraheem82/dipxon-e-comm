@@ -68,10 +68,10 @@
     <div class="main_menu menu_position"> 
         <nav>  
             <ul>
-                <li><a class="active"  href="{% url "home" %}">home</a>
+                <li><a class="active"  href="{% url 'home' %}">home</a>
                 
                 </li>
-        <li class="mega_items"><a href="{% url "shop" %}">shop<i class="fa fa-angle-down"></i></a> 
+        <li class="mega_items"><a href="{% url 'shop' %}">shop<i class="fa fa-angle-down"></i></a> 
             <div class="mega_menu">
                 <ul class="mega_menu_inner">
                     <li><a href="#">Shop Layouts</a>
@@ -137,7 +137,7 @@
                         </div>
                         <div class="header_account_list  mini_cart_wrapper">
                             <a href="javascript:void(0)"><span class="pe-7s-shopbag"></span>
-                                <span class="item_count">2</span>
+                                <span class="item_count" id="cart">{{ cart_item.quantity }}</span>
                             </a>
                             
                         </div>
