@@ -2,10 +2,10 @@ import requests
 import pycountry
 import os
 from dotenv import load_dotenv
-
+from accounts.models import Customer
 load_dotenv()
-
-
+from django.contrib.sessions.models import Session
+from django.core.exceptions import ObjectDoesNotExist
 
 def get_currency_symbol(country_code):
     try:
@@ -60,3 +60,30 @@ def get_user_country(request):
 # Example usage:
 # user_country = get_user_country(request)
 # currency_symbol = get_currency_symbol(user_country)
+
+
+
+
+
+
+def get_or_create_customer(request):
+    if not request.user.is_authenticated:
+        session_key = request.session.session_key
+        if session_key:
+            try:
+                session = Session.objects.get(session_key=session_key)
+                customer = session.customer
+            except ObjectDoesNotExist:
+                # Create new anonymous customer and link to session
+                customer = Customer.objects.create()
+                session.customer = customer
+                session.save()
+        else:
+            # Create new session and anonymous customer
+            request.session.create()
+            customer = Customer.objects.create()
+            request.session['customer_id'] = str(customer.id)
+    else:
+        customer = request.user.customer
+
+    return customer
