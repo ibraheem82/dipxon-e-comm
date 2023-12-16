@@ -1,4 +1,4 @@
-import logging
+from django.contrib.sessions.models import Session
 from django.shortcuts import render
 from .models import Product, Category
 from .utils import get_user_country, get_currency_symbol
@@ -48,12 +48,20 @@ class ProductsByCategoryView(View):
         products = Product.objects.filter(category=category)
         return render(request, self.template_name, {'category': category, 'products': products})
 
+
+
 def add_to_cart(request, product_id):
     try:
         product = Product.objects.get(pk=product_id)
 
         # Get or create Customer instance
-        customer, created = Customer.objects.get_or_create(user=request.user)
+        # Check if user is authenticated
+        if not request.user.is_authenticated:
+            # Create temporary customer for anonymous user
+            customer = Customer.objects.create(is_anonymous=True)
+        else:
+            # Use existing customer for authenticated user
+            customer, created = Customer.objects.get_or_create(user=request.user)
 
         # Get or create cart based on customer
         cart, created = Cart.objects.get_or_create(user=customer, completed=False)
