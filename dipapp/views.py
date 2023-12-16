@@ -1,7 +1,7 @@
 from django.contrib.sessions.models import Session
 from django.shortcuts import render
 from .models import Product, Category
-from .utils import get_user_country, get_currency_symbol
+from .utils import get_user_country, get_currency_symbol, get_or_create_customer
 from django.views import View
 
 
@@ -54,14 +54,8 @@ def add_to_cart(request, product_id):
     try:
         product = Product.objects.get(pk=product_id)
 
-        # Get or create Customer instance
-        # Check if user is authenticated
-        if not request.user.is_authenticated:
-            # Create temporary customer for anonymous user
-            customer = Customer.objects.create(is_anonymous=True)
-        else:
-            # Use existing customer for authenticated user
-            customer, created = Customer.objects.get_or_create(user=request.user)
+        # Get or create customer based on the session
+        customer = get_or_create_customer(request)
 
         # Get or create cart based on customer
         cart, created = Cart.objects.get_or_create(user=customer, completed=False)
