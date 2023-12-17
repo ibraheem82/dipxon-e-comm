@@ -4,7 +4,7 @@ import os
 from category.models import Category
 from django.urls import reverse
 from django.db import models
-from accounts.models import Customer
+from accounts.models import Account
 import uuid
 # Create your models here.
 
@@ -78,7 +78,7 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     cart_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)

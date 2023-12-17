@@ -1,7 +1,7 @@
 from django.contrib.sessions.models import Session
 from django.shortcuts import render
 from .models import Product, Category
-from .utils import get_user_country, get_currency_symbol, get_or_create_customer
+from .utils import get_user_country, get_currency_symbol
 from django.views import View
 
 
@@ -12,7 +12,7 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from accounts.models import Customer
+from accounts.models import Account
 
 
 def home(request):
@@ -50,57 +50,54 @@ class ProductsByCategoryView(View):
 
 
 
-def add_to_cart(request, product_id):
-    try:
-        product = Product.objects.get(pk=product_id)
+# def add_to_cart(request, product_id):
+#     try:
+#         product = Product.objects.get(pk=product_id)
 
-        # Get or create customer based on the session
-        customer = get_or_create_customer(request)
+#         # Get or create cart based on customer
+#         cart, created = Cart.objects.get_or_create(user=customer, completed=False)
 
-        # Get or create cart based on customer
-        cart, created = Cart.objects.get_or_create(user=customer, completed=False)
+#         # Get desired quantity from form
+#         quantity = int(request.POST.get('quantity', 1))
 
-        # Get desired quantity from form
-        quantity = int(request.POST.get('quantity', 1))
+#         # Check if product is available in sufficient quantity
+#         if product.stock < quantity:
+#             return JsonResponse({
+#                 'success': False,
+#                 'message': f"Insufficient stock for {product.product_name}. Only {product.stock} available."
+#             })
 
-        # Check if product is available in sufficient quantity
-        if product.stock < quantity:
-            return JsonResponse({
-                'success': False,
-                'message': f"Insufficient stock for {product.product_name}. Only {product.stock} available."
-            })
+#         # Check if product is already in the cart
+#         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
 
-        # Check if product is already in the cart
-        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+#         # Update quantity if already in cart
+#         if not created:
+#             cart_item.quantity += quantity
+#         else:
+#             cart_item.quantity = quantity
 
-        # Update quantity if already in cart
-        if not created:
-            cart_item.quantity += quantity
-        else:
-            cart_item.quantity = quantity
+#         cart_item.save()
 
-        cart_item.save()
+#         # Prepare successful response data
+#         data = {
+#             'success': True,
+#             'message': f"{quantity} {product.product_name}(s) added to your cart.",
+#             'cart_quantity': cart_item.quantity,  # Include updated cart quantity for the product
+#         }
 
-        # Prepare successful response data
-        data = {
-            'success': True,
-            'message': f"{quantity} {product.product_name}(s) added to your cart.",
-            'cart_quantity': cart_item.quantity,  # Include updated cart quantity for the product
-        }
+#         return JsonResponse(data, safe=True)
 
-        return JsonResponse(data, safe=True)
+#     except ObjectDoesNotExist:
+#         return JsonResponse({
+#             'success': False,
+#             'message': "Product not found."
+#         })
 
-    except ObjectDoesNotExist:
-        return JsonResponse({
-            'success': False,
-            'message': "Product not found."
-        })
-
-    except ValueError as ve:
-        return JsonResponse({
-            'success': False,
-            'message': f"Invalid quantity entered: {ve}"
-        })
+#     except ValueError as ve:
+#         return JsonResponse({
+#             'success': False,
+#             'message': f"Invalid quantity entered: {ve}"
+#         })
 
 
 

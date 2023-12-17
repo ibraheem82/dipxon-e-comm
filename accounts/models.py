@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 import uuid
 # Create your models here.
 
-class Customer(models.Model):
+class Account(models.Model):
     user                =  models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
@@ -24,7 +24,7 @@ class Customer(models.Model):
     
     
 class UserProfile(models.Model):
-    user           = models.OneToOneField(Customer, on_delete=models.CASCADE)
+    user           = models.OneToOneField(Account, on_delete=models.CASCADE)
     address_line_1 = models.CharField(blank = True, max_length = 100)
     address_line_2 = models.CharField(blank = True, max_length = 100)
     city           = models.CharField(blank=True, max_length=20)
