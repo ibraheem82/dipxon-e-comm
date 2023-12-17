@@ -21,7 +21,7 @@
                         <!-- Login Title & Content End -->
 
                         <!-- Form Action Start -->
-                        <form action="{% url "login" %}" method="post">
+                        <form action="{% url 'login' %}" method="post">
                             {% csrf_token %}
                             {{ login_form.as_p }}
 
@@ -86,7 +86,7 @@
                 
                                 </form>
                                 <!-- Form Action End -->
-                
+                                
                             </div>
                             <!-- Register Wrapper End -->
                         </div>
@@ -99,5 +99,14 @@
         </div>
     </div>
     <!-- Login | Register Section End -->
-
+    {% for message in messages %}
+    <script>
+        swal({
+            title: "{{ message.tags }}",
+            text: "{{ message }}",
+            icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% else %}error{% endif %}",
+            button: "OK",
+        });
+    </script>
+{% endfor %}
 {% endblock %}
