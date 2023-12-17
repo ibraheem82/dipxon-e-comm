@@ -9,7 +9,6 @@ class Account(models.Model):
     user                =  models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
-    username            = models.CharField(max_length=50, unique=True)
     email               = models.EmailField(max_length = 100, unique=True)
     phone_number        = models.CharField(max_length=50)
     
