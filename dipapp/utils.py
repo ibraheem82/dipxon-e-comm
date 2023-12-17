@@ -4,8 +4,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-from accounts.models import Customer
-
 def get_currency_symbol(country_code):
     try:
         country = pycountry.countries.get(alpha_2=country_code)
