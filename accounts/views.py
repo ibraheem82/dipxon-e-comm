@@ -18,30 +18,27 @@ def loginUser(request):
         return redirect('shop')
 
     if request.method == 'POST':
-        form = CustomLoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+        email = request.POST['email'].lower()
+        password = request.POST['password']
 
-            # Authenticate without passing a username
-            user = authenticate(request, email=email, password=password)
+        try:
+            # ! import the [User] model when using this.
+            user = User.objects.get(email = email)
+        except :
+            messages.error(request, 'Email does not exist')
 
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'Login successful!')
-                return redirect(request.GET.get('next', 'shop'))
-            else:
-                messages.error(request, 'Email or Password is incorrect')
+        user = authenticate(request, email = email, password = password)
+
+        if user is not None:
+            # ! [ login() ] is going to create a [sessions] for the user, in the database inside the [sessions] table, then it is going to get that [sessions] and add it to our browsers [cookies]
+            login(request, user)
+            # will send the user to the next route.
+            # * the next route will be what we have passed in the url.
+            return redirect(request.GET['next'] if 'next' in request.GET else 'account')
         else:
-            # Form is not valid, display form errors
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f'{field}: {error}')
+            messages.error(request, 'Username OR Password is incorrect')
 
-    else:
-        form = CustomLoginForm()
-
-    context = {'page': page, 'login_form': form}
+    context = {'page': page}
     return render(request, 'accounts/login_register.html', context)
 
 
@@ -61,8 +58,9 @@ def registerUser(request):
             user = form.save(commit=False)
             # ! convert the [username] to lowercase.
             user.email = user.email.lower()
-            messages.success(request, 'User account was created!')
             user.save()
+            messages.success(request, 'User account was created!')
+            
             
             
             login(request, user)
