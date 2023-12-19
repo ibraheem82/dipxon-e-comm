@@ -22,21 +22,25 @@ def loginUser(request):
         password = request.POST['password']
 
         try:
-            # ! import the [User] model when using this.
+            
             user = User.objects.get(email = email)
-        except :
+        except User.DoesNotExist:
             messages.error(request, 'Email does not exist')
+            return redirect('login')
 
-        user = authenticate(request, email = email, password = password)
+        # * Checking if the user account is active
+        if user.is_active:
+            # * Then authenticate the user through the email and password
+            user = authenticate(request, email = email, password = password)
 
-        if user is not None:
-            # ! [ login() ] is going to create a [sessions] for the user, in the database inside the [sessions] table, then it is going to get that [sessions] and add it to our browsers [cookies]
-            login(request, user)
-            # will send the user to the next route.
-            # * the next route will be what we have passed in the url.
-            return redirect(request.GET['next'] if 'next' in request.GET else 'account')
+            if user is not None:
+                login(request, user)
+                return redirect(request.GET.get('next', 'home'))
+                # return redirect(request.GET['next'] if 'next' in request.GET else 'home')
+            else:
+                messages.error(request, 'Username OR Password is incorrect')
         else:
-            messages.error(request, 'Username OR Password is incorrect')
+            messages.error(request, 'User account is not active')
 
     context = {'page': page}
     return render(request, 'accounts/login_register.html', context)
@@ -69,7 +73,7 @@ def registerUser(request):
             # return redirect('profiles')
 
             # * When the user create thier account they should be redirected to the shop.
-            return redirect('shop')
+            return redirect('login')
 
 
         else:
@@ -81,8 +85,6 @@ def registerUser(request):
 
 # ========> Logout <========
 def logoutUser(request):
-# ! [logout]it is going to take in the request and the simply delete the [sessionID]
-    # ! logout(request) it is going to delete that session
     logout(request)
     messages.info(request, 'User was logged out.')
     return redirect('login')
