@@ -52,15 +52,3 @@ class RegistrationForm(forms.ModelForm):
             # ===> and this will assign all the attribute class to the fields we have looped through earlier
             self.fields[field].widget.attrs['class'] = 'form-control'
     
-    
-    
-class CustomLoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs={
-        'placeholder': 'Enter Email',
-        'class': 'form-control'
-    }))
-
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Enter Password',
-        'class': 'form-control'
-    }))
