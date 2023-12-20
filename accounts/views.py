@@ -10,6 +10,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import render, redirect
+import logging
+from .models import Account, UserProfile
+
+# Create a logger instance
+logger = logging.getLogger(__name__)
 
 def loginUser(request):
     page = 'login'
