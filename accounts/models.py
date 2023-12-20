@@ -1,6 +1,7 @@
 from django.db import models
 # Create your models here.
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 
  # ===> Creating a model for super admin
 #  ===>  Creating a custom user model
@@ -51,7 +52,7 @@ class MyAccountManager(BaseUserManager):
 
 # # Create your models here.
 # # ===> this custom user model will be use to overide the django admin panel system
-class Account(AbstractBaseUser):
+class Account(AbstractBaseUser, PermissionsMixin):
     first_name          = models.CharField(max_length=50)
     last_name           = models.CharField(max_length=50)
     username            = models.CharField(max_length=50, unique=True)
@@ -98,13 +99,9 @@ class UserProfile(models.Model):
     state = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)
     
-
-
-
+    
     def __str__(self):
         return self.user.first_name
-
-
 
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}'
