@@ -126,7 +126,7 @@
                 </div> 
                 <div class="col-lg-2 col-md-4 col-sm-4 col-4">
                     <div class="header_account_area">
-                        <div class="header_account_list search_list">
+                        <!-- <div class="header_account_list search_list">
                             <a href="javascript:void(0)"><span class="pe-7s-search"></span></a>
                             <div class="dropdown_search">
                                 <form action="#">
@@ -134,7 +134,7 @@
                                     <button type="submit"><span class="pe-7s-search"></span></button>
                                 </form>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="header_account_list  mini_cart_wrapper">
                             <a href="javascript:void(0)"><span class="pe-7s-shopbag"></span>
                                 <span class="item_count" id="cart">{{ cart_item.quantity }}</span>
@@ -144,9 +144,14 @@
                         <div class="language_currency header_account_list ">
                             <a href="#"> <span class="pe-7s-user"></span></a>
                             <ul class="dropdown_currency">
-                                <li><a href="my-account.html">My account</a></li>
-                                <li><a href="#">Order History</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
+                                {% if request.user.is_authenticated %}
+                                <!-- <li><a href="">Hello {{user.username}}</a></li> -->
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                                {% else %}
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                                <li><a href="{% url 'register' %}">Register</a></li>
+                                
+                                {% endif %}
                                 <li><a href="cart.html">Shipping</a></li>
                             </ul>
                         </div>
