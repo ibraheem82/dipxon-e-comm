@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate, logout
 # Create your views here.
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.contrib import messages, auth
 from .forms import RegistrationForm
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -24,36 +24,43 @@ logger = logging.getLogger(__name__)
 def loginUser(request):
     page = 'login'
 
-    if request.user.is_authenticated:
-        return redirect('shop')
-
+    # ========> Login View <========
     if request.method == 'POST':
-        email = request.POST['email'].lower()
+        # ===> from the login form, the name values.
+        email = request.POST['email']
         password = request.POST['password']
-
-        try:
-            
-            user = User.objects.get(email = email)
-        except User.DoesNotExist:
-            messages.error(request, 'Email does not exist')
-            return redirect('login')
-
-        # * Checking if the user account is active
-        if user.is_active:
-            # * Then authenticate the user through the email and password
-            user = authenticate(request, email = email, password = password)
-
-            if user is not None:
-                login(request, user)
-                return redirect(request.GET.get('next', 'home'))
-                # return redirect(request.GET['next'] if 'next' in request.GET else 'home')
-            else:
-                messages.error(request, 'Username OR Password is incorrect')
+        
+        # * ===> will set the user so they can login
+        user = auth.authenticate(email=email, password=password)
+        
+        if user is not None:
+                # The user is valid, log them in.
+                auth.login(request, user)
+                messages.success(request, 'You are now logged in')
+                return redirect('home')
         else:
-            messages.error(request, 'User account is not active')
-
+            messages.error(request, 'Invalid login credentials')
+            return redirect('login')
     context = {'page': page}
     return render(request, 'accounts/login_register.html', context)
+
+
+# def loginUser(request):
+#     page = 'login'
+
+#     if request.method == 'POST':
+#         email = request.POST['email'].lower()
+#         password = request.POST['password']
+        
+#         user = authenticate(request, email=email, password=password)
+
+#         if user is not None:
+#             login(request, user)
+#             return redirect('shop')
+#         else:
+#             messages.info(request, 'Email OR password is incorrect')
+
+#     return render(request, 'accounts/login_register.html', {'page': page})
 
 
 
@@ -93,9 +100,10 @@ def registerUser(request):
             })
             
             to_email = email
-            # ===> 
             send_email = EmailMessage(mail_subject, message, to=[to_email])
+            messages.info(request, 'Thank you for registering! Please check your email to activate your account.')
             send_email.send()
+            
 
             return redirect('/accounts/login/?command=verification=' + email)
 
@@ -105,6 +113,31 @@ def registerUser(request):
     context = {'page' : page, 'form' : form}
     return render(request, 'accounts/login_register.html', context)
 
+
+
+# ========> Activate View <========
+def activate(request, uidb64, token):
+
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        
+        user = Account._default_manager.get(id=uid)
+        
+
+    except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user  = None
+        
+    
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        
+        messages.success(request, 'Congratulations! your account is activated.')
+        return redirect('login')
+
+    else:
+        messages.error(request,'Invalid activation link OR the link has expired.')
+        return redirect('register')
 
 
 # ========> Logout <========
