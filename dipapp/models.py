@@ -78,10 +78,8 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
-    cart_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    completed = models.BooleanField(default=False)
+    cart_id     = models.CharField(max_length=250, blank=True)
+    date_added  = models.DateField(auto_now_add=True)
     def __str__(self):
         return f"{self.user}'s Cart"
 
@@ -103,12 +101,17 @@ class Cart(models.Model):
     
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
-    quantity = models.PositiveIntegerField(default=0)
+    user        =  models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    cart        = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product     = models.ForeignKey(Product, on_delete=models.CASCADE) 
+    quantity    = models.PositiveIntegerField(default=0)
+    is_active   = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.quantity} x {self.product.product_name}"
+    
+    def __unicode__(self):
+        return self.product
     
     # The subtotal property calculates the total price of a specific item in the cart based on its quantity and price
     @property
