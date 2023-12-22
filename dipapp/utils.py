@@ -53,3 +53,14 @@ def get_user_country(request):
 
     # If an error occurred, return a default value or handle it as needed
     return 'XX'  # Replace with an appropriate default value
+
+
+
+
+def validate_quantity(product, quantity):
+    if quantity <= 0:
+        return "Quantity must be a positive integer."
+    elif product.stock < quantity:
+        return f"Insufficient stock for {product.product_name}. Only {product.stock} available."
+    else:
+        return None
