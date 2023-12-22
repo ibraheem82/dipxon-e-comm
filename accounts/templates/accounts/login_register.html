@@ -3,77 +3,81 @@
 {% load static %}
 {% block content %}
 
-    <!-- Login | Register Section Start -->
-    <div class="section section-margin">
-        <div class="container">
 
-            <div class="row mb-n10">
-                {% if page == 'login' %}
-                <div class="col-lg-6 col-md-8 m-auto pb-10">
-                    <!-- Login Wrapper Start -->
-                    <div class="login-wrapper">
-
-                        <!-- Login Title & Content Start -->
-                        <div class="section-content text-center mb-5">
-                            <h2 class="title mb-2">Login</h2>
-                            <p class="desc-content">Please login using account detail below.</p>
-                        </div>
-                        <!-- Login Title & Content End -->
-
-                        <!-- Form Action Start -->
-                        <form action="{% url "login" %}" method="post">
-                            {% csrf_token %}
-                            {{ login_form.as_p }}
-
-                            <!-- Checkbox/Forget Password Start -->
-                            <div class="single-input-item mb-3">
-                                <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
-                                    <div class="remember-meta mb-3">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe">
-                                            <label class="custom-control-label" for="rememberMe">Remember Me</label>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="forget-pwd mb-3">Forget Password?</a>
-                                </div>
-                            </div>
-                            <!-- Checkbox/Forget Password End -->
-
-                            <!-- Login Button Start -->
-                            <div class="single-input-item mb-3">
-                                <button class="btn btn btn-dark  btn-hover-primary rounded-0" type="submit">Login</button>
-                            </div>
-                            <!-- Login Button End -->
-
-                            <!-- Lost Password & Create New Account Start -->
-                            <div class="lost-password">
-                                <a href="{% url 'register' %}">Create Account</a>
-                            </div>
-                            <!-- Lost Password & Create New Account End -->
-
-                        </form>
-                        <!-- Form Action End -->
-
-                    </div>
-                    <!-- Login Wrapper End -->
+ <!--breadcrumbs area start-->
+ <div class="breadcrumbs_area">
+    <div class="container">   
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    {% if page == 'register' %}<h3>Register</h3>{% else %}<h3>Login</h3>{% endif %}
+                    <ul>
+                        <li><a href="index.html">home</a></li>
+                        {% if page == 'register' %}<li>Register</li>{% else %}
+                        <li>Login</li>{% endif %}
+                    </ul>
                 </div>
-                {% endif %}
-                {% if page == 'register' %}
+            </div>
+        </div>
+    </div>         
+</div>
+<!--breadcrumbs area end-->
+
+<!-- customer login start -->
+<div class="customer_login">
+    <div class="container">
+        <div class="row justify-content-center">
+           <!--login area start-->
+           {% if page == 'login' %}
+            <div class="col-lg-6 col-md-6 justify-content-center">
+                <div class="account_form">
+                    <h2>login</h2>
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+
+
+                        <p>   
+                            <label>Email<span>*</span></label>
+                            <input type="email" class="form-control" placeholder="Email Address" name="email">
+                         </p>
+                         <p>   
+                            <label>Passwords<span>*</span></label>
+                            <input type="password" class="form-control" placeholder="Password" name="password">
+                         </p>   
+
+                         
+                        <div class="login_submit">
+                           <a href="#">Lost your password?</a>
+                            <label for="remember">
+                                <input id="remember" type="checkbox">
+                                Remember me
+                            </label>
+                            <button type="submit">login</button>
+                            
+                        </div>
+
+                    </form>
+                 </div>    
+            </div>
+            {% endif %}
+            <!--login area start-->
+
+            {% if page == 'register' %}
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-6 col-md-8 m-auto pb-10">
+                        <div class="col-lg-6 col-md-8 m-auto pb-10  card">
                             <!-- Register Wrapper Start -->
                             <div class="register-wrapper">
                 
                                 <!-- Login Title & Content Start -->
-                                <div class="section-content text-center mb-5">
+                                <div class="section-content text-center mt-3">
                                     <h2 class="title mb-2">Create Account</h2>
                                     <p class="desc-content">Please register using account detail below.</p>
                                 </div>
                                 <!-- Login Title & Content End -->
                 
                                 <!-- Form Action Start -->
-                                <form action="#" method="post">
+                                <form action="{% url 'register' %}" method="POST">
                 
                                     {% csrf_token %}
                                     {{ form.as_p }}
@@ -81,12 +85,13 @@
                                     <!-- Register Button Start -->
                                     <div class="single-input-item mb-3">
                                         <button class="btn btn btn-dark btn-hover-primary rounded-0">Register</button>
+                                       
                                     </div>
                                     <!-- Register Button End -->
                 
                                 </form>
                                 <!-- Form Action End -->
-                
+                                
                             </div>
                             <!-- Register Wrapper End -->
                         </div>
@@ -94,10 +99,20 @@
                 </div>
                 
                 {% endif %}
-            </div>
 
+                {% for message in messages %}
+                <script>
+                    swal({
+                        title: "{{ message.tags }}",
+                        text: "{{ message }}",
+                        icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% elif message.tags == 'info' %}info{% else %}error{% endif %}",
+                        button: "OK",
+                    });
+                </script>
         </div>
-    </div>
-    <!-- Login | Register Section End -->
-
+    </div>    
+</div>
+<!-- customer login end -->
+{% endfor %}
+   
 {% endblock %}

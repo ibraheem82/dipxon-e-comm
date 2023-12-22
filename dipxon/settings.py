@@ -84,8 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dipxon.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -150,6 +148,8 @@ STATICFILES_DIRS = [
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)

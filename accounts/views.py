@@ -1,43 +1,147 @@
 from django.shortcuts import render
-
+from django.contrib.auth import login, authenticate, logout
 # Create your views here.
-# from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
+from django.contrib import messages, auth
+from .forms import RegistrationForm
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+# ========> Login View <========
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import render, redirect
+import logging
+from .models import Account
+from django.contrib.sites.shortcuts import get_current_site
 
-# from .forms import 
-# from .models import Account
+# Create a logger instance
+logger = logging.getLogger(__name__)
+
+def loginUser(request):
+    page = 'login'
+
+    # ========> Login View <========
+    if request.method == 'POST':
+        # ===> from the login form, the name values.
+        email = request.POST['email']
+        password = request.POST['password']
+        
+        # * ===> will set the user so they can login
+        user = auth.authenticate(email=email, password=password)
+        
+        if user is not None:
+                # The user is valid, log them in.
+                auth.login(request, user)
+                messages.success(request, 'You are now logged in')
+                return redirect('home')
+        else:
+            messages.error(request, 'Invalid login credentials')
+            return redirect('login')
+    context = {'page': page}
+    return render(request, 'accounts/login_register.html', context)
+
+
+# def loginUser(request):
+#     page = 'login'
+
+#     if request.method == 'POST':
+#         email = request.POST['email'].lower()
+#         password = request.POST['password']
+        
+#         user = authenticate(request, email=email, password=password)
+
+#         if user is not None:
+#             login(request, user)
+#             return redirect('shop')
+#         else:
+#             messages.info(request, 'Email OR password is incorrect')
+
+#     return render(request, 'accounts/login_register.html', {'page': page})
 
 
 
 
-import requests
+
+
 
 # ========> Register View <========
+def registerUser(request):
+    page = 'register'
+    form  = RegistrationForm()
+    
+    if request.method == 'POST':
+        form  = RegistrationForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            phone_number = form.cleaned_data['phone_number']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            
+            username = email.split("@")[0]
+            
+            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+            user.phone_number = phone_number
+            user.save()
+            
+            current_site = get_current_site(request)
+            
+            mail_subject = 'Please activate your account'
 
+            message = render_to_string('accounts/account_verification_email.html', {
+                'user' : user,
+                'domain' : current_site,
+                'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+                'token' : default_token_generator.make_token(user),
+            })
+            
+            to_email = email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            messages.info(request, 'Thank you for registering! Please check your email to activate your account.')
+            send_email.send()
+            
+
+            return redirect('/accounts/login/?command=verification=' + email)
+
+        else:
+            form = RegistrationForm()
+
+    context = {'page' : page, 'form' : form}
+    return render(request, 'accounts/login_register.html', context)
 
 
 
 # ========> Activate View <========
+def activate(request, uidb64, token):
+
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        
+        user = Account._default_manager.get(id=uid)
+        
+
+    except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user  = None
+        
+    
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        
+        messages.success(request, 'Congratulations! your account is activated.')
+        return redirect('login')
+
+    else:
+        messages.error(request,'Invalid activation link OR the link has expired.')
+        return redirect('register')
 
 
-
-# def login_view(request):
-#     page = 'login'
-#     login_form = LoginForm(request.POST or None)
-
-#     if request.method == "POST":
-#         if login_form.is_valid():
-#             user = login_form.get_user()
-
-#             # Check for "Remember Me" checkbox
-#             if request.POST.get('rememberMe'):
-#                 set_remember_me_cookie(request, user)
-
-#             login(request, user)
-#             return redirect('home')
-
-#     context = {
-#         'login_form': login_form,
-#         'page': page
-#     }
-
-#     return render(request, 'accounts/login_register.html', context)
+# ========> Logout <========
+def logoutUser(request):
+    logout(request)
+    messages.info(request, 'User was logged out.')
+    return redirect('login')

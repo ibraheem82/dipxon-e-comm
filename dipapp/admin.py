@@ -17,7 +17,7 @@ class ProductAdmin(admin.ModelAdmin):
     
 admin.site.register(Product, ProductAdmin)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('user', 'created_at')
+    list_display = ('cart_id', 'date_added')
 
 
 class CartItemAdmin(admin.ModelAdmin):

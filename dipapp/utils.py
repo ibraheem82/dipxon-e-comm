@@ -2,10 +2,7 @@ import requests
 import pycountry
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
-
-
 
 def get_currency_symbol(country_code):
     try:
@@ -44,7 +41,7 @@ def get_user_country(request):
         if country_code is None:
             # Handle the case where country information is not available
             print("Country information not available.")
-            return 'US'  # Return 'US' for United State, which corresponds to Naira
+            return 'US'  # Return 'US' for United State, which corresponds to dollar
 
         return country_code  # Return the country code, not the entire dictionary
 
@@ -57,6 +54,13 @@ def get_user_country(request):
     # If an error occurred, return a default value or handle it as needed
     return 'XX'  # Replace with an appropriate default value
 
-# Example usage:
-# user_country = get_user_country(request)
-# currency_symbol = get_currency_symbol(user_country)
+
+
+
+def validate_quantity(product, quantity):
+    if quantity <= 0:
+        return "Quantity must be a positive integer."
+    elif product.stock < quantity:
+        return f"Insufficient stock for {product.product_name}. Only {product.stock} available."
+    else:
+        return None
