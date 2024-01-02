@@ -84,8 +84,8 @@ def registerUser(request):
             
             try:
                 user = Account.objects.create_user(
-                    first_name = form.cleaned_data['first_name'], last_name=form.cleaned_data['last_name'], email=form.cleaned_data['email'], username=form.cleaned_data['email'].split("@")[0],
-                    password=password
+                    **form.cleaned_data, 
+                    username=form.cleaned_data['email'].split("@")[0]
                     )
                 user.phone_number = form.cleaned_data['phone_number']
                 user.save()
@@ -110,10 +110,7 @@ def registerUser(request):
             except Exception as e:
                 messages.error(request, f"An error occurred during registration: {e}")
                 return redirect('register')
-
-        else:
-            # form = RegistrationForm()
-            print(form.errors)
+    print(form.errors)
 
     context = {'page' : page, 'form' : form}
     return render(request, 'accounts/login_register.html', context)

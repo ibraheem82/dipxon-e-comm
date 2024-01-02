@@ -50,12 +50,9 @@ class ProductsByCategoryView(View):
         return render(request, self.template_name, {'category': category, 'products': products})
 # -------
 def _cart_id(request):
-    # ===> we are creating a new session
     cart = request.session.session_key
     if not cart:
-    # ===> if there is no session, a new seesion will be created
         cart = request.session.create()
-    # ===> this will return the cart id
     return cart
 
 
@@ -64,23 +61,10 @@ def add_to_cart(request, product_id):
         product = Product.objects.get(pk=product_id)
         
         # Retrieve or create cart based on session cart_id:
-        cart = Cart.objects.get(cart_id=_cart_id(request))
-    except Cart.DoesNotExist:
-        cart_id = _cart_id(request)
-        cart = Cart.objects.create(cart_id=cart_id)
-
-
-         # Check for authenticated user and retrieve relevant cart
-        if request.user.is_authenticated:
-            cart.user = request.user  # Associate cart with authenticated user
-            cart.save()
-            cart_item, cart_item_created = CartItem.objects.get_or_create(cart=cart, product=product)
-        else:
-           cart_item_data = cart.cart.get(str(product_id), {'quantity': 0})
-           cart_item_data['quantity'] += 1
-           cart.cart[str(product_id)] = cart_item_data
-           request.session['cart'] = cart.cart
-           return JsonResponse({'success': True, 'message': f"{product.product_name} added to your cart."})
+        cart, cart_created = Cart.objects.get_or_create(cart_id=_cart_id(request))
+        
+        # Get or create cart item
+        cart_item, cart_item_created = CartItem.objects.get_or_create(cart=cart, product=product)
 
         # Get desired quantity from form
         quantity = int(request.POST.get('quantity', 1))
@@ -94,6 +78,11 @@ def add_to_cart(request, product_id):
        # Update cart item quantity
         cart_item.quantity += quantity
         cart_item.save()
+        
+        # If the user is not authenticated, update the session-based cart
+        if not request.user.is_authenticated:
+            cart.cart[str(product_id)] = {'quantity': cart_item.quantity}
+            request.session['cart'] = cart.cart
 
         # Prepare successful response data
         data = {
