@@ -6,7 +6,6 @@ carts/migrations
 carts/__pycache__
 dipxon/__pycache__
 ibraheem
-db.sqlite3
 app-content.txt
 accounts/migrations
 accounts/__pycache__

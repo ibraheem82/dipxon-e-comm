@@ -17,6 +17,7 @@ from django.shortcuts import render, redirect
 import logging
 from .models import Account
 from django.contrib.sites.shortcuts import get_current_site
+from django import forms
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -76,39 +77,40 @@ def registerUser(request):
     if request.method == 'POST':
         form  = RegistrationForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            phone_number = form.cleaned_data['phone_number']
-            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            confirm_password = form.cleaned_data['confirm_password']
+            if password != confirm_password:
+                form.add_error('confirm_password', "Passwords do not match!")
             
-            username = email.split("@")[0]
-            
-            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
-            user.phone_number = phone_number
-            user.save()
-            
-            current_site = get_current_site(request)
-            
-            mail_subject = 'Please activate your account'
+            try:
+                user = Account.objects.create_user(
+                    **form.cleaned_data, 
+                    username=form.cleaned_data['email'].split("@")[0]
+                    )
+                user.phone_number = form.cleaned_data['phone_number']
+                user.save()
+                current_site = get_current_site(request)
+                
+                mail_subject = 'Please activate your account'
 
-            message = render_to_string('accounts/account_verification_email.html', {
-                'user' : user,
-                'domain' : current_site,
-                'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
-                'token' : default_token_generator.make_token(user),
-            })
-            
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            messages.info(request, 'Thank you for registering! Please check your email to activate your account.')
-            send_email.send()
+                message = render_to_string('accounts/account_verification_email.html', {
+                    'user' : user,
+                    'domain' : current_site,
+                    'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token' : default_token_generator.make_token(user),
+                })
+                
+                to_email = user.email
+                send_email = EmailMessage(mail_subject, message, to=[to_email])
+                messages.info(request, 'Thank you for registering! Please check your email to activate your account.')
+                send_email.send()
             
 
-            return redirect('/accounts/login/?command=verification=' + email)
-
-        else:
-            form = RegistrationForm()
+                return redirect('/accounts/login/?command=verification&email=' + user.email)
+            except Exception as e:
+                messages.error(request, f"An error occurred during registration: {e}")
+                return redirect('register')
+    print(form.errors)
 
     context = {'page' : page, 'form' : form}
     return render(request, 'accounts/login_register.html', context)
