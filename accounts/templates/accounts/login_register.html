@@ -77,17 +77,41 @@
                                 <!-- Login Title & Content End -->
                 
                                 <!-- Form Action Start -->
-                                <form action="{% url 'register' %}" method="POST">
+                                <form class="was-validated" action="{% url 'register' %}" method="POST">
                 
                                     {% csrf_token %}
-                                    {{ form.as_p }}
-                
-                                    <!-- Register Button Start -->
-                                    <div class="single-input-item mb-3">
-                                        <button class="btn btn btn-dark btn-hover-primary rounded-0">Register</button>
-                                       
-                                    </div>
-                                    <!-- Register Button End -->
+                                    
+                                    {% for field in form %}
+    <div class="mb-3">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.name == 'confirm_password' %}
+            <div class="invalid-feedback d-block">
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% else %}
+                <div class="invalid-feedback d-block"> 
+                    {% for error in form.non_field_errors %}
+                        <ul class="errorlist">
+                            <li>{{ error }}</li>
+                        </ul>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        {% elif field.errors %}
+            <div class="invalid-feedback d-block">
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+                    <button class="btn btn-primary" type="submit" {% if form.is_valid %}disabled{% endif %}>Register</button>
                 
                                 </form>
                                 <!-- Form Action End -->
