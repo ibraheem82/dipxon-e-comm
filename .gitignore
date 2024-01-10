@@ -12,3 +12,4 @@ accounts/__pycache__
 media
 sent_emails
 static
+db.sqlite3
