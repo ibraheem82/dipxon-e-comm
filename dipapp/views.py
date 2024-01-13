@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.exceptions import ObjectDoesNotExist
 from .utils import validate_quantity
-
+from django.http import Http404
 
 def home(request):
     products = Product.objects.all()[:5]
@@ -58,62 +58,48 @@ class ProductsByCategoryView(View):
         category = Category.objects.get(unique_id=category_id)
         products = Product.objects.filter(category=category)
         return render(request, self.template_name, {'category': category, 'products': products})
-# -------
-def _cart_id(request):
-    cart = request.session.session_key
-    if not cart:
-        cart = request.session.create()
-    return cart
-
 
 def add_to_cart(request, product_id):
     try:
-        product = Product.objects.get(pk=product_id)
-        
-        # Retrieve or create cart based on session cart_id:
-        cart, cart_created = Cart.objects.get_or_create(cart_id=_cart_id(request))
-        
-        # Get or create cart item
-        cart_item, cart_item_created = CartItem.objects.get_or_create(cart=cart, product=product)
+        product = get_object_or_404(Product, pk=product_id)
+        cart, cart_created = Cart.objects.get_or_create(cart_id=request.session.session_key)
 
-        # Get desired quantity from form
+        # Retrieve existing cart item or create a new one
+        cart_item, cart_item_created = cart.cartitem_set.get_or_create(product=product, defaults={'quantity': 0})  # Set default quantity to 0
+
         quantity = int(request.POST.get('quantity', 1))
-
-        # Get desired quantity and validate
         error_message = validate_quantity(product, quantity)
         if error_message:
             return JsonResponse({'success': False, 'message': error_message})
 
-
-       # Update cart item quantity
+        # Update quantity of existing item instead of creating a new one
         cart_item.quantity += quantity
         cart_item.save()
-        
-        # If the user is not authenticated, update the session-based cart
-        if not request.user.is_authenticated:
-            cart.cart[str(product_id)] = {'quantity': cart_item.quantity}
-            request.session['cart'] = cart.cart
 
-        # Prepare successful response data
+        # Save cart to recalculate grandtotal
+        cart.save()
+
         data = {
             'success': True,
-            'message': f"{quantity} {product.product_name}(s) added to your cart.",
-            'cart_quantity': cart_item.quantity,  # Include updated cart quantity for the product
+            'message': f"{product.product_name} added to your cart.",
+            'cart_quantity': cart_item.quantity,
+            'cart_items': [{
+                'product_name': item.product.product_name,
+                'quantity': item.quantity,
+                'price': item.product.price,
+                'image_url': item.product.product_images.first().image.url,
+                'product_url': item.product.get_url(),
+            } for item in cart.cartitem_set.all()],
+            'cart_subtotal': cart.grandtotal,
         }
-
         return JsonResponse(data, safe=True)
 
-    except ObjectDoesNotExist:
-        return JsonResponse({
-            'success': False,
-            'message': "Product not found."
-        })
+    except Http404:
+        return JsonResponse({'success': False, 'message': "Product not found."})
 
     except ValueError as ve:
-        return JsonResponse({
-            'success': False,
-            'message': f"Invalid quantity entered: {ve}"
-        })
+        return JsonResponse({'success': False, 'message': f"Invalid quantity entered: {ve}"})
+
 
 
 

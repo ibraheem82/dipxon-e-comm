@@ -78,11 +78,14 @@
                             </ul>
                         </div> -->
                         <div class="product_variant quantity">
-                            <label>quantity</label>
-                            <input value="1" type="number">
-                            <input type="hidden" name="product_id" id="productId" value="{{ product.product_id }}">
-                            <button class="button" type="submit">add to cart</button>  
-                            
+                            <input type="hidden" 
+                                    name="product_id" 
+                                    id="productId"
+                                     value="{{ product.product_id }}">
+                                     
+                            <button class="button" id="addToCartButton" {% if isInCart %}disabled style="cursor:auto;"{% endif %}>
+                                {% if isInCart %}Already in Cart{% else %}add to cart{% endif %}
+                            </button>
                         </div>
                         <!-- <div class=" product_d_action">
                            <ul>

@@ -37,7 +37,7 @@ class Product(models.Model):
        return self.product_name
     
     def get_url(self):
-        return reverse('product_details', args = [self.category.slug, self.slug])      
+        return reverse('product_details', args = [str(self.product_id)])      
         
 class ProductImage(models.Model):
     MAX_IMAGES_PER_PRODUCT = 5
@@ -78,15 +78,16 @@ class ProductImage(models.Model):
 
 
 class Cart(models.Model):
+    user        =  models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     cart_id     = models.CharField(max_length=250, blank=True)
     date_added  = models.DateField(auto_now_add=True)
     def __str__(self):
-        return f"{self.user}'s Cart"
+        return "ok"
 
     # grandtotal property: Calculates the total price of all items in the cart. It first retrieves all associated cart items using cartitems_set.all(). Then, it uses list comprehension to sum the subtotal of each item.
     @property
     def grandtotal(self):
-        cartitems = self.cartitems_set.all()
+        cartitems = self.cartitem_set.all()
         total = sum([item.subtotal for item in cartitems])
         return total
     
@@ -101,7 +102,7 @@ class Cart(models.Model):
     
 
 class CartItem(models.Model):
-    user        =  models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    
     cart        = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product     = models.ForeignKey(Product, on_delete=models.CASCADE) 
     quantity    = models.PositiveIntegerField(default=0)
