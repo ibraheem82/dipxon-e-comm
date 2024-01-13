@@ -38,7 +38,17 @@ class ProductDetailView(View):
 
     def get(self, request, product_id):
         product = get_object_or_404(Product, product_id=product_id)
-        return render(request, self.template_name, {'product': product})
+
+        # Check if product is in cart
+        cart, cart_created = Cart.objects.get_or_create(cart_id=request.session.session_key)
+        cart_items = cart.cartitem_set.all()
+        isInCart = cart_items.filter(product=product).exists()
+
+        return render(request, self.template_name, {
+            'product': product,
+            'isInCart': isInCart,
+        })
+
     
     
 class ProductsByCategoryView(View):
