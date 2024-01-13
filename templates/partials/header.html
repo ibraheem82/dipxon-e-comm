@@ -171,30 +171,23 @@
                     <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                 </div>
             </div>
+
+            {% for cart_item in cart_items %}
+
             <div class="cart_item">
                 <div class="cart_img">
                     <a href="#"><img src="{% static 'assets/img/s-product/product.jpg' %}" alt=""></a>
                 </div>
                 <div class="cart_info">
-                    <a href="#">Juicy Couture Tricot</a>
+                    <a href="#">{{ cart_item.product_name }}</a>
                     <p>1 x <span> $30.00 </span></p>    
                 </div>
                 <div class="cart_remove">
                     <a href="#"><i class="ion-ios-close-outline"></i></a>
                 </div>
             </div>
-            <div class="cart_item">
-                <div class="cart_img">
-                    <a href="#"><img src="{% static 'assets/img/s-product/product2.jpg' %}" alt=""></a>
-                </div>
-                <div class="cart_info">
-                    <a href="#">Juicy Couture Juicy</a>
-                    <p>1 x <span> $29.00 </span></p>    
-                </div>
-                <div class="cart_remove">
-                    <a href="#"><i class="ion-ios-close-outline"></i></a>
-                </div>
-            </div>
+            {% endfor %}
+
         </div>
         <div class="mini_cart_table">
             <div class="cart_table_border">
