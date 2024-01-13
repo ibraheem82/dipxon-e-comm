@@ -81,6 +81,9 @@
                             <label>quantity</label>
                             <input value="1" type="number">
                             <input type="hidden" name="product_id" id="productId" value="{{ product.product_id }}">
+                            {% if isInCart %}
+                                <button class="button" type="button" disabled style="cursor:auto ;">Already in Cart</button>
+                            {% else %}
                             <button class="button" type="submit">add to cart</button>  
                             
                         </div>
