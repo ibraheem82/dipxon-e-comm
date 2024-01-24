@@ -49,8 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'dipapp',
-    'category',
+    # 'dipapp',
+    # 'category',
     'django.contrib.humanize'
 ]
 
@@ -149,7 +149,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'accounts.User'
 
 JAZZMIN_SETTINGS = {
     # title of the window (Will default to current_admin_site.site_title if absent or None)
