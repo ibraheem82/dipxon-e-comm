@@ -58,6 +58,12 @@ class ProductsByCategoryView(View):
         category = Category.objects.get(unique_id=category_id)
         products = Product.objects.filter(category=category)
         return render(request, self.template_name, {'category': category, 'products': products})
+    
+def _cart_id(request):
+    cart = request.session.session_key
+    if not cart:
+        cart = request.session.create()
+    return cart
 
 def add_to_cart(request, product_id):
     try:
