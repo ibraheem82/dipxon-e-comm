@@ -23,120 +23,105 @@
 </div>
 <!--breadcrumbs area end-->
 
-<!-- customer login start -->
-<div class="customer_login">
-    <div class="container">
-        <div class="row justify-content-center">
-           <!--login area start-->
-           {% if page == 'login' %}
-            <div class="col-lg-6 col-md-6 justify-content-center">
-                <div class="account_form">
-                    <h2>login</h2>
-                    <form action="{% url 'login' %}" method="POST">
-                        {% csrf_token %}
 
-
-                        <p>   
-                            <label>Email<span>*</span></label>
-                            <input type="email" class="form-control" placeholder="Email Address" name="email">
-                         </p>
-                         <p>   
-                            <label>Passwords<span>*</span></label>
-                            <input type="password" class="form-control" placeholder="Password" name="password">
-                         </p>   
-
-                         
-                        <div class="login_submit">
-                           <a href="#">Lost your password?</a>
-                            <label for="remember">
-                                <input id="remember" type="checkbox">
-                                Remember me
-                            </label>
-                            <button type="submit">login</button>
-                            
-                        </div>
-
-                    </form>
-                 </div>    
-            </div>
-            {% endif %}
             <!--login area start-->
 
+
+            <!-- * NEW LOGIN PAGE START HERE -->
+
+                <!-- customer login start -->
+                {% if page == 'login' %}
+            <div class="customer_login">
+                <div class="container d-flex justify-content-center">
+                
+                    <!--login area start-->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="account_form">
+                                <h2 class="text-center">login</h2>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <p>   
+                                        <label>Email <span>*</span></label>
+                                        <input type="email" name="email" required placeholder="Email">
+                                    </p>
+                                    <p>   
+                                        <label>Passwords <span>*</span></label>
+                                        <input type="password" name="password" required placeholder="Password">
+                                    </p>   
+                                    <div class="login_submit">
+                                     <a href="#">Lost your password?</a> 
+                                        <label for="remember">
+                                            <input id="remember" type="checkbox">
+                                            Remember me
+                                        </label> 
+                                        <button type="submit" name="submit">login</button>
+                                        
+                                    </div>
+
+                                </form>
+                            </div>    
+                        </div>
+                        <!--login area start-->
+                </div>    
+            </div>
+            <!-- customer login end -->
+            {% endif %}
+
+    <!-- * NEW LOGIN PAGE STOPS HERE -->
+
+
+
+
+            <!-- ** NEW REGISTER PAGE START HERE -->
             {% if page == 'register' %}
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6 col-md-8 m-auto pb-10  card">
-                            <!-- Register Wrapper Start -->
-                            <div class="register-wrapper">
-                
-                                <!-- Login Title & Content Start -->
-                                <div class="section-content text-center mt-3">
-                                    <h2 class="title mb-2">Create Account</h2>
-                                    <p class="desc-content">Please register using account detail below.</p>
-                                </div>
-                                <!-- Login Title & Content End -->
-                
-                                <!-- Form Action Start -->
-                                <form class="was-validated" action="{% url 'register' %}" method="POST">
-                
+            <div class="customer_login">
+                {% if form.errors %}
+                    <div class="alert alert-danger text-center">
+                        <span>{{form.errors}}</span>
+                    </div>
+                    {% endif %}
+                <div class="container d-flex justify-content-center">
+                    
+                <!--register area start-->
+                <div class="col-lg-6 col-md-6 ">
+                            <div class="account_form register">
+                                <h2 class="text-center">Register Now. Dress Like You Mean It</h2>
+                                <form method="POST">
                                     {% csrf_token %}
                                     
-                                    {% for field in form %}
-    <div class="mb-3">
-        {{ field.label_tag }}
-        {{ field }}
-        {% if field.name == 'confirm_password' %}
-            <div class="invalid-feedback d-block">
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        {{ error }}
-                    {% endfor %}
-                {% else %}
-                <div class="invalid-feedback d-block"> 
-                    {% for error in form.non_field_errors %}
-                        <ul class="errorlist">
-                            <li>{{ error }}</li>
-                        </ul>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-        {% elif field.errors %}
-            <div class="invalid-feedback d-block">
-                {% for error in field.errors %}
-                    {{ error }}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
-{% endfor %}
+                                    <p>   
 
-                    <button class="btn btn-primary" type="submit" {% if form.is_valid %}disabled{% endif %}>Register</button>
-                
+                                        {{form.username}}
+                                     </p>
+
+                                     <p>   
+
+                                        {{form.email}}
+                                     </p>
+                                     <p>   
+
+                                        {{form.password1}}
+                                     </p>
+                                     <p>   
+
+                                        {{form.password2}}
+                                     </p>
+                                     
+                                    <div class="login_submit">
+                                        <a href="{% url "login" %}">Login</a> 
+
+                                        <button type="submit" name="submit">Register</button>
+                                    </div>
                                 </form>
-                                <!-- Form Action End -->
-                                
-                            </div>
-                            <!-- Register Wrapper End -->
+                            </div>    
                         </div>
-                    </div>
-                </div>
-                
-                {% endif %}
+                        <!--register area end-->
+        
+                </div>    
+            </div>
+            {% endif %}
 
-                {% for message in messages %}
-                <script>
-                    swal({
-                        title: "{{ message.tags }}",
-                        text: "{{ message }}",
-                        icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'warning' %}warning{% elif message.tags == 'info' %}info{% else %}error{% endif %}",
-                        button: "OK",
-                    });
-                </script>
-        </div>
-    </div>    
-</div>
+            <!-- ** NEW REGISTER PAGE STOPS HERE -->
 <!-- customer login end -->
-{% endfor %}
    
 {% endblock %}
