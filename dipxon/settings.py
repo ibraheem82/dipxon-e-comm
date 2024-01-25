@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    # 'dipapp',
-    # 'category',
+    'dipapp',
     'django.contrib.humanize'
 ]
 
