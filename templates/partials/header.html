@@ -205,6 +205,19 @@
 									<li><a href="my-account.html">My account</a></li>
 									<li><a href="#">Order History</a></li>
 									<li><a href="wishlist.html">Wishlist</a></li>
+                                   
+                                    
+                                    
+                                    {% if request.user.is_authenticated %}
+									<li>
+                                        <li><a href="{% url "logout" %}">Logout</a></li>
+                                        {% else %}
+                                        <a href="{% url "register" %}">
+                                            Register
+                                        </a>
+                                    </li>
+									<li><a href="{% url "login" %}">Login</a></li>
+                                    {% endif %}
 									<li><a href="cart.html">Shipping</a></li>
 								</ul>
 							</div>
@@ -213,6 +226,8 @@
 				</div>
 			</div>
         </div> 
+
+        
         <!--mini cart-->
         <div class="mini_cart">
             <div class="cart_gallery">
@@ -272,5 +287,7 @@
             </div>
         </div>
         <!--mini cart end-->
+
+
     </header>
     <!--header area end-->
