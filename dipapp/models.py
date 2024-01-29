@@ -36,7 +36,7 @@ RATING = (
 
 
 def user_directory_path(instance, filename):
-    return 'user_{0}/{1}'.format(instance.user.id)
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 class Category(models.Model):
     # cid is the same as (id)
@@ -98,7 +98,7 @@ class Product(models.Model):
     
     old_price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "2.99")
     specifications = models.TextField(null = True, blank = True)
-    tags = models.ForeignKey(Tags, on_delete = models.SET_NULL, null = True)
+    # tags = models.ForeignKey(Tags, on_delete = models.SET_NULL, null = True)
     product_status = models.CharField(choices = STATUS, max_length = 10, default="in_review")
     status = models.BooleanField(default=True)
     in_stock = models.BooleanField(default=True)
