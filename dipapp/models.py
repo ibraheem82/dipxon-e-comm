@@ -18,8 +18,47 @@ STATUS_CHOICE = (
     modified_date  = models.DateTimeField(auto_now=True)
 
 
+# ###########
+STATUS = (
+    ("draft", "Draft"),
+    ("disabled", "Disabled"),
+    ("rejected", "Rejected"),
+    ("in_review", "In Review"),
+    ("published", "Published"),
+)
+
+
+
+
+RATING = (
+    (1, "★☆☆☆☆"),
+    (2, "★★☆☆☆"),
+    (3, "★★★☆☆"),
+    (4, "★★★★☆"),
+    (5, "★★★★★"),
+)
+
+
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id)
+
+class Category(models.Model):
+    # cid is the same as (id)
+    # cat is the prefix and it will be added along side the shortuuidfield
+    # will be picking random alphabet and numbers to make up the id (alphabet)
+    cid = ShortUUIDField(unique = True, length = 10, max_length = 30, prefix="cat", alphabet="abcbefghi12345")
+    title = models.CharField(max_length = 100, default="Fashion")
+    image = models.ImageField(upload_to="category", default="category.jpg")
+    
+    
+    class Meta:
+        verbose_name_plural = "Categories"
+        
+    def category_image(self):
+        return mark_safe('<img src ="%s" width="50" height="50" />' % (self.image.url))
+
     def __str__(self):
-       return self.product_name
+        return self.title
     
     def get_url(self):
         return reverse('product_details', args = [str(self.product_id)])      
