@@ -1,26 +1,8 @@
 from django.db import models
-from PIL import Image
-import os
-from category.models import Category
-from django.urls import reverse
-from django.db import models
-from accounts.models import Account
-import uuid
-# Create your models here.
+from shortuuid.django_fields import ShortUUIDField
 
-class Product(models.Model):
-    AVAILABILITY_CHOICES = [
-        ('available', 'Available'),
-        ('out_of_stock', 'Out of Stock'),
-        ('coming_soon', 'Coming Soon'),
-        ('new', 'New'), 
-    ]
-    product_name   = models.CharField(max_length=200, unique=True)
-    slug           = models.SlugField(max_length=200, unique=True)
-    description    = models.TextField(max_length=500, blank=True)
-    price = models.FloatField()
-    old_price = models.PositiveIntegerField(blank=True, null=True, default=0)
-            
+from accounts.models import User
+
     stock          = models.IntegerField()
     is_available   = models.CharField(
         max_length=20,
