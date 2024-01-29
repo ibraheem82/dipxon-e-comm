@@ -62,12 +62,30 @@ class Category(models.Model):
     
     def get_url(self):
         return reverse('product_details', args = [str(self.product_id)])      
+    
+class Tags(models.Model):
+    pass
         
-class ProductImage(models.Model):
-    MAX_IMAGES_PER_PRODUCT = 5
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
-    image   = models.ImageField(upload_to='photos/products')
+        
+class Vendor(models.Model):
+    vid = ShortUUIDField(unique = True, length = 10, max_length = 30, prefix="ven", alphabet="abcbefghi12345")
+    title = models.CharField(max_length = 100, default="Ibraheem")
+    image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
+    description = models.TextField(null = True, blank = True, default="Good company")
+    address = models.CharField(max_length = 100, default = "12 Sadiku street Ilasamaja lagos state")
+    contact = models.CharField(max_length = 100, default = "+234 8102673964")
+    chat_resp_time = models.CharField(max_length = 100, default = "100", null = True, blank = True)
+    shipping_on_time = models.CharField(max_length = 100, default = "100", null = True, blank = True)
+    authentic_rating = models.CharField(max_length = 100, default="100", null = True, blank = True)
+    days_return = models.CharField(max_length = 100, default = "100", null = True, blank = True)
+    warranty_period = models.CharField(max_length = 100,  default = "100", null = True, blank = True)
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    
+    class Meta:
+        verbose_name_plural = "Vendors"
+    
+    def vendor_image(self):
+        return mark_safe('<img src ="%s" width="50" height="50" />' % (self.image.url))
 
     def __str__(self):
         return f"Image for {self.product.product_name}"
