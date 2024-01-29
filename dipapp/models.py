@@ -42,9 +42,9 @@ class Category(models.Model):
     # cid is the same as (id)
     # cat is the prefix and it will be added along side the shortuuidfield
     # will be picking random alphabet and numbers to make up the id (alphabet)
-    cid = ShortUUIDField(unique = True, length = 10, max_length = 30, prefix="cat", alphabet="abcbefghi12345")
-    title = models.CharField(max_length = 100, default="Fashion")
-    image = models.ImageField(upload_to="category", default="category.jpg")
+    cid         = ShortUUIDField(unique = True, length = 10, max_length = 30, prefix      ="cat", alphabet="abcbefghi12345")
+    title       = models.CharField(max_length = 100, default="Fashion")
+    image       = models.ImageField(upload_to="category", default="category.jpg")
     
     
     class Meta:
@@ -62,18 +62,39 @@ class Tags(models.Model):
         
         
 class Vendor(models.Model):
-    vid = ShortUUIDField(unique = True, length = 10, max_length = 30, prefix="ven", alphabet="abcbefghi12345")
-    title = models.CharField(max_length = 100, default="Ibraheem")
-    image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
-    description = models.TextField(null = True, blank = True, default="Good company")
-    address = models.CharField(max_length = 100, default = "12 Sadiku street Ilasamaja lagos state")
-    contact = models.CharField(max_length = 100, default = "+234 8102673964")
-    chat_resp_time = models.CharField(max_length = 100, default = "100", null = True, blank = True)
-    shipping_on_time = models.CharField(max_length = 100, default = "100", null = True, blank = True)
-    authentic_rating = models.CharField(max_length = 100, default="100", null = True, blank = True)
-    days_return = models.CharField(max_length = 100, default = "100", null = True, blank = True)
-    warranty_period = models.CharField(max_length = 100,  default = "100", null = True, blank = True)
-    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    vid                 = ShortUUIDField(unique = True,
+                                         length = 10,
+                                         max_length = 30,
+                                         prefix="ven", alphabet="abcbefghi12345")
+    title               = models.CharField(max_length = 100, default="Ibraheem")
+    image               = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
+    description         = models.TextField(null = True, blank = True, default="Good company")
+    address             = models.CharField(max_length = 100, default = "12 Sadiku street Ilasamaja lagos state")
+    contact             = models.CharField(max_length = 100, 
+                                           default = "+234 8102673964")
+    chat_resp_time      = models.CharField(max_length = 100,
+                                           default = "100", 
+                                           null = True,
+                                           blank = True)
+    shipping_on_time    = models.CharField(max_length = 100,
+                                           default = "100",
+                                           null = True,
+                                           blank = True)
+    authentic_rating    = models.CharField(max_length = 100,
+                                           default="100",
+                                           null = True,
+                                           blank = True)
+    days_return         = models.CharField(max_length = 100, 
+                                           default = "100",
+                                           null = True,
+                                           blank = True)
+    warranty_period     = models.CharField(max_length = 100,
+                                       default = "100",
+                                       null = True,
+                                       blank = True)
+    user                = models.ForeignKey(User,
+                                            on_delete = models.SET_NULL, 
+                                            null = True)
     
     class Meta:
         verbose_name_plural = "Vendors"
@@ -87,26 +108,48 @@ class Vendor(models.Model):
 
 
 class Product(models.Model):
-    pid = ShortUUIDField(unique = True, length = 10, max_length = 20, alphabet="abcbefghi12345")
-    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
-    category = models.ForeignKey(Category, on_delete = models.SET_NULL, null = True)
-    title = models.CharField(max_length = 100, default = "new cloth")
-    image = models.ImageField(upload_to="category", default="product.jpg")
-    description = models.TextField(null = True, blank = True, default = "Porduct")
+    pid                 = ShortUUIDField(unique = True, 
+                                         length = 10,
+                                         max_length = 20, 
+                                         alphabet="abcbefghi12345")
+    user                = models.ForeignKey(User, 
+                                            on_delete = models.SET_NULL, 
+                                            null = True)
+    category            = models.ForeignKey(Category,
+                                            on_delete = models.SET_NULL,
+                                            null = True)
+    title               = models.CharField(max_length = 100, 
+                                           default = "new cloth")
+    image               = models.ImageField(upload_to="category",
+                                            default="product.jpg")
+    description         = models.TextField(null = True,
+                                           blank = True,
+                                           default = "Porduct")
     
-    price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
+    price               = models.DecimalField(max_digits=9999999999999999, 
+                                              decimal_places = 2,
+                                              default = "1.99")
     
-    old_price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "2.99")
-    specifications = models.TextField(null = True, blank = True)
+    old_price           = models.DecimalField(max_digits=9999999999999999, 
+                                              decimal_places = 2,
+                                              default = "2.99")
+    specifications      = models.TextField(null = True,
+                                           blank = True)
     # tags = models.ForeignKey(Tags, on_delete = models.SET_NULL, null = True)
-    product_status = models.CharField(choices = STATUS, max_length = 10, default="in_review")
-    status = models.BooleanField(default=True)
-    in_stock = models.BooleanField(default=True)
-    featured = models.BooleanField(default=False)
-    digital = models.BooleanField(default=False)
-    sku = ShortUUIDField(unique = True, length = 4, prefix ="sku", max_length = 10, alphabet="1234567890")
-    date = models.DateTimeField(auto_now_add = True)
-    updated = models.DateTimeField(null = True, blank = True)
+    product_status      = models.CharField(choices = STATUS,
+                                      max_length = 10,
+                                      default="in_review")
+    status              = models.BooleanField(default=True)
+    in_stock            = models.BooleanField(default=True)
+    featured            = models.BooleanField(default=False)
+    digital             = models.BooleanField(default=False)
+    sku                 = ShortUUIDField(unique = True,
+                                         length = 4, 
+                                         prefix ="sku",
+                                         max_length = 10,
+                                         alphabet="1234567890")
+    date                = models.DateTimeField(auto_now_add = True)
+    updated             = models.DateTimeField(null = True, blank = True)
     
     
     
@@ -125,18 +168,18 @@ class Product(models.Model):
 
 
 class ProductImages(models.Model):
-    images = models.ImageField(upload_to="product-images", default="product.jpg")
-    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
-    date = models.DateTimeField(auto_now_add = True)
+    images              = models.ImageField(upload_to="product-images", default="product.jpg")
+    product             = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
+    date                = models.DateTimeField(auto_now_add = True)
     
     class Meta:
         verbose_name_plural = "Product Images"
 
 
 class CartOrder(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
-    paid_status = models.BooleanField(default=False)
+    user                = models.ForeignKey(User, on_delete = models.CASCADE)
+    price               = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
+    paid_status         = models.BooleanField(default=False)
     order_date = models.DateTimeField(auto_now_add = True)
     product_status = models.CharField(choices = STATUS_CHOICE, max_length = 30, default="Processing")
     
