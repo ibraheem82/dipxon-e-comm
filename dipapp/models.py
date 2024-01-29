@@ -12,10 +12,6 @@ STATUS_CHOICE = (
     ("shipped", "Shipped"),
     ("delivered", "Delivered"),
 )
-    category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-    product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
-    created_date   = models.DateTimeField(auto_now_add=True)
-    modified_date  = models.DateTimeField(auto_now=True)
 
 
 # ###########
@@ -60,8 +56,6 @@ class Category(models.Model):
     def __str__(self):
         return self.title
     
-    def get_url(self):
-        return reverse('product_details', args = [str(self.product_id)])      
     
 class Tags(models.Model):
     pass
@@ -88,76 +82,136 @@ class Vendor(models.Model):
         return mark_safe('<img src ="%s" width="50" height="50" />' % (self.image.url))
 
     def __str__(self):
-        return f"Image for {self.product.product_name}"
-
-    def save(self, *args, **kwargs):
-        # Check the number of existing images for the product
-        existing_images_count = self.product.product_images.count()
-
-        if existing_images_count >= self.MAX_IMAGES_PER_PRODUCT:
-            # If the maximum number of images is reached, don't save the new image
-            return
-
-        super().save(*args, **kwargs)
-
-        if self.image and self.image.name:
-            product_name = self.product.product_name.replace(" ", "_").lower()
-            base_filename = f"{product_name}_image_{self.pk}.png"
-
-            img = Image.open(self.image.path)
-            resized_img = img.resize((500, 666), resample=Image.LANCZOS)
-
-            output_path = os.path.join("media", "photos", "products", base_filename)
-            resized_img.save(output_path, "PNG")
-
-            # Delete the original image file after saving the resized image
-            os.remove(self.image.path)
-
-            # Update the image field with the resized image path
-            self.image.name = os.path.join("photos", "products", base_filename)
-            super().save(*args, **kwargs)
-
-
-
-class Cart(models.Model):
-    user        =  models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
-    cart_id     = models.CharField(max_length=250, blank=True)
-    date_added  = models.DateField(auto_now_add=True)
-    def __str__(self):
-        return "ok"
-
-    # grandtotal property: Calculates the total price of all items in the cart. It first retrieves all associated cart items using cartitems_set.all(). Then, it uses list comprehension to sum the subtotal of each item.
-    @property
-    def grandtotal(self):
-        cartitems = self.cartitem_set.all()
-        total = sum([item.subtotal for item in cartitems])
-        return total
-    
-    
-    # cartquantity property: Calculates the total quantity of all items in the cart. Similar to grandtotal, it retrieves all cart items and uses list comprehension to sum their quantity.
-    @property
-    def cartquantity(self):
-        cartitems = self.cartitems_set.all()
-        total = sum([item.quantity for item in cartitems])
-        return total
-    
+        return self.title
     
 
-class CartItem(models.Model):
+
+class Product(models.Model):
+    pid = ShortUUIDField(unique = True, length = 10, max_length = 20, alphabet="abcbefghi12345")
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    category = models.ForeignKey(Category, on_delete = models.SET_NULL, null = True)
+    title = models.CharField(max_length = 100, default = "new cloth")
+    image = models.ImageField(upload_to="category", default="product.jpg")
+    description = models.TextField(null = True, blank = True, default = "Porduct")
     
-    cart        = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product     = models.ForeignKey(Product, on_delete=models.CASCADE) 
-    quantity    = models.PositiveIntegerField(default=0)
-    is_active   = models.BooleanField(default=True)
+    price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
+    
+    old_price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "2.99")
+    specifications = models.TextField(null = True, blank = True)
+    tags = models.ForeignKey(Tags, on_delete = models.SET_NULL, null = True)
+    product_status = models.CharField(choices = STATUS, max_length = 10, default="in_review")
+    status = models.BooleanField(default=True)
+    in_stock = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)
+    digital = models.BooleanField(default=False)
+    sku = ShortUUIDField(unique = True, length = 4, prefix ="sku", max_length = 10, alphabet="1234567890")
+    date = models.DateTimeField(auto_now_add = True)
+    updated = models.DateTimeField(null = True, blank = True)
+    
+    
+    
+    class Meta:
+        verbose_name_plural = "Products"
+    
+    def product_image(self):
+        return mark_safe('<img src ="%s" width="50" height="50" />' % (self.image.url))
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.product_name}"
+        return self.title
+
+    def get_percentage(self):
+        new_price = (self.price / self.old_price) * 100
+        return new_price
+
+
+class ProductImages(models.Model):
+    images = models.ImageField(upload_to="product-images", default="product.jpg")
+    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
+    date = models.DateTimeField(auto_now_add = True)
     
-    def __unicode__(self):
-        return self.product
+    class Meta:
+        verbose_name_plural = "Product Images"
+
+
+class CartOrder(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
+    paid_status = models.BooleanField(default=False)
+    order_date = models.DateTimeField(auto_now_add = True)
+    product_status = models.CharField(choices = STATUS_CHOICE, max_length = 30, default="Processing")
     
-    # The subtotal property calculates the total price of a specific item in the cart based on its quantity and price
-    @property
-    def subtotal(self):
-        total = self.quantity * self.product.price    
-        return total
+    
+    class Meta:
+        verbose_name_plural = "Cart Order"
+
+
+
+
+
+class CartOrderItems(models.Model):
+     order = models.ForeignKey(CartOrder, on_delete = models.CASCADE)
+     product_status = models.CharField(max_length = 300)
+     item = models.CharField(max_length = 200)
+     image = models.CharField(max_length = 200)
+     qty = models.IntegerField(default = 0)
+     price = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
+     total = models.DecimalField(max_digits=9999999999999999, decimal_places = 2, default = "1.99")
+     
+     
+     class Meta:
+        verbose_name_plural = "Cart Order Items"
+        
+        
+     def order_img(self):
+        return mark_safe('<img src ="/media/%s" width="50" height="50" />' % (self.image))
+     
+
+
+class ProductReview(models.Model):
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
+    review = models.TextField()
+    rating = models.IntegerField(choices = RATING, default = None)
+    date = models.DateTimeField(auto_now_add = True)
+    
+    
+    class Meta:
+        verbose_name_plural = "Product Reviews"
+    
+
+    def __str__(self):
+        return self.product.title
+    
+    def get_rating(self):
+        return self.rating
+    
+    
+    
+    
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True)
+    date = models.DateTimeField(auto_now_add = True)
+    
+    
+    class Meta:
+        verbose_name_plural = "wishlist"
+    
+
+    def __str__(self):
+        return self.product.title
+    
+    
+    
+    
+    
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    address = models.CharField(max_length = 100,  null = True)
+    status = models.BooleanField(default = False)
+    
+    
+    class Meta:
+        verbose_name_plural = "Address"
+    
+
