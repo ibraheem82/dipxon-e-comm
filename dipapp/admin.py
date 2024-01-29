@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Product, ProductImage, Cart, CartItem
+from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
+
+from
 # Register your models here.
 
 
