@@ -3,18 +3,21 @@ from shortuuid.django_fields import ShortUUIDField
 
 from accounts.models import User
 
-    stock          = models.IntegerField()
-    is_available   = models.CharField(
-        max_length=20,
-        choices=AVAILABILITY_CHOICES,
-        default='available',
-    )
+# was imported so as to display images in the admin panel.
+from django.utils.html import mark_safe
+
+# ###########
+STATUS_CHOICE = (
+    ("process", "Processing"),
+    ("shipped", "Shipped"),
+    ("delivered", "Delivered"),
+)
     category       = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     created_date   = models.DateTimeField(auto_now_add=True)
     modified_date  = models.DateTimeField(auto_now=True)
-    
-    
+
+
     def __str__(self):
        return self.product_name
     
