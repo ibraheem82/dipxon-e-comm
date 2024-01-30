@@ -120,7 +120,7 @@ class Product(models.Model):
                                             null = True)
     title               = models.CharField(max_length = 100, 
                                            default = "new cloth")
-    image               = models.ImageField(upload_to="category",
+    image               = models.ImageField(upload_to=user_directory_path,
                                             default="product.jpg")
     description         = models.TextField(null = True,
                                            blank = True,
