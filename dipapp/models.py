@@ -118,6 +118,9 @@ class Product(models.Model):
     category            = models.ForeignKey(Category,
                                             on_delete = models.SET_NULL,
                                             null = True)
+    vendor            = models.ForeignKey(Vendor,
+                                            on_delete = models.SET_NULL,
+                                            null = True)
     title               = models.CharField(max_length = 100, 
                                            default = "new cloth")
     image               = models.ImageField(upload_to=user_directory_path,
