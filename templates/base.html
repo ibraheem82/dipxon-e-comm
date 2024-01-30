@@ -49,6 +49,7 @@
   
    
     {% include 'partials/header.html' %}
+    {% include 'partials/alert.html' %}
     {% block content %}
 
         
@@ -76,6 +77,8 @@
 ============================================ -->
 
 <!--jquery min js-->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script src="{% static 'assets/js/vendor/jquery-3.4.1.min.js' %}"></script>
 <!--popper min js-->
 <script src="{% static 'assets/js/popper.js' %}"></script>
@@ -100,6 +103,7 @@
 
 <!-- Main JS -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 <script src="{% static 'assets/js/main.js' %}"></script>
