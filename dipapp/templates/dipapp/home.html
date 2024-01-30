@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% block title %}👚DipXon 👖👔Drips 👘🥻 Home{% endblock %}
 {% load static %}
-{% load humanize %}
 {% block content %}
-      
-    <!--slider area start-->
-    <section class="slider_section mb-100">
+
+{% comment %} {% static "" %} {% endcomment %}
+
+
+       <!--slider area start-->
+       <section class="slider_section mb-100">
         <div class="slider_area owl-carousel">
             <div class="single_slider d-flex align-items-center" data-bgimg="{% static "assets/img/slider/slider1.jpg" %} ">
                 <div class="container">
@@ -13,11 +15,11 @@
                         <div class="col-12">
                             <div class="slider_content">
                                 <h2>Get 30% Off &amp; Free Shipping </h2>
-                                <h1>Winter ❄ sale</h1>
+                                <h1>SUmmer sale</h1>
                                 <p>
 								An exclusive selection of this season’s trends. <span>Exclusively online </span>
 							     </p>
-                                <a href="{% url "shop" %}">Shop Now +</a>
+                                <a href="shop.html">Shop Now +</a>
                             </div>
                         </div>
                     </div>
@@ -33,7 +35,7 @@
                                 <p>
 								An exclusive selection of this season’s trends. <span>Exclusively online </span>
 							     </p>
-                                <a href="{% url "shop" %}">Shop Now </a>
+                                <a href="shop.html">Shop Now </a>
                             </div>
                         </div>
                     </div>
@@ -43,6 +45,40 @@
     </section>
     <!--slider area end-->
     
+    <!--banner area start-->
+    <div class="banner_area mb-95">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-6 col-md-6">
+                    <div class="single_banner">
+                        <div class="banner_thumb">
+                            <a href="shop.html"><img src="{% static 'assets/img/bg/banner1.jpg' %}" alt=""></a>
+                            <div class="banner_text1">
+                                <div class="banner_text1_inner">
+                            		<h3>Men’s <br> Collections</h3>
+                            		<a href="shop.html">shop now</a>
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="single_banner">
+                        <div class="banner_thumb">
+                            <a href="shop.html"><img src="{% static 'assets/img/bg/banner2.jpg' %}" alt=""></a>
+                            <div class="banner_text1">
+                                <div class="banner_text1_inner">
+									<h3>Women’s <br> Collections</h3>
+									<a href="shop.html">shop now</a>
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--banner area end-->
     
     <!--categories product area start-->
     <div class="categories_product_area   mb-92">
@@ -56,34 +92,143 @@
             </div> 
             <div class="row">
                <div class="product_carousel product_column4 owl-carousel">
-                   {% for category in categories %}
                    <div class="col-lg-3">
                         <article class="single_categories">
                             <figure>
                                 <div class="categories_thumb">
-                                    {% if category.cat_image %}
-                            <img src="{{ category.cat_image.url }}" alt="{{ category.category_name }}">
-                        {% else %}
-                            <!-- Provide a default image or placeholder if no image is available -->
-                            <img src="{% static 'path/to/default/image.jpg' %}" alt="{{ category.category_name }}">
-                        {% endif %}
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category1.jpg' %}" alt=""></a>
                                 </div>
                                 <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="{% url 'products_by_category' category_id=category.unique_id %}">{{ category.category_name }}</a></h4>
+                                    <h4 class="product_name"><a href="shop.html">t-shirt</a></h4>
                                    <div class="product_collection">
-										<p>{{ category.product_set.count }} Products</p>
-										<a href="{% url 'products_by_category' category_id=category.unique_id %}">+ Shop Collection</a>
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
                                     </div>
                                 </figcaption>
                             </figure>
                         </article>
                    </div>
-                   {% endfor %}
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category3.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">jacket</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category4.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">Dress</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
+                   <div class="col-lg-3">
+                        <article class="single_categories">
+                            <figure>
+                                <div class="categories_thumb">
+                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
+                                </div>
+                                <figcaption class="categories_content">
+                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
+                                   <div class="product_collection">
+										<p>13 Products</p>
+										<a href="shop.html">+ Shop Collection</a>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        </article>
+                   </div>
                </div>
            </div>   
         </div> 
     </div>
     <!--categories product area end-->
+    
+    <!--testimonial area start-->
+    {% comment %} <div class="testimonial_area mb-95">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_title">
+                       <h2>Testimonials</h2>
+                    </div>
+                </div>
+            </div> 
+            <div class="testimonial_container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="testimonial_wrapper  testimonial_collumn1 owl-carousel">
+                            <div class="single_testimonial">
+                            	<div class="testimonial_thumb">
+									<img src="{% static 'assets/img/about/testimonial1.png' %}" alt="">
+								</div>
+                           		<div class="testimonial_content">
+								   <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
+									<h3><a href="#">John Sullivan</a></h3>
+									<span>Customer</span>
+								</div>
+                            </div>
+                            <div class="single_testimonial">
+                            	<div class="testimonial_thumb">
+									<img src="{% static 'assets/img/about/testimonial2.png' %}" alt="">
+								</div>
+                           		<div class="testimonial_content">
+								   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error in, mollitia nulla officiis excepturi repudiandae beatae optio, sequi maxime assumenda ipsum exercitationem nostrum ducimus facilis, nesciunt aliquam dicta totam.</p>
+									<h3><a href="#">Jenifer Brown</a></h3>
+									<span>Manager of AZ</span>
+								</div>
+                            </div>
+                            <div class="single_testimonial">
+                            	<div class="testimonial_thumb">
+									<img src="{% static 'assets/img/about/testimonial3.png' %}" alt="">
+								</div>
+                           		<div class="testimonial_content">
+								   <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
+									<h3><a href="#">Kathy Young</a></h3>
+									<span>CEO of SunPark</span>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+    <!--testimonial area end-->
     
     <!--product area start-->
     <div class="product_area  mb-95">
@@ -94,64 +239,93 @@
                        <h2>Featured products </h2>
                     </div>
                     <div class="product_shop_collection">
-                    	<a href="{% url "shop" %}">Shop all collection</a>
+                    	<a href="shop.html">Shop all collection</a>
                     </div>
                 </div>
             </div> 
             <div class="row">
-               <div class="product_carousel product_column5 owl-carousel">
-                {% for product in products %}
-                   <div class="col-lg-3">
-                       <div class="product_items">
-                            <article class="single_product">
-
                 
-                <figure>
+            
+                   
+             
                     
-                    <div class="product_thumb">
-                        {% for image in product.product_images.all %}
-                        <a class="{% if forloop.first %}primary_img{% else %}secondary_img{% endif %}" href="{% url 'product_details' product_id=product.product_id %}">
-                            <img src="{{ image.image.url }}" alt="{{ product.product_name }}">
-                        </a>
-                    {% endfor %}
+                {% for p in products %}
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12 ">
+                    <div class="single_product">
+                        <div class="product_thumb">
 
-                        <div class="label_product">
-                            <span class="label_sale {% if product.is_available == 'available' %}in-stock{% elif product.is_available == 'out_of_stock' %}out-of-stock{% elif product.is_available == 'coming_soon' %}coming-soon{% elif product.is_available == 'new' %}new{% endif %}">
-                                {{ product.get_is_available_display }}
-                            </span>
+                            
+
+                    <a class="primary_img" href="product-details.html"><img src="{{ p.image.url }}" alt=""></a>
+
+
+                            {% for image in p.productimages_set.all %}
+                    <a class="secondary_img" href="">
+                        <img src="{{ image.images.url }}" alt="{{ product.title }}">
+                    </a>
+                {% endfor %}
+                            <div class="label_product">
+                                <span class="label_sale">Sale</span>
+                            </div>
+
+                            <div class="action_links">
+                                <ul>
+                                    <li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
+                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
+                                    <li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="product_content grid_content">
+                            <div class="product_content_inner">
+                                <h4 class="product_name"><a href="product-details.html">{{p.title}}</a></h4>
+                                <div class="price_box"> 
+                                    <span class="old_price">$84.00</span>
+                                    <span class="current_price">$79.00</span>
+                                </div>
+                            </div>
+                            <div class="add_to_cart">
+                                <a href="cart.html">Add to cart</a>
+                            </div>
+                        </div>
+                        <div class="product_content list_content">
+                            <h4 class="product_name"><a href="product-details.html">Duis pulvinar obortis eleifend elementum</a></h4>
+                            <div class="price_box"> 
+                                <span class="old_price">$84.00</span>
+                                <span class="current_price">$79.00</span>
+                            </div>
+                            <div class="product_rating">
+                                <ul>
+                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product_desc">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                            </div>
+                            <div class="add_to_cart shop_list_cart">
+                                <a href="cart.html">Add to cart</a>
+                            </div>
                         </div>
                     </div>
-                        <figcaption class="product_content">
-                            <div class="product_content_inner">
-                                <h4 class="product_name">
-                                    <a href="">{{ product.product_name }}</a>
-                                </h4>
-                                {% with humanize.currency_symbol|default:"$" as symbol %}
-                                <div class="price_box"> 
-                                    
-                                    {% if product.old_price %}
-                                    <span class="old_price">{{ symbol }}{{ product.old_price|floatformat:2|intcomma }}</span>
-                                    {% endif %}
-                                    <span class="current_price">{{ symbol }}{{ product.price|floatformat:2|intcomma }}</span>
-                                    
-                                </div>
-                                {% endwith %}
-                            </div>
-                        </figcaption>
-                        
-                </figure>
-
-                    </article>
-                        </div>
-                   </div>
-                   {% endfor %}
+                </div>
+                {% endfor %}
+                  
+                     
                    
-               </div>
+                  
+                   
+            
+               
            </div>   
         </div> 
     </div>
     <!--product area end-->
-   
+    
 
     
 
