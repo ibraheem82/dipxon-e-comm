@@ -3194,7 +3194,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   transition: .3s;
 }
 .price_box span {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 16px;
   color: #1e1e1f;
@@ -5840,11 +5840,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   }
 }
 .product_d_right .price_box span.old_price {
-  font-size: 17px;
+  font-size: 20px;
 }
 @media only screen and (max-width: 767px) {
   .product_d_right .price_box span.old_price {
-    font-size: 15px;
+    font-size: 20px;
   }
 }
 .product_d_right .product_desc {
@@ -10084,7 +10084,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 .modal_price span.old_price {
   color: #232323;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 400;
   text-decoration: line-through;
   margin-left: 5px;
