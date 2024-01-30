@@ -240,6 +240,12 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
         "accounts.Customer": "fas fa-user-edit",
+        "dipapp.Category": "fas fa-object-group",
+        "accounts.User": "fas fa-users-cog",
+        "dipapp.Address": "far fa-address-card",
+        "dipapp.Wishlist": "fas fa-heart",
+        "dipapp.ProductReview": "fas fa-history"
+        # "dipapp.ProductReview": "fas fa-history",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
