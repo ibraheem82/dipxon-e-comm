@@ -91,88 +91,30 @@
                 </div>
             </div> 
             <div class="row">
-               <div class="product_carousel product_column4 owl-carousel">
+               
+                {% for c in categories %}
                    <div class="col-lg-3">
                         <article class="single_categories">
                             <figure>
                                 <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category1.jpg' %}" alt=""></a>
+                                    <a href="product-details.html"><img src="{{c.image.url}}" alt=""></a>
                                 </div>
                                 <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">t-shirt</a></h4>
+                                    <h4 class="product_name"><a href="shop.html">{{c.title}}</a></h4>
                                    <div class="product_collection">
-										<p>13 Products</p>
+                                    <!-- Counting products that is associated to each category -->
+										<!-- <p>{{ c.product_set.all|length }} Products</p> -->
+                                        <!-- OR SINCE YOU HAVE SET THE RELATED NAME OT category in the model -->
+										<p>{{ c.category.count }} Product{{ c.category.count|pluralize }}</p>
 										<a href="shop.html">+ Shop Collection</a>
                                     </div>
                                 </figcaption>
                             </figure>
                         </article>
                    </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category3.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">jacket</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category4.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">Dress</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-                   <div class="col-lg-3">
-                        <article class="single_categories">
-                            <figure>
-                                <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{% static 'assets/img/s-product/category2.jpg' %}" alt=""></a>
-                                </div>
-                                <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">Blazer</a></h4>
-                                   <div class="product_collection">
-										<p>13 Products</p>
-										<a href="shop.html">+ Shop Collection</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                   </div>
-               </div>
+                   {% endfor %}
+                  
+               
            </div>   
         </div> 
     </div>
@@ -255,17 +197,19 @@
                         <div class="product_thumb">
 
                             
-
+                        <!-- The image is coming directly from the Product model -->
                     <a class="primary_img" href="product-details.html"><img src="{{ p.image.url }}" alt=""></a>
 
 
+                    <!-- image in p, -> meaning image of each products from the [ProductImages], all the images, and also there is a field called {images}-->
                             {% for image in p.productimages_set.all %}
+
                     <a class="secondary_img" href="">
                         <img src="{{ image.images.url }}" alt="{{ product.title }}">
                     </a>
-                {% endfor %}
+                        {% endfor %}
                             <div class="label_product">
-                                <span class="label_sale">Sale</span>
+                                <span class="label_sale">-{{p.get_percentage|floatformat:0}}&#37;</span>
                             </div>
 
                             <div class="action_links">
@@ -279,35 +223,13 @@
                         </div>
                         <div class="product_content grid_content">
                             <div class="product_content_inner">
-                                <h4 class="product_name"><a href="product-details.html">{{p.title}}</a></h4>
+                                <h4 class="product_name"><a class="h4" href="product-details.html">{{p.title}}</a></h4>
                                 <div class="price_box"> 
-                                    <span class="old_price">$84.00</span>
-                                    <span class="current_price">$79.00</span>
+                                    <span class="old_price"> &#x20A6; {{p.price}}</span>
+                                    <span class="current_price">&#x20A6; {{p.old_price}}</span>
                                 </div>
                             </div>
                             <div class="add_to_cart">
-                                <a href="cart.html">Add to cart</a>
-                            </div>
-                        </div>
-                        <div class="product_content list_content">
-                            <h4 class="product_name"><a href="product-details.html">Duis pulvinar obortis eleifend elementum</a></h4>
-                            <div class="price_box"> 
-                                <span class="old_price">$84.00</span>
-                                <span class="current_price">$79.00</span>
-                            </div>
-                            <div class="product_rating">
-                                <ul>
-                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                    <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="product_desc">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                            </div>
-                            <div class="add_to_cart shop_list_cart">
                                 <a href="cart.html">Add to cart</a>
                             </div>
                         </div>

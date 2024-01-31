@@ -7,7 +7,7 @@ from django.views import View
 
 
 # from django.shortcuts import get_object_or_404, redirect, render 
-# from .models import Cart, CartItem, Product
+from django.db.models import Count
 # from django.http import JsonResponse
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.decorators import login_required
@@ -19,12 +19,14 @@ from django.views import View
 def home(request):
     products = Product.objects.filter(product_status ="published", featured = True)
     categories = Category.objects.all()[:4]
+    # count_category_products = Category.objects.annotate(product_count=Count('product'))
     # user_country = get_user_country(request)
     
     # Create the context dictionary
     context = {
         'products': products,
         'categories': categories,
+        # 'count_category_products':count_category_products
         # 'user_country': user_country,
         # 'get_currency_symbol' : get_currency_symbol,
     }
@@ -32,8 +34,7 @@ def home(request):
     # Render the template with the context data
     return render(request, 'dipapp/home.html', context)
 
-def category_list_view(request):
-    categories = Category.objects.all()
+
 
 
 

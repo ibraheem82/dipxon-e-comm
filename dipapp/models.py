@@ -117,7 +117,7 @@ class Product(models.Model):
                                             null = True)
     category            = models.ForeignKey(Category,
                                             on_delete = models.SET_NULL,
-                                            null = True)
+                                            null = True, related_name='category')
     vendor            = models.ForeignKey(Vendor,
                                             on_delete = models.SET_NULL,
                                             null = True)
