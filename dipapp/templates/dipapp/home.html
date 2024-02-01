@@ -45,41 +45,6 @@
     </section>
     <!--slider area end-->
     
-    <!--banner area start-->
-    <div class="banner_area mb-95">
-        <div class="container">
-            <div class="row no-gutters">
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="{% static 'assets/img/bg/banner1.jpg' %}" alt=""></a>
-                            <div class="banner_text1">
-                                <div class="banner_text1_inner">
-                            		<h3>Men’s <br> Collections</h3>
-                            		<a href="shop.html">shop now</a>
-                            	</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="{% static 'assets/img/bg/banner2.jpg' %}" alt=""></a>
-                            <div class="banner_text1">
-                                <div class="banner_text1_inner">
-									<h3>Women’s <br> Collections</h3>
-									<a href="shop.html">shop now</a>
-                            	</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--banner area end-->
-    
     <!--categories product area start-->
     <div class="categories_product_area   mb-92">
         <div class="container">
@@ -97,7 +62,9 @@
                         <article class="single_categories">
                             <figure>
                                 <div class="categories_thumb">
-                                    <a href="product-details.html"><img src="{{c.image.url}}" alt=""></a>
+                                    <a href="{% url "category-product-list" c.cid %}">
+                                        <img src="{{c.image.url}}" alt="{{c.image.url}}">
+                                    </a>
                                 </div>
                                 <figcaption class="categories_content">
                                     <h4 class="product_name"><a href="shop.html">{{c.title}}</a></h4>
@@ -106,7 +73,7 @@
 										<!-- <p>{{ c.product_set.all|length }} Products</p> -->
                                         <!-- OR SINCE YOU HAVE SET THE RELATED NAME OT category in the model -->
 										<p>{{ c.category.count }} Product{{ c.category.count|pluralize }}</p>
-										<a href="shop.html">+ Shop Collection</a>
+										<a href="{% url "category-product-list" c.cid %}">+ Shop Collection</a>
                                     </div>
                                 </figcaption>
                             </figure>
