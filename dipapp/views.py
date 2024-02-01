@@ -40,10 +40,13 @@ def home(request):
 
 
 
-# def shop(request):
-#     products = Product.objects.all()
-#     context = {
-#         'products': products
-#     }
+def shop(request):
+    products = Product.objects.filter(product_status ="published")
+    categories = Category.objects.all()
+    
+    context = {
+        'products': products,
+        'categories': categories,
+    }
 
-#     return render(request, 'dipapp/shop.html', context)
+    return render(request, 'dipapp/shop.html', context)
