@@ -67,7 +67,7 @@
                                     </a>
                                 </div>
                                 <figcaption class="categories_content">
-                                    <h4 class="product_name"><a href="shop.html">{{c.title}}</a></h4>
+                                    <h4 class="product_name"><a href="{% url "category-product-list" c.cid %}">{{c.title}}</a></h4>
                                    <div class="product_collection">
                                     <!-- Counting products that is associated to each category -->
 										<!-- <p>{{ c.product_set.all|length }} Products</p> -->
