@@ -50,3 +50,21 @@ def shop(request):
     }
 
     return render(request, 'dipapp/shop.html', context)
+
+
+def category_product_list_view(request, cid):
+#     products = Product.objects.filter(product_status ="published", category = category) retrieves a collection of product objects that meet two conditions:
+# product_status ="published": Filters for products marked as "published."
+# category = category: Filters for products belonging to the retrieved category.
+    category = Category.objects.get(cid = cid)
+    products = Product.objects.filter(product_status ="published", category = category)
+    
+    context = {
+        
+        'category': category,
+        'products': products,
+    }
+
+    return render(request, 'dipapp/category-product-list.html', context)
+
+    
