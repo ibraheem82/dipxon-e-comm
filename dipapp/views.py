@@ -35,7 +35,14 @@ def home(request):
     return render(request, 'dipapp/home.html', context)
 
 
+def category_list_view(request):
+    categories = Category.objects.all()
 
+    context = {
+        'categories': categories,
+    }
+
+    return render(request, 'dipapp/category-list.html', context)
 
 
 
