@@ -122,8 +122,28 @@
 									<li class="mega_items">
                                         <a href="{% url "shop" %}">shop</a> 
 									</li>
+                                    <li>
+                                        <a href="#">Categories <i class="fa fa-angle-down"></i>
+                                        </a>
+										<ul class="sub_menu pages">
+                                            {% for c in categories %}
+											<li>
+                                                <a href="{% url "category-product-list" c.cid %}">
+                                                    {{c.title}}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                            <hr>
+                                            <li>
+                                        <a href="{% url "category-list" %}">
+                                                    All Categories
+                                                </a>
+                                            </li>
+											
+										</ul>
+									</li>
 									
-									<li><a href="contact.html"> Contact Us</a></li>
+									
 									<li><a href="about.html"> About us</a></li>
 									<li><a href="#">pages <i class="fa fa-angle-down"></i></a>
 										<ul class="sub_menu pages">
@@ -135,6 +155,8 @@
 											<li><a href="404.html">Error 404</a></li>
 										</ul>
 									</li>
+
+                                    <li><a href="contact.html"> Contact Us</a></li>
 								</ul>  
 							</nav> 
 						</div>
