@@ -74,4 +74,22 @@ def category_product_list_view(request, cid):
 
     return render(request, 'dipapp/category-product-list.html', context)
 
+
+
+
+
+
+def product_detail_view(request, pid):
+    product = Product.objects.get(pid = pid)
+    # product = get_object_or_404(Product, id = pid)
     
+    
+    # filter all the images that is related to the product that you are getting it details, it will get all it corresponding images.
+    p_image = product.p_images.all()
+
+    context = {
+        'p': product,
+        'p_image': p_image,
+    }
+
+    return render(request, 'dipapp/product_detail.html', context)
