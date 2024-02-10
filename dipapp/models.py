@@ -138,6 +138,14 @@ class Product(models.Model):
                                               default = "2.99")
     specifications      = models.TextField(null = True,
                                            blank = True)
+    type               = models.CharField(max_length = 100, 
+                                           default = "Silk-blend", 
+                                           null = True,
+                                           blank = True)
+    stock_count               = models.CharField(max_length = 100, 
+                                           default = "10", 
+                                           null = True,
+                                           blank = True)
     # tags = models.ForeignKey(Tags, on_delete = models.SET_NULL, null = True)
     product_status      = models.CharField(choices = STATUS,
                                       max_length = 10,
