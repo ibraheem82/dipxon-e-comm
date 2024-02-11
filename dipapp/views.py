@@ -1,7 +1,7 @@
 # from django.contrib.sessions.models import Session
 from django.shortcuts import render
 from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
-# from .utils import get_user_country, get_currency_symbol
+from .utils import get_user_country, get_currency_symbol
 from django.views import View
 
 
@@ -20,15 +20,17 @@ def home(request):
     products = Product.objects.filter(product_status ="published", featured = True)
     categories = Category.objects.all()[:4]
     # count_category_products = Category.objects.annotate(product_count=Count('product'))
-    # user_country = get_user_country(request)
+    user_country = get_user_country(request)
+    currency_symbol = get_currency_symbol(user_country)
+    print(user_country)
     
     # Create the context dictionary
     context = {
         'products': products,
         'categories': categories,
         # 'count_category_products':count_category_products
-        # 'user_country': user_country,
-        # 'get_currency_symbol' : get_currency_symbol,
+        'user_country': user_country,
+        'currency_symbol' : currency_symbol
     }
 
     # Render the template with the context data
