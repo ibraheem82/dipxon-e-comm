@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}👚DipXon 👖👔Drips 👘🥻 Home{% endblock %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 
 {% comment %} {% static "" %} {% endcomment %}
@@ -192,9 +193,12 @@
                             <div class="product_content_inner">
                                 <h4 class="product_name"><a class="h4" href="product-details.html">{{p.title}}</a></h4>
                                 <div class="price_box"> 
-                                    <span class="old_price">&#x20A6; {{p.old_price}}</span>
-                                    <span class="current_price"> &#x20A6; {{p.price}}</span>
+                                    {% with humanize.currency_symbol|default:"$" as symbol %}
+                                    <span class="old_price">{{ symbol }}{{ p.old_price|floatformat:2|intcomma }}</span>
+                                    <span class="current_price">{{ symbol }}{{ p.price|floatformat:2|intcomma }}</span>
+                                    {% endwith %}
                                 </div>
+                                
                             </div>
                             <div class="add_to_cart">
                                 <a href="cart.html">Add to cart</a>
