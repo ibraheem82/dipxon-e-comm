@@ -172,11 +172,11 @@
                                 {% for image in p.productimages_set.all %}
             
                                 <a class="secondary_img" href="">
-                                    <img src="{{ image.images.url }}" alt="{{ product.title }}">
+                                    <img src="{{ image.images.url }}" alt="">
                                 </a>
                                     {% endfor %}
                                         <div class="label_product">
-                                            <span class="label_sale">-{{p.get_percentage|floatformat:0}}&#37;</span>
+                                            <span class="label_sale"> {{p.get_percentage|floatformat:0}}&#37;</span>
                                         </div>
                               
                                 <div class="label_product">
