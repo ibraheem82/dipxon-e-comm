@@ -9,7 +9,6 @@ from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, 
 
 class ProductImagesAdmin(admin.TabularInline):
     model = ProductImages
-    extra = 1  # Number of empty forms to display for adding new images
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImagesAdmin]
