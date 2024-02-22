@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}/{{ p.title }}/{% endblock %}
+{% block title %}{{ p.title }}{% endblock %}
 {% load static %}
 {% block content %}
 
@@ -27,7 +27,7 @@
                 <div class="col-lg-5 col-md-5">
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
-                            <a href="#">
+                            <a href="#{{p.image.url}}">
                                 <img id="zoom1" src="{{p.image.url}}" data-zoom-image="assets/img/product/productbig1.jpg" alt="big-1">
                             </a>
                         </div>
@@ -35,7 +35,7 @@
                             <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
 								{% for p in p_image %}
                                 <li>
-                                    <a href="#" class="elevatezoom-gallery active" data-update="{{p.images.url}}" data-image="{{p.images.url}}" data-zoom-image="{{p.images.url}}">
+                                    <a href="#{{p.images.url}}" class="elevatezoom-gallery active" data-update="{{p.images.url}}" data-image="{{p.images.url}}" data-zoom-image="{{p.images.url}}">
                                         <img src="{{p.images.url}}" alt="zo-th-1"/>
                                     </a>
 
@@ -49,13 +49,13 @@
                     <div class="product_d_right">
                        <form action="#">
                             <div class="productd_title_nav">
-                                <h1><a href="#">Lorem ipsum dolor sit amet elit</a></h1>
-                                <div class="product_nav">
+                                <h1><a href="#">{{p.title}}</a></h1>
+                                <!-- <div class="product_nav">
                                     <ul>
                                         <li class="prev"><a href="product-details.html"><i class="fa fa-angle-left"></i></a></li>
                                         <li class="next"><a href="variable-product.html"><i class="fa fa-angle-right"></i></a></li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                             
                             <div class=" product_ratting">
@@ -69,11 +69,11 @@
                                 </ul>
                             </div>
                             <div class="price_box"> 
-                                <span class="old_price">$56.00</span>
-                                <span class="current_price">$48.00</span>
+                                <span class="old_price">${{p.old_price}}</span>
+                                <span class="current_price">${{p.price}}</span>
                             </div>
                             <div class="product_desc">
-                                <p>eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in </p>
+                                <p>{{p.description}}</p>
                             </div>
                             <div class="product_variant color">
                                 <h3>Available Options</h3>
@@ -92,13 +92,19 @@
                                 
                             </div>
                             <div class=" product_d_action">
-                               <ul>
+                               <ul">
                                    <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                                   <li><a href="#" title="Add to wishlist">+ Compare</a></li>
+                                   <li><a href="#" title="In stock">({{p.stock_count}}) Items in stock</a></li>
+								   <li class="h6">Type : {{p.type}}</li>
+								   <li> SKU :{{p.sku}}</li>
                                </ul>
+							
                             </div>
+
+							
                             <div class="product_meta">
                                 <span>Category: <a href="#">Clothing</a></span>
+
                             </div>
                             
                         </form>
@@ -141,8 +147,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="info" role="tabpanel" >
                                 <div class="product_info_content">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.</p>
-                                    <p>Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem, quis fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis mi. Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget.</p>
+                                    <p>{{p.description|truncatechars:30}}</p>
                                 </div>    
                             </div>
                             <div class="tab-pane fade" id="sheet" role="tabpanel" >
@@ -201,13 +206,29 @@
                                     </div>
                                     <div class="product_ratting mb-10">
                                        <h3>Your rating</h3>
-                                        <ul>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                            <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                        </ul>
+					<ul>
+						<li>
+							<a href="#">
+								<i class="ion-android-star"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="ion-android-star"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="ion-android-star"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="ion-android-star"></i>
+							</a>
+						</li>
+						<li><a href="#"><i class="ion-android-star"></i></a></li>
+					</ul>
                                     </div>
                                     <div class="product_review_form">
                                         <form action="#">
