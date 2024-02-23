@@ -7,9 +7,6 @@ from accounts.models import User
 # # Create your views here.
 
 
-# (AUTH_USER_MODEL) that was defined in the settings.py file.
-# User = settings.AUTH_USER_MODEL
-
 
 
 
