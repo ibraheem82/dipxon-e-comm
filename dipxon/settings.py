@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'dipapp',
-    'django.contrib.humanize'
+    'django.contrib.humanize',
+    'taggit',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
