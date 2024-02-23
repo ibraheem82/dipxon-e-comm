@@ -128,7 +128,7 @@ class Product(models.Model):
                                            default = "new cloth")
     image               = models.ImageField(upload_to=user_directory_path,
                                             default="product.jpg")
-    description         = models.TextField(null = True,
+    description         = RichTextUploadingField(null = True,
                                            blank = True,
                                            default = "Porduct")
     
@@ -139,7 +139,7 @@ class Product(models.Model):
     old_price           = models.DecimalField(max_digits=9999999999999999, 
                                               decimal_places = 2,
                                               default = "2.99")
-    specifications      = models.TextField(null = True,
+    specifications      = RichTextUploadingField(null = True,
                                            blank = True)
     type               = models.CharField(max_length = 100, 
                                            default = "Silk-blend", 
