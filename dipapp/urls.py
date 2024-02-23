@@ -10,5 +10,5 @@ urlpatterns = [
     path('category/<cid>/', views.category_product_list_view, name="category-product-list"),
     
     # Tags
-    path('products/tag/<slug:tag_slug/>', views.tag_list, name="tags"),
+    path('products/tag/<slug:tag_slug>/', views.tag_list, name="tags"),
 ]
