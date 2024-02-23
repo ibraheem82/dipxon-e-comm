@@ -1,12 +1,8 @@
 # from django.contrib.sessions.models import Session
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 from .utils import get_user_country, get_currency_symbol
 from django.views import View
-
-
-
-# from django.shortcuts import get_object_or_404, redirect, render 
 from django.db.models import Count
 # from django.http import JsonResponse
 # from django.core.exceptions import ObjectDoesNotExist
@@ -14,7 +10,7 @@ from django.db.models import Count
 
 # from django.core.exceptions import ObjectDoesNotExist
 # from .utils import validate_quantity
-# from django.http import Http404
+from taggit.models import Tag
 
 def home(request):
     products = Product.objects.filter(product_status ="published", featured = True)
@@ -84,6 +80,7 @@ def category_product_list_view(request, cid):
 def product_detail_view(request, pid):
     product = Product.objects.get(pid = pid)
     # product = get_object_or_404(Product, id = pid)
+    products = Product.objects.filter(category = product.category).exclude(pid = pid) # filtering by the category in the Product model, if the category = the product that we are currently viewing, meaning that filtering by the category of that product. that is show all the products that have the same categories, and also exclude what so ever product that you are currently viewing or that you are on.
     
     
     # filter all the images that is related to the product that you are getting it details, it will get all it corresponding images.
@@ -92,6 +89,21 @@ def product_detail_view(request, pid):
     context = {
         'p': product,
         'p_image': p_image,
+        'products': products
     }
 
     return render(request, 'dipapp/product_detail.html', context)
+
+
+def tag_list(request, tag_slug = None):
+    products = Product.objects.filter(product_status ="published").order_by("-id")
+    tag = None # initially is should have nothing in it.
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug =  tag_slug) # the second argument (slug) is in the Tag model that we installed from pip, and we are saying slug = whatsoever slug that we will be passing in.
+        # when ever the is a slug we want to get all the products that is related to that slug.
+        products = products.filter(tags__in=[tag]) # [tags__in] , take note that the product model has a field called tag, checking if we have this (tags__in) in what so ever product that we are filtering. 
+    context = {
+        "products":products,
+        'tag': tag
+    }
+    return render(request, 'dipapp/tag.html', context)
