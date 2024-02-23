@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 from .utils import get_user_country, get_currency_symbol
 from django.views import View
-from django.db.models import Count
+from django.db.models import Count, Avg
 # from django.http import JsonResponse
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.decorators import login_required
@@ -82,13 +82,20 @@ def product_detail_view(request, pid):
     # product = get_object_or_404(Product, id = pid)
     products = Product.objects.filter(category = product.category).exclude(pid = pid) # filtering by the category in the Product model, if the category = the product that we are currently viewing, meaning that filtering by the category of that product. that is show all the products that have the same categories, and also exclude what so ever product that you are currently viewing or that you are on.
     
+    # getting all reviews that is related to the product that we are currently viewing.
+    reviews  = ProductReview.objects.filter(product = product).order_by("-date")
     
     # filter all the images that is related to the product that you are getting it details, it will get all it corresponding images.
     p_image = product.p_images.all()
+    
+    # Getting average review of the product, checking average on the rating field.
+    average_rating = ProductReview.objects.filter(product = product).aggregate(rating = Avg('rating'))
 
     context = {
         'p': product,
         'p_image': p_image,
+        'average_rating': average_rating,
+        'reviews' : reviews,
         'products': products
     }
 
