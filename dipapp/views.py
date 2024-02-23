@@ -1,15 +1,12 @@
-# from django.contrib.sessions.models import Session
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 from .utils import get_user_country, get_currency_symbol
 from django.views import View
 from django.db.models import Count, Avg
-# from django.http import JsonResponse
+from dipapp.forms import ProductReviewForm
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.decorators import login_required
-
-# from django.core.exceptions import ObjectDoesNotExist
-# from .utils import validate_quantity
 from taggit.models import Tag
 
 def home(request):
@@ -91,9 +88,11 @@ def product_detail_view(request, pid):
     # Getting average review of the product, checking average on the rating field.
     average_rating = ProductReview.objects.filter(product = product).aggregate(rating = Avg('rating'))
 
+    review_form = ProductReviewForm()
     context = {
         'p': product,
         'p_image': p_image,
+        'review_form': review_form,
         'average_rating': average_rating,
         'reviews' : reviews,
         'products': products
@@ -114,3 +113,34 @@ def tag_list(request, tag_slug = None):
         'tag': tag
     }
     return render(request, 'dipapp/tag.html', context)
+
+
+
+def ajax_add_review(request, pid):
+    product = Product.objects.get(pk  = pid)
+    user = request.user
+    # we want to create new review with whatsoever the user pass in the review form.
+    # [user] field in the [ProductReview] model
+    review   = ProductReview.objects.create(
+        user = user,
+        product = product,
+        # getting the review that the user is passing in.
+        review = request.POST['review'],
+        rating = request.POST['rating']
+    )
+    
+    context = {
+        'user':user.username,
+        'review': request.POST['review'],
+        'rating' : request.POST['rating']
+    }
+    # getting the average reviews
+    average_reviews = ProductReview.objects.filter(product = product).aggregate(rating = Avg("rating"))
+    
+    return JsonResponse(
+        {
+            'bool':True,
+            'context': context,
+            'average_reviews': average_reviews
+        }
+    )
