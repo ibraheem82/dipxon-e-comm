@@ -5,6 +5,8 @@ from accounts.models import User
 
 # was imported so as to display images in the admin panel.
 from django.utils.html import mark_safe
+# install taggit
+from taggit.managers import TaggableManager
 
 # ###########
 STATUS_CHOICE = (
@@ -161,6 +163,8 @@ class Product(models.Model):
                                          alphabet="1234567890")
     date                = models.DateTimeField(auto_now_add = True)
     updated             = models.DateTimeField(null = True, blank = True)
+    # dont forget to makemigrations and migrate.
+    tags                = TaggableManager(blank = True)
     
     
     
