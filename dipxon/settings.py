@@ -290,5 +290,44 @@ EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'skin': 'mono',
+#         'codeSnippet_theme': 'monokai',
+#         'toolbar': 'all',
+#         'height': 300,
+#         'width': 300,
+#         'extraPlugins': ','.join(
+#             [
+#                 'codesnippet',
+#                 'widget',
+#                 'dialog'
+#             ]
+#         ),
+#     }
+# }
+
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+       'skin': 'moono',
+        'toolbar': 'all',
+        'codeSnippet_theme': 'monokai',
+        'extraPlugins': ','.join(
+            [
+                'codesnippet',
+                'widget',
+                'dialog'
+            ]
+        ),
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
+}
