@@ -5,8 +5,8 @@ from accounts.models import User
 
 # was imported so as to display images in the admin panel.
 from django.utils.html import mark_safe
-# install taggit
 from taggit.managers import TaggableManager
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # ###########
 STATUS_CHOICE = (
