@@ -70,7 +70,8 @@ class Vendor(models.Model):
                                          prefix="ven", alphabet="abcbefghi12345")
     title               = models.CharField(max_length = 100, default="Ibraheem")
     image               = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
-    description         = models.TextField(null = True, blank = True, default="Good company")
+    # description         = models.TextField(null = True, blank = True, default="Good company")
+    description         = RichTextUploadingField(null = True, blank = True, default="Good company")
     address             = models.CharField(max_length = 100, default = "12 Sadiku street Ilasamaja lagos state")
     contact             = models.CharField(max_length = 100, 
                                            default = "+234 8102673964")
