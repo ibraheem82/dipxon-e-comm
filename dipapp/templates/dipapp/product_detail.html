@@ -28,7 +28,7 @@
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
                             <a href="#{{p.image.url}}">
-                                <img id="zoom1" src="{{p.image.url}}" data-zoom-image="assets/img/product/productbig1.jpg" alt="big-1">
+                                <img id="zoom1" src="{{p.image.url}}" data-zoom-image="{{p.image.url}}" alt="big-1">
                             </a>
                         </div>
                         <div class="single-zoom-thumb">
@@ -92,11 +92,16 @@
                                 
                             </div>
                             <div class=" product_d_action">
-                               <ul">
+                               <ul>
                                    <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
                                    <li><a href="#" title="In stock">({{p.stock_count}}) Items in stock</a></li>
 								   <li class="h6">Type : {{p.type}}</li>
-								   <li> SKU :{{p.sku}}</li>
+								   <li>SKU :{{p.sku}}</li>
+                                   <li>
+                                    {% for tag in p.tags.all  %} 
+                                    <a href="{% url "tags" tag.slug %}"> #{{tag.name}}</a>,
+                                    {% endfor %}
+                                </li>
                                </ul>
 							
                             </div>
@@ -264,401 +269,75 @@
     <section class="product_area related_products">
         <div class="container">
             <div class="row">
+                <!-- it will only show if there is related products -->
+                {% if products %}
                 <div class="col-12">
                     <div class="section_title psec_title">
                         <h2>Related Products</h2>
                     </div>
                 </div>
-            </div> 
-            <div class="row">
-                <div class="product_carousel product_column5 owl-carousel">
-				   <div class="col-lg-3">
-						<article class="single_product">
-								<figure>
-									<div class="product_thumb">
-										<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product3.jpg' %}" alt=""></a>
-										<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product4.jpg' %}" alt=""></a>
-										<div class="action_links">
-											<ul>
-												<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-												<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-												<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-											</ul>
-										</div>
-									</div>
-									<figcaption class="product_content">
-										<div class="product_content_inner">
-											<h4 class="product_name"><a href="product-details.html">Eodem modo vel are mattis ante his facilisis</a></h4>
-											<div class="price_box"> 
-												<span class="old_price">$86.00</span>
-												<span class="current_price">$82.00</span>
-											</div>
-										</div>
-										<div class="add_to_cart">
-											<a href="cart.html">Add to cart</a>
-										</div>
-									</figcaption>
-								</figure>
-							</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product5.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product6.jpg' %}" alt=""></a>
-									<div class="label_product">
-										<span class="label_sale">Sale</span>
-									</div>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Epicuri per lobortis eleifend eget laoreet</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$82.00</span>
-											<span class="current_price">$77.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product9.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product10.jpg' %}" alt=""></a>
-									<div class="label_product">
-										<span class="label_sale">Sale</span>
-									</div>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Kaoreet lobortis sagittis laoreet metus feugiat</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$94.00</span>
-											<span class="current_price">$92.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product13.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product14.jpg' %}" alt=""></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Ornare sed consequat nisl eget mi porttitor</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$76.00</span>
-											<span class="current_price">$73.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product4.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product3.jpg' %}" alt=""></a>
-									<div class="label_product">
-										<span class="label_sale">Sale</span>
-									</div>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Donec eu libero ac dapibus urna placerat</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$87.00</span>
-											<span class="current_price">$78.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product8.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product7.jpg' %}" alt=""></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Eodem modo vel mattis ante facilisis</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$86.00</span>
-											<span class="current_price">$82.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-			   </div>
-            </div>  
-        </div>
-    </section>
-    <!--product area end-->
-    
-    <!--product area start-->
-    <section class="product_area upsell_products mb-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_title psec_title">
-                        <h2>Upsell Products	</h2>
-                    </div>
-                </div>
-            </div> 
-            <div class="row">
-                <div class="product_carousel product_column5 owl-carousel">
-					<div class="col-lg-3">
-						<article class="single_product">
-								<figure>
-									<div class="product_thumb">
-										<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product4.jpg' %}" alt=""></a>
-										<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product3.jpg' %}" alt=""></a>
-										<div class="label_product">
-											<span class="label_sale">Sale</span>
-										</div>
-										<div class="action_links">
-											<ul>
-												<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-												<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-												<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-											</ul>
-										</div>
-									</div>
-									<figcaption class="product_content">
-										<div class="product_content_inner">
-											<h4 class="product_name"><a href="product-details.html">Donec eu libero ac dapibus urna her placerat</a></h4>
-											<div class="price_box"> 
-												<span class="old_price">$87.00</span>
-												<span class="current_price">$78.00</span>
-											</div>
-										</div>
-										<div class="add_to_cart">
-											<a href="cart.html">Add to cart</a>
-										</div>
-									</figcaption>
-								</figure>
-							</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product8.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product7.jpg' %}" alt=""></a>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Eodem modo vel mattis ante facilisis</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$86.00</span>
-											<span class="current_price">$82.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-								<figure>
-									<div class="product_thumb">
-										<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product3.jpg' %}" alt=""></a>
-										<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product4.jpg' %}" alt=""></a>
-										<div class="action_links">
-											<ul>
-												<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-												<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-												<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-											</ul>
-										</div>
-									</div>
-									<figcaption class="product_content">
-										<div class="product_content_inner">
-											<h4 class="product_name"><a href="product-details.html">Eodem modo vel mattis ante facilisis</a></h4>
-											<div class="price_box"> 
-												<span class="old_price">$86.00</span>
-												<span class="current_price">$82.00</span>
-											</div>
-										</div>
-										<div class="add_to_cart">
-											<a href="cart.html">Add to cart</a>
-										</div>
-									</figcaption>
-								</figure>
-							</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product5.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product6.jpg' %}" alt=""></a>
-									<div class="label_product">
-										<span class="label_sale">Sale</span>
-									</div>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Epicuri per lobortis eleifend eget laoreet</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$82.00</span>
-											<span class="current_price">$77.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-							<figure>
-								<div class="product_thumb">
-									<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product9.jpg' %}" alt=""></a>
-									<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product10.jpg' %}" alt=""></a>
-									<div class="label_product">
-										<span class="label_sale">Sale</span>
-									</div>
-									<div class="action_links">
-										<ul>
-											<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-											<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-											<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-										</ul>
-									</div>
-								</div>
-								<figcaption class="product_content">
-									<div class="product_content_inner">
-										<h4 class="product_name"><a href="product-details.html">Kaoreet lobortis sagittis laoreet metus feugiat</a></h4>
-										<div class="price_box"> 
-											<span class="old_price">$94.00</span>
-											<span class="current_price">$92.00</span>
-										</div>
-									</div>
-									<div class="add_to_cart">
-										<a href="cart.html">Add to cart</a>
-									</div>
-								</figcaption>
-							</figure>
-						</article>
-				   </div>
-				   <div class="col-lg-3">
-						<article class="single_product">
-								<figure>
-									<div class="product_thumb">
-										<a class="primary_img" href="product-details.html"><img src="{% static 'assets/img/product/product13.jpg' %}" alt=""></a>
-										<a class="secondary_img" href="product-details.html"><img src="{% static 'assets/img/product/product14.jpg' %}" alt=""></a>
-										<div class="action_links">
-											<ul>
-												<li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
-												<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
-												<li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
-											</ul>
-										</div>
-									</div>
-									<figcaption class="product_content">
-										<div class="product_content_inner">
-											<h4 class="product_name"><a href="product-details.html">Ornare sed consequat nisl eget mi porttitor</a></h4>
-											<div class="price_box"> 
-												<span class="old_price">$76.00</span>
-												<span class="current_price">$73.00</span>
-											</div>
-										</div>
-										<div class="add_to_cart">
-											<a href="cart.html">Add to cart</a>
-										</div>
-									</figcaption>
-								</figure>
-							</article>
-				   </div>
 
-			   </div> 
-            </div>   
+                {% endif %}
+            </div> 
+            <div class="row">
+                <div class="row shop_wrapper">
+                    {% for p in products %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 ">
+                        <div class="single_product">
+                            <div class="product_thumb">
+                                <a class="primary_img" href="{% url 'product_detail' p.pid %}"><img src="{{p.image.url}}" alt=""></a>
+                                <div class="label_product">
+                                    <span class="label_sale">Sale</span>
+                                </div>
+                                <div class="action_links">
+                                    <ul>
+                                        <li class="quick_button"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"> <span class="pe-7s-search"></span></a></li>
+                                        <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><span class="pe-7s-like"></span></a></li>
+                                        <li class="compare"><a href="#" title="Add to Compare"><span class="pe-7s-edit"></span></a></li>                                                 
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product_content grid_content">
+                                <div class="product_content_inner">
+                                    <h4 class="product_name"><a href="{% url 'product_detail' p.pid %}">{{p.title}}</a></h4>
+                                    <div class="price_box"> 
+                                        <span class="old_price">${{p.old_price}}</span>
+                                        <span class="current_price">${{p.price}}</span>
+                                    </div>
+                                </div>
+                                <div class="add_to_cart">
+                                    <a href="cart.html">Add to cart</a>
+                                </div>
+                            </div>
+                            <div class="product_content list_content">
+                                <h4 class="product_name"><a href="product-details.html">Duis pulvinar obortis eleifend elementum</a></h4>
+                                <div class="price_box"> 
+                                    <span class="old_price">$84.00</span>
+                                    <span class="current_price">$79.00</span>
+                                </div>
+                                <div class="product_rating">
+                                    <ul>
+                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product_desc">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
+                                </div>
+                                <div class="add_to_cart shop_list_cart">
+                                    <a href="cart.html">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                   
+                    
+                </div>
+            </div>  
         </div>
     </section>
     <!--product area end-->
