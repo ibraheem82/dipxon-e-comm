@@ -58,13 +58,14 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 ">
                             <div class="single_product">
                                 <div class="product_thumb">
-                                    <a class="primary_img" href="product-details.html"><img src="{{ p.image.url }}" alt=""></a>
+                                    <a class="primary_img" href="{% url 'product_detail' p.pid %}">
+                                        <img src="{{ p.image.url }}" alt=""></a>
 
 
                             
                                 {% for image in p.productimages_set.all %}
             
-                                <a class="secondary_img" href="">
+                                <a class="secondary_img" href="{% url 'product_detail' p.pid %}">
                                     <img src="{{ image.images.url }}" alt="{{ product.title }}">
                                 </a>
                                     {% endfor %}
@@ -92,7 +93,7 @@
 									</div>
                                 </div>
                                 <div class="product_content list_content">
-                                    <h4 class="product_name"><a href="product-details.html">{{p.title}}</a></h4>
+                                    <h4 class="product_name"><a href="{% url 'product_detail' p.pid %}">{{p.title}}</a></h4>
 									<div class="price_box"> 
 										<span class="old_price">&#x20A6; {{p.old_price}}</span>
 										<span class="current_price">&#x20A6; {{p.price}}</span>
