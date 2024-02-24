@@ -5,7 +5,7 @@ from .utils import get_user_country, get_currency_symbol
 from django.views import View
 from django.db.models import Count, Avg
 from dipapp.forms import ProductReviewForm
-# from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 # from django.contrib.auth.decorators import login_required
 from taggit.models import Tag
 
@@ -157,3 +157,24 @@ def ajax_add_review(request, pid):
             'average_reviews': average_reviews
         }
     )
+
+
+
+
+def search_view(request):
+    query = request.GET.get("q")
+    if query:
+        # Filter products based on the query
+        products = Product.objects.filter(Q(title__icontains=query) | Q(description__icontains=query)).order_by("-date")
+        product_count = products.count()
+    else:
+        # If no query is provided, return all products or handle as needed
+        products = Product.objects.all().order_by("-date")
+        product_count = products.count()
+
+    context = {
+        'products': products,
+        'product_count': product_count,
+        "query": query
+    }
+    return render(request, 'dipapp/shop.html', context)
