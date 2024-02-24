@@ -244,7 +244,8 @@
 					</ul>
                                     </div>
 
-                                    {% if make_review == True %}
+            {% if make_review == True %}
+            {% if request.user.is_authenticated %}
             <div class="product_review_form">
                 <form action="{% url 'ajax-add-review' p.id %}" id="commentForm" method="POST" class="hide-comment-form">
                     {% csrf_token %}
@@ -259,6 +260,7 @@
                     <button type="submit">Submit</button>
                     </form>   
             </div> 
+            {% endif %}
             {% endif %}
                             </div>     
                             </div>
