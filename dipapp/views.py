@@ -88,10 +88,23 @@ def product_detail_view(request, pid):
     # Getting average review of the product, checking average on the rating field.
     average_rating = ProductReview.objects.filter(product = product).aggregate(rating = Avg('rating'))
 
+# form the we are passing to the template.
     review_form = ProductReviewForm()
+    
+    make_review = True
+    
+    # if a user has make review before they shouldnt be able to make a review any longer.
+    
+    if request.user.is_authenticated:
+        # filtering by the logged in user.
+        user_review_count = ProductReview.objects.filter(user = request.user, product = product).count() # they should only be restrcted on the product that they have comment on, meaning that one product should have just one comment. 
+
+        if user_review_count > 0:
+            make_review = False
     context = {
         'p': product,
         'p_image': p_image,
+        'make_review' : make_review,
         'review_form': review_form,
         'average_rating': average_rating,
         'reviews' : reviews,
