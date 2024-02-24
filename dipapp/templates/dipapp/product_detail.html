@@ -73,7 +73,7 @@
                                 <span class="current_price">${{p.price}}</span>
                             </div>
                             <div class="product_desc">
-                                <p>{{p.description}}</p>
+                                <p>{{p.description|safe}}</p>
                             </div>
                             <div class="product_variant color">
                                 <h3>Available Options</h3>
@@ -97,7 +97,7 @@
                                    <li><a href="#" title="In stock">({{p.stock_count}}) Items in stock</a></li>
 								   <li class="h6">Type : {{p.type}}</li>
 								   <li>SKU :{{p.sku}}</li>
-                                   <li>
+                                   <li> Tags: 
                                     {% for tag in p.tags.all  %} 
                                     <a href="{% url "tags" tag.slug %}"> #{{tag.name}}</a>,
                                     {% endfor %}
@@ -192,28 +192,30 @@
 
 
                                            
-                                        <div class="comment_text ">
-                                            <div class="reviews_meta">
-                                                <div class="star_rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                                    </ul>   
-                                                </div>
-                                                <p><strong>{{r.user.username|title}} </strong>- {{ r.date|date:"d M, Y h:i A" }}</p>
-                                                <span>{{r.review}}</span>
-                                            </div>
-                                        </div>
+                    <div class="comment_text">
+                        <div class="reviews_meta">
+                            <div class="star_rating">
+                                <ul>
+                                    {% for r in r.rating|ljust:r.rating  %}
+                                    <li>
+                                        <a href="#">
+                                            <i class="ion-android-star"></i>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>   
+                            </div>
+                            <p><strong>{{r.user.username|title}} </strong>- {{ r.date|date:"d M, Y h:i A" }}</p>
+                            <span>{{r.review}}</span>
+                        </div>
+                    </div>
                                         
                                         
                                     </div>
                                     {% endfor %}
                                     <div class="comment_title">
-                                        <h2>Add a review </h2>
-                                        <p>Your email address will not be published.  Required fields are marked </p>
+                                        <h2 class="hide-review">Add a review </h2>
+                                        <strong class="text-success" id="review-res">Review Added</strong>
                                     </div>
                                     <div class="product_ratting mb-10">
                                        <h3>Your rating</h3>
@@ -241,27 +243,24 @@
 						<li><a href="#"><i class="ion-android-star"></i></a></li>
 					</ul>
                                     </div>
-                                    <div class="product_review_form">
-                                        <form action="#">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label for="review_comment">Your review </label>
-                                                    <textarea name="comment" id="review_comment" ></textarea>
-                                                </div> 
-                                                <div class="col-lg-6 col-md-6">
-                                                    <label for="author">Name</label>
-                                                    <input id="author"  type="text">
 
-                                                </div> 
-                                                <div class="col-lg-6 col-md-6">
-                                                    <label for="email">Email </label>
-                                                    <input id="email"  type="text">
-                                                </div>  
-                                            </div>
-                                            <button type="submit">Submit</button>
-                                         </form>   
-                                    </div> 
-                                </div>     
+                                    {% if make_review == True %}
+            <div class="product_review_form">
+                <form action="{% url 'ajax-add-review' p.id %}" id="commentForm" method="POST" class="hide-comment-form">
+                    {% csrf_token %}
+                    <div class="row comment_form">
+                        <div class="col-12">
+                            {{review_form.review}}
+                        </div> 
+                        <div class="col-12">
+                            {{review_form.rating}}
+                        </div> 
+                    </div>
+                    <button type="submit">Submit</button>
+                    </form>   
+            </div> 
+            {% endif %}
+                            </div>     
                             </div>
                         </div>
                     </div>     
