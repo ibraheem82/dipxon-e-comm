@@ -167,8 +167,8 @@
 							<div class="header_account_list search_list">
 								<a href="javascript:void(0)"><span class="pe-7s-search"></span></a>
 								<div class="dropdown_search">
-									<form action="#">
-										<input placeholder="Search entire store here ..." type="text">
+									<form action="{% url 'search' %}" method="GET">
+										<input placeholder="Search entire store here ..." type="text" name="q">
 										<button type="submit"><span class="pe-7s-search"></span></button>
 									</form>
 								</div>
