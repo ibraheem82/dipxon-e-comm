@@ -166,7 +166,15 @@
                         </form>
                     </div>
                     <div class="page_amount">
-                        <p>Showing 1–12 of 21 results</p>
+                        {% if query %}
+                            {% if product_count >  0 %}
+                                <p>{{ product_count }} Items 🛒 was found</p>
+                            {% else %}
+                                <p>No products found for "{{ query }}"</p>
+                            {% endif %}
+                        {% else %}
+                            <p>Showing {{ products.count }} results</p>
+                        {% endif %}
                     </div>
                 </div>
                  <!--shop toolbar end-->
