@@ -52,7 +52,7 @@
                             <ul>
                                 <li class="">
                                     {% for c in categories %}
-                                    <a href="javascript:void(0)">{{c.title}}     <span>({{c.category.count}})</span></a></a>
+                                    <a href="{% url 'category-product-list' c.cid %}">{{c.title}}     <span>({{c.category.count}})</span></a></a>
                                     {% endfor %}
                                     
                                 </li>
@@ -94,38 +94,6 @@
                                     <a href="#"> XL <span>(6)</span></a> 
                                 </li>
                               
-                            </ul>
-                        </div>
-                         <div class="widget_list widget_brand">
-                            <h3>Brand</h3>
-                            <ul>
-                                <li>
-                                    <a href="#">Studio Design <span>(8)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#"> Graphic Corner<span>(5)</span></a> 
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="widget_list widget_manu">
-                            <h3>Manufacturer</h3>
-                            <ul>
-                                <li>
-                                    <a href="#">Cotton <span>(6)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#">Elastane <span>(10)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#">Polyester <span>(4)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#">Wool <span>(10)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#">Squarred <span>(3)</span></a> 
-                                </li>
-                            
                             </ul>
                         </div>
                         <div class="widget_list tags_widget">
