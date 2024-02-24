@@ -28,7 +28,7 @@ def loginUser(request):
 
             if user is not None:
                 login(request, user)
-                messages.success(request, f'You are logged in.')
+                messages.success(request, f'Welcome 🤝.')
                 return redirect('home')
             else:
                 messages.warning(request, f'User does not Exist, create an account.')
