@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Shop 🛒{% endblock %}
+{% block title %}
+    {% if query %}
+        Search Results for: {{ query }}
+    {% else %}
+        Shop 🛒
+    {% endif %}
+{% endblock %}
 {% load static %}
 
 {% block content %}
@@ -10,7 +16,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumb_content">
-                    <h3>shop</h3>
+                    {% if search in request.path %}
+                    <h3>Search Result</h3>
+                    {% else %}
+                    <h3>Our Store</h3>
+                    {% endif %}
                     <ul>
                         <li><a href="index.html">home</a></li>
                         <li>shop</li>
