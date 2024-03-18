@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumb_content">
-                    {% if search in request.path %}
+                    {% if query %}
                     <h3>Search Result</h3>
                     {% else %}
                     <h3>Our Store</h3>
@@ -67,35 +67,8 @@
                                 <input type="text" name="text" id="amount" />   
                             </form> 
                         </div>
-                        <div class="widget_list widget_color">
-                            <h3>Select By Category</h3>
-                            <ul>
-                                {% for c in categories %}
-                                <li>
-                                    <a href="#">{{c.title}}   <span>({{c.category.count}})</span></a> 
-                                </li>
-                                {% endfor %}
-                              
-                            </ul>
-                        </div>
-                        <div class="widget_list widget_color">
-                            <h3>Select By SIze</h3>
-                            <ul>
-                                <li>
-                                    <a href="#">S  <span>(6)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#"> M <span>(8)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#">L <span>(10)</span></a> 
-                                </li>
-                                <li>
-                                    <a href="#"> XL <span>(6)</span></a> 
-                                </li>
-                              
-                            </ul>
-                        </div>
+                       
+                        
                         <div class="widget_list tags_widget">
                             <h3>Product tags</h3>
                             <div class="tag_cloud">
