@@ -87,7 +87,9 @@
                             </div>
                             <div class="product_variant quantity">
                                 <label>quantity</label>
-                                <input min="1" max="100" value="1" type="number">
+                                <input min="1" max="100" value="1" id="product-quantity" type="number">
+                                <input value="{{p.id}}" class="product-id" type="hidden">
+                                <input value="{{p.title}}" class="product-title" type="hidden">
                                 <button class="button" type="submit">add to cart</button>  
                                 
                             </div>
