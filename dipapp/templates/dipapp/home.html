@@ -20,7 +20,7 @@
                                 <p>
 								An exclusive selection of this season’s trends. <span>Exclusively online </span>
 							     </p>
-                                <a href="shop.html">Shop Now +</a>
+                                <a href="{% url "shop" %}">Shop Now +</a>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                                 <p>
 								An exclusive selection of this season’s trends. <span>Exclusively online </span>
 							     </p>
-                                <a href="shop.html">Shop Now </a>
+                                <a href="{% url "shop" %}">Shop Now </a>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                        <h2>Featured products </h2>
                     </div>
                     <div class="product_shop_collection">
-                    	<a href="shop.html">Shop all collection</a>
+                    	<a href="{% url "shop" %}">Shop all collection</a>
                     </div>
                 </div>
             </div> 
@@ -166,7 +166,7 @@
 
                             
                         <!-- The image is coming directly from the Product model -->
-                    <a class="primary_img" href="product-details.html"><img src="{{ p.image.url }}" alt=""></a>
+                    <a class="primary_img" href="{% url 'product_detail' p.pid %}"><img src="{{ p.image.url }}" alt=""></a>
 
 
                     <!-- image in p, -> meaning image of each products from the [ProductImages], all the images, and also there is a field called {images}-->
