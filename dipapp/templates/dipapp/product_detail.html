@@ -68,10 +68,10 @@
                                     <li class="review h6"><a href="#" class="h6"> ({{average_rating.rating|floatformat}} out of 5.0 )  </a></li>
                                 </ul>
                             </div> 
-                            <div class="price_box"> 
-                                <span class="old_price">${{p.old_price}}</span>
-                                <span class="current_price">${{p.price}}</span>
-                            </div>
+                <div class="price_box"> 
+                    <span class="old_price">${{p.old_price}}</span>
+                    <span>$</span><span class="current_price" id="current-product-price">{{p.price}}</span>
+                </div>
                             <div class="product_desc">
                                 <p>{{p.description|safe}}</p>
                             </div>
@@ -90,7 +90,7 @@
                                 <input min="1" max="100" value="1" id="product-quantity" type="number">
                                 <input value="{{p.id}}" class="product-id" type="hidden">
                                 <input value="{{p.title}}" class="product-title" type="hidden">
-                                <button class="button" type="submit">add to cart</button>  
+                                <button class="button" id="add-to-cart-btn" type="submit">add to cart</button>  
                                 
                             </div>
                             <div class=" product_d_action">
@@ -191,9 +191,6 @@
                                         <div class="comment_thmb">
                                             <img src="{% static 'assets/img/blog/comment2.jpg' %}" alt="">
                                         </div>
-
-
-                                           
                     <div class="comment_text">
                         <div class="reviews_meta">
                             <div class="star_rating">
