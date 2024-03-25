@@ -173,12 +173,13 @@
 									</form>
 								</div>
 							</div>
-							<div class="header_account_list  mini_cart_wrapper">
-								<a href="javascript:void(0)"><span class="pe-7s-shopbag"></span>
-									<span class="item_count">2</span>
-								</a>
-								
-						   </div>
+                <div class="header_account_list  mini_cart_wrapper">
+                    <a href="javascript:void(0)"><span class="pe-7s-shopbag"></span>
+                        {% comment %} Count all product to the icon dislay. {% endcomment %}
+                        <span class="item_count cart-items-count">{{request.session.cart_data_obj|length}}</span>
+                    </a>
+                    
+                </div>
 						    <div class="language_currency header_account_list ">
 						        <a href="#"> <span class="pe-7s-user"></span></a>
 								<ul class="dropdown_currency">
