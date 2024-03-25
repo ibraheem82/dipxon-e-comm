@@ -97,7 +97,7 @@ def product_detail_view(request, pid):
     
     if request.user.is_authenticated:
         # filtering by the logged in user.
-        user_review_count = ProductReview.objects.filter(user = request.user, product = product).count() # they should only be restrcted on the product that they have comment on, meaning that one product should have just one comment. 
+        user_review_count = ProductReview.objects.filter(user = request.user, product = product).count() # they should only be restrcted on the product that they have comment on, meaning that one product should have just one comment from just one user, a user can only make a review once on one product.. 
 
         if user_review_count > 0:
             make_review = False
@@ -119,7 +119,7 @@ def tag_list(request, tag_slug = None):
     tag = None # initially is should have nothing in it.
     if tag_slug:
         tag = get_object_or_404(Tag, slug =  tag_slug) # the second argument (slug) is in the Tag model that we installed from pip, and we are saying slug = whatsoever slug that we will be passing in.
-        # when ever the is a slug we want to get all the products that is related to that slug.
+        # when ever there is a slug we want to get all the products that is related to that slug.
         products = products.filter(tags__in=[tag]) # [tags__in] , take note that the product model has a field called tag, checking if we have this (tags__in) in what so ever product that we are filtering. 
     context = {
         "products":products,
@@ -178,3 +178,31 @@ def search_view(request):
         "query": query
     }
     return render(request, 'dipapp/shop.html', context)
+
+
+def add_to_cart(request):
+    cart_product = {}
+    cart_product[str(request.GET['id'])] = {
+        'title':request.GET['title'],
+        'qty':request.GET['qty'],
+        'price':request.GET['price']
+        } # get the current product id.
+
+    # check if there is cart data inside the session the user is using.
+    if 'cart_data_obj' in request.session: # Get the current session.
+        if str(request.GET['id']) in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])]['qty'])
+            cart_data.update(cart_data)
+            request.session['cart_data_obj'] = cart_data
+        else:
+            cart_data = request.session['cart_data_obj']
+            cart_data.update(cart_product)
+            request.session['cart_data_obj'] = cart_data
+    else:
+        request.session['cart_data_obj'] = cart_product
+    return JsonResponse({
+        "data":request.session['cart_data_obj'],
+        'totalcartitems': len(request.session['cart_data_obj'])
+    });
+        
