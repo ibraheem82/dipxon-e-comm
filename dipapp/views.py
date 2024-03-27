@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from dipapp.models import Product, Category, Vendor, CartOrder, CartOrderItems, ProductImages, ProductReview, WishList, Address
 from .utils import get_user_country, get_currency_symbol
 from django.views import View
@@ -8,6 +8,7 @@ from dipapp.forms import ProductReviewForm
 from django.db.models import Q
 # from django.contrib.auth.decorators import login_required
 from taggit.models import Tag
+from django.contrib import messages
 
 def home(request):
     products = Product.objects.filter(product_status ="published", featured = True)
@@ -197,14 +198,63 @@ def add_to_cart(request):
             cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])]['qty'])
             cart_data.update(cart_data)
             request.session['cart_data_obj'] = cart_data
+            
         else:
             cart_data = request.session['cart_data_obj']
             cart_data.update(cart_product)
             request.session['cart_data_obj'] = cart_data
+            
     else:
         request.session['cart_data_obj'] = cart_product
     return JsonResponse({
         "data":request.session['cart_data_obj'],
         'totalcartitems': len(request.session['cart_data_obj'])
-    });
+    })
+    
+def cart_view(request):
+    cart_total_amount = 0
+    if 'cart_data_obj' in request.session:
+        for p_id, item in request.session['cart_data_obj'].items():
+            cart_total_amount += int(item['qty']) * float(item['price']) # getting the quantity of each products, multiplying each items. quantity multiply by it price
+            print(p_id)
+            print(item)
+            print(request.session['cart_data_obj'])
+            
+            
+        return render(request, 'dipapp/cart.html', {
+            "cart_data": request.session['cart_data_obj'],
+            'totalcartitems': len(request.session['cart_data_obj']),
+            'cart_total_amount' : cart_total_amount
+        })
+    else:
+        messages.warning(request, "Your cart is empty")
+        return redirect('home')
+
+
+# def cart_view(request):
+#     cart_total_amount = 0
+#     if 'cart_data_obj' in request.session:
         
+#         for p_id, item in request.session['cart_data_obj'].items():
+#             print(item)
+#             try:
+#                 qty = int(item.get('qty', 0))
+#                 price = float(item.get('price', 0))
+#                 cart_total_amount += qty * price
+#             except (ValueError, TypeError):
+#                 # Handle conversion errors
+#                 messages.warning(request, f"Invalid quantity or price for item with ID {p_id}")
+               
+            
+#         return render(request, 'dipapp/cart.html', {
+#             "cart_data": request.session['cart_data_obj'],
+            
+#             'totalcartitems': len(request.session['cart_data_obj']),
+#             'cart_total_amount' : cart_total_amount
+#         })
+        
+#     else:
+#         messages.warning(request, "Your cart is empty")
+#         return redirect('home')
+        
+    
