@@ -216,9 +216,6 @@ def cart_view(request):
     if 'cart_data_obj' in request.session:
         for p_id, item in request.session['cart_data_obj'].items():
             cart_total_amount += int(item['qty']) * float(item['price']) # getting the quantity of each products, multiplying each items. quantity multiply by it price
-            print(p_id)
-            print(item)
-            print(request.session['cart_data_obj'])
             
             
         return render(request, 'dipapp/cart.html', {
