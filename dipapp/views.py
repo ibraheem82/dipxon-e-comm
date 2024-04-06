@@ -166,7 +166,7 @@ def search_view(request):
     query = request.GET.get("q")
     if query:
         # Filter products based on the query
-        products = Product.objects.filter(Q(title__icontains=query) | Q(description__icontains=query)).order_by("-date")
+        products = Product.objects.filter(Q(title__icontains=query) | Q(description__icontains=query) | Q(category__title__icontains=query) | Q(price__icontains=query) | Q(tags__name__icontains=query)).order_by("-date")
         product_count = products.count()
     else:
         # If no query is provided, return all products or handle as needed
