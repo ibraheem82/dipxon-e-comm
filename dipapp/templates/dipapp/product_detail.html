@@ -50,12 +50,7 @@
                        <!-- <form action="#"> -->
                             <div class="productd_title_nav">
                                 <h1><a href="#">{{p.title}}</a></h1>
-                                <!-- <div class="product_nav">
-                                    <ul>
-                                        <li class="prev"><a href="product-details.html"><i class="fa fa-angle-left"></i></a></li>
-                                        <li class="next"><a href="variable-product.html"><i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
-                                </div> -->
+                                
                             </div>
                             
                             <div class=" product_ratting">
@@ -65,12 +60,16 @@
                                     <li><a href="#"><i class="ion-android-star"></i></a></li>
                                     <li><a href="#"><i class="ion-android-star"></i></a></li>
                                     <li><a href="#"><i class="ion-android-star"></i></a></li>
-                                    <li class="review h6"><a href="#" class="h6"> ({{average_rating.rating|floatformat}} out of 5.0 )  </a></li>
+                                    <li class="review h6">
+                                        <a href="#" class="h6"> 
+                                            ({{average_rating.rating|floatformat}} out of 5.0 ) 
+                                         </a>
+                                        </li>
                                 </ul>
                             </div> 
                 <div class="price_box"> 
                     <span class="old_price">${{p.old_price}}</span>
-                    <span>$</span><span class="current_price" id="current-product-price">{{p.price}}</span>
+                    <span>$</span><span class="current_price current-product-price-{{ p.id }}" id="current-product-price-{{ p.id }}">{{ p.price }}</span>
                 </div>
                             <div class="product_desc">
                                 <p>{{p.description|safe}}</p>
@@ -98,10 +97,10 @@
                 
                                 <input type="hidden" class="product-id-{{p.id}}" value="{{p.id}}">
                                 <input type="hidden" class="product-title-{{p.id}}" value="{{p.title}}">
-                                <button class="add add-to-cart-btn" data-index="{{p.id}}" id="add-to-cart-btn">Add to cart</button>
+                                <button class="add add-to-cart-btn" data-index="{{ p.id }}" id="add-to-cart-btn">Add to cart</button>
                                 
                             </div>
-                            <div class=" product_d_action">
+                            <div class="product_d_action">
                                <ul>
                                    <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
                                    <li><a href="#" title="In stock">({{p.stock_count}}) Items in stock</a></li>
@@ -315,11 +314,10 @@
                                     <div class="price_box"> 
                             <span class="old_price">${{p.old_price}}</span>
                             <span>$</span>
-                <span class="current_price
-                 current-product-price-{{p.id}}" 
-                 id="current-product-price">
-                    {{p.price}}
-                </span>
+                            <span class="current_price current-product-price-{{ p.id }}" 
+                                    id="current-product-price-{{ p.id }}">
+                                {{p.price}}
+                            </span>
                                     </div>
                                 </div>
                                 <div class="add_to_cart">
