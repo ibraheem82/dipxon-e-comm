@@ -88,57 +88,7 @@
     </div>
     <!--categories product area end-->
     
-    <!--testimonial area start-->
-    {% comment %} <div class="testimonial_area mb-95">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_title">
-                       <h2>Testimonials</h2>
-                    </div>
-                </div>
-            </div> 
-            <div class="testimonial_container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="testimonial_wrapper  testimonial_collumn1 owl-carousel">
-                            <div class="single_testimonial">
-                            	<div class="testimonial_thumb">
-									<img src="{% static 'assets/img/about/testimonial1.png' %}" alt="">
-								</div>
-                           		<div class="testimonial_content">
-								   <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
-									<h3><a href="#">John Sullivan</a></h3>
-									<span>Customer</span>
-								</div>
-                            </div>
-                            <div class="single_testimonial">
-                            	<div class="testimonial_thumb">
-									<img src="{% static 'assets/img/about/testimonial2.png' %}" alt="">
-								</div>
-                           		<div class="testimonial_content">
-								   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error in, mollitia nulla officiis excepturi repudiandae beatae optio, sequi maxime assumenda ipsum exercitationem nostrum ducimus facilis, nesciunt aliquam dicta totam.</p>
-									<h3><a href="#">Jenifer Brown</a></h3>
-									<span>Manager of AZ</span>
-								</div>
-                            </div>
-                            <div class="single_testimonial">
-                            	<div class="testimonial_thumb">
-									<img src="{% static 'assets/img/about/testimonial3.png' %}" alt="">
-								</div>
-                           		<div class="testimonial_content">
-								   <p>These guys have been absolutely outstanding. Perfect Themes and the best of all that you have many options to choose! Best Support team ever! Very fast responding! Thank you very much! I highly recommend this theme and these people!</p>
-									<h3><a href="#">Kathy Young</a></h3>
-									<span>CEO of SunPark</span>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> {% endcomment %}
-    <!--testimonial area end-->
+
     
     <!--product area start-->
     <div class="product_area  mb-95">
@@ -186,29 +136,28 @@
                             <div class="product_content_inner">
                      <h4 class="product_name"><a class="h4" href="{% url 'product_detail' p.pid %}">{{p.title}}</a></h4>
             <div class="price_box"> 
-                    {% with humanize.currency_symbol|default:"$" as symbol %}
-                <span class="old_price">{{ symbol }}{{ p.old_price|floatformat:2|intcomma }}</span>
+                <span class="old_price">${{ p.old_price }}</span>
 
-                    <span>$</span>
-                <span class="current_price current-product-price-{{p.id}}" id="current-product-price">{{ symbol }}{{ p.price|floatformat:2|intcomma }}</span>
-                                    {% endwith %}
+                    <span>$</span><span 
+                    class="current_price current-product-price-{{ p.id }}"
+                    id="current-product-price-{{ p.id }}">{{ p.price }}</span>
                 </div>
                                 
         </div>
             <div class="add_to_cart">
-                <input type="hidden" value="{{p.id}}" id="product-quantity" class="product-quantity-{{p.id}}">
+                <input type="hidden" value="{{ p.id }}" id="product-quantity" class="product-quantity-{{ p.id }}">
 
 
-                <input type="hidden" value="{{p.pid}}" class="product-pid-{{p.id}}">
+                <input type="hidden" value="{{ p.pid }}" class="product-pid-{{ p.id }}">
 
                 {% comment %} Get the product image. {% endcomment %}
-                <input type="hidden" class="product-image-{{p.id}}" value="{{p.image.url}}">
+            <input type="hidden" class="product-image-{{ p.id }}" value="{{ p.image.url }}">
 
 
-                <input type="hidden" class="product-id-{{p.id}}" value="{{p.id}}">
-                <input type="hidden" class="product-title-{{p.id}}" value="{{p.title}}">
+                <input type="hidden" class="product-id-{{ p.id }}" value="{{ p.id }}">
+                <input type="hidden" class="product-title-{{ p.id}}" value="{{ p.title }}">
                 
-                <button class="add add-to-cart-btn" data-index="{{p.id}}" id="add-to-cart-btn">Add to cart</button>
+                <button class="add add-to-cart-btn" id="add-to-cart-btn" data-index="{{ p.id }}">Add to cart</button>
             </div>
                         </div>
                     </div>
@@ -225,8 +174,4 @@
         </div> 
     </div>
     <!--product area end-->
-    
-
-    
-
 {% endblock  %}
