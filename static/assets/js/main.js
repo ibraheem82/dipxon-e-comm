@@ -631,10 +631,6 @@
     });
     
     /*---product dl column3 activation---*/
-    
-    
-
-    
-    
-    
 })(jQuery);	
+
+

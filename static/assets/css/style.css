@@ -3242,7 +3242,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     top: 25%;
   }
 }
-.add_to_cart a {
+.add_to_cart button {
   line-height: 55px;
   height: 55px;
   display: inline-block;
@@ -3255,42 +3255,42 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #fff;
   border-radius: 30px;
 }
-.add_to_cart a::before {
+.add_to_cart button::before {
   content: "+";
   float: right;
 }
-.add_to_cart a:hover {
+.add_to_cart button:hover {
   background: #232323;
   color: #fff;
 }
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
-  .add_to_cart a {
+  .add_to_cart .button {
     line-height: 49px;
     height: 49px;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .add_to_cart a {
+  .add_to_cart button {
     line-height: 50px;
     height: 50px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .add_to_cart a {
+  .add_to_cart button {
     line-height: 46px;
     height: 46px;
     padding: 0 24px;
   }
 }
 @media only screen and (max-width: 767px) {
-  .add_to_cart a {
+  .add_to_cart button {
     line-height: 42px;
     height: 42px;
     padding: 0 20px;
   }
 }
 @media only screen and (max-width: 575px) {
-  .add_to_cart a {
+  .add_to_cart button {
     line-height: 38px;
     height: 38px;
     padding: 0 15px;
@@ -6020,6 +6020,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   font-size: 16px;
   margin-left: 20px;
   background: #0f9b0f;
+  color: white;
   height: 42px;
   line-height: 42px;
   text-transform: capitalize;
