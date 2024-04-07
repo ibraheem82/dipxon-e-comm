@@ -9,6 +9,7 @@ from django.db.models import Q
 # from django.contrib.auth.decorators import login_required
 from taggit.models import Tag
 from django.contrib import messages
+from django.template.loader import render_to_string
 
 def home(request):
     products = Product.objects.filter(product_status ="published", featured = True)
