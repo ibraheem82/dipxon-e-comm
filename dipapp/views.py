@@ -229,6 +229,33 @@ def cart_view(request):
         return redirect('home')
 
 
+def delete_item_from_cart(request):
+    product_id = str(request.GET['id']) #  Retrieves the ID of the product to be deleted from the HTTP GET request parameters and converts it into a string.
+    if 'cart_data_obj' in request.session: # Checks if the user's session contains a dictionary called 'cart_data_obj', which presumably stores shopping cart items.
+        if product_id in request.session['cart_data_obj']: # Checks if the product ID exists as a key within the cart dictionary.
+            
+            cart_data = request.session['cart_data_obj'] # Stores the current cart data in a variable.
+            del request.session['cart_data_obj'][product_id] # Deletes the dictionary entry for the product being removed
+            request.session['cart_data_obj'] = cart_data # Saves the modified cart data back into the session.
+
+    cart_total_amount = 0 # Initializes a variable to store the new cart total.
+    if 'cart_data_obj' in request.session: # Checks if the cart is not empty.
+        for p_id, item in request.session['cart_data_obj'].items(): # Iterates through each item in the cart data.
+            cart_total_amount += int(item['qty']) * float(item['price']) # Multiplies the quantity of each item by its price and adds it to the running total.
+    
+    context = render_to_string("dipapp/async/cart-list.html", {"cart_data": request.session['cart_data_obj'],
+            'totalcartitems': len(request.session['cart_data_obj']),
+            'cart_total_amount' : cart_total_amount}) # This rendering includes the updated cart data, total items, and total amount.
+    return JsonResponse({
+        "data": context,
+        'totalcartitems': len(request.session['cart_data_obj']) # The total number of items remaining in the cart.
+    })
+        
+
+
+
+
+
 # def cart_view(request):
 #     cart_total_amount = 0
 #     if 'cart_data_obj' in request.session:
