@@ -21,9 +21,9 @@
 <!--breadcrumbs area end-->
 
  <!--shopping cart area start -->
-<div class="shopping_cart_area">
+<div class="shopping_cart_area" id="cart-list">
     <div class="container">  
-        <form action="#"> 
+      
             <div class="row">
                 <div class="col-12">
                     <div class="table_desc">
@@ -44,15 +44,17 @@
                         <tbody>
                             
                             {% for product_id, item in cart_data.items %}
+                        
                             <tr>
-                               <td class="product_remove">
-                                <a href="#">
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
-                            </td>
+
+            <td class="product_remove">
+            <button style="border: none; background: none;" class="delete-product" data-product="{{product_id}}">
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </td>
 
                             <td class="product_refresh">
-                                <a href="#">
+                                <a>
                                     <i class="fa fa-refresh"></i>
                                 </a>
                             </td>
@@ -61,17 +63,15 @@
                                     <img src="{{item.image}}" alt="">
                                 </a>
                             </td>
-                                <td class="product_name">
-                                    <a href="{% url "product_detail" item.pid %}">{{item.title}}</a>
-                                </td>
-                                <td class="product-price">£{{ item.price|floatformat:2 }}</td>
-                                <td class="product_quantity">
-                                    <label>Quantity</label> 
-                                    <input placeholder="Qty" value="{{item.qty}}"  type="number">
-                                </td>
-                                <td class="product_total">£{% widthratio item.price 1 item.qty  %}</td>
-
-
+            <td class="product_name">
+                <a href="{% url "product_detail" item.pid %}">{{item.title}}</a>
+            </td>
+            <td class="product-price">£{{ item.price|floatformat:2 }}</td>
+            <td class="product_quantity">
+                <label>Quantity</label> 
+                <input placeholder="Qty" value="{{item.qty}}"  type="number">
+            </td>
+            <td class="product_total">£{% widthratio item.price 1 item.qty  %}</td>
                             </tr>
                             {% endfor %}
 
@@ -119,16 +119,18 @@
                                    <p>Total</p>
                                    <p class="cart_amount">£{{cart_total_amount|floatformat:2}}</p>
                                </div>
+                               {% if totalcartitems %}
                                <div class="checkout_btn">
                                    <a href="#">Proceed to Checkout</a>
                                </div>
+                               {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!--coupon code area end-->
-        </form> 
+
     </div>     
 </div>
  <!--shopping cart area end -->
