@@ -168,8 +168,7 @@
                                 <h4 class="product_name"><a href="{% url 'product_detail' p.pid %}">{{p.title}}</a></h4>
                                 <div class="price_box"> 
                                     <span class="old_price">&#x20A6; {{p.old_price}}</span>
-                                    <span>$</span><span class="current_price current-product-price-{{ p.id }}" 
-                         id="current-product-price-{{ p.id }}">{{ p.price }}</span>
+    <span>$</span><span class="current_price">{{p.price}}</span>
                                 </div>
                               
                                 <div class="product_desc">
