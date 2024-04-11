@@ -42,8 +42,6 @@ def category_list_view(request):
     return render(request, 'dipapp/category-list.html', context)
 
 
-
-
 def shop(request):
     products = Product.objects.filter(product_status ="published")
     categories = Category.objects.all()
@@ -70,10 +68,6 @@ def category_product_list_view(request, cid):
     }
 
     return render(request, 'dipapp/category-product-list.html', context)
-
-
-
-
 
 
 def product_detail_view(request, pid):
@@ -161,8 +155,6 @@ def ajax_add_review(request, pid):
     )
 
 
-
-
 def search_view(request):
     query = request.GET.get("q")
     if query:
@@ -183,8 +175,8 @@ def search_view(request):
 
 
 def add_to_cart(request):
-    cart_product = {}
-    cart_product[str(request.GET['id'])] = {
+    cart_product = {} # This will temporarily store information about the product being added
+    cart_product[str(request.GET['id'])] = { # Creates a key-value pair in cart_product.
         'title':request.GET['title'],
         'qty':request.GET['qty'],
         'price':request.GET['price'],
@@ -192,17 +184,23 @@ def add_to_cart(request):
         'pid':request.GET['pid']
         } # get the current product id.
 
-    # check if there is cart data inside the session the user is using.
+    # check if there is cart data inside the session the user is using, :  checks if there's already a key named 'cart_data_obj' in the user's session. The session is a temporary storage area for data associated with the user's web browsing session.
+    # * If the key exists, the code proceeds to update the existing cart data.
+# If the key doesn't exist, the code creates a new cart in the session.
     if 'cart_data_obj' in request.session: # Get the current session.
-        if str(request.GET['id']) in request.session['cart_data_obj']:
+        if str(request.GET['id']) in request.session['cart_data_obj']: # checks if the product being added (identified by its ID) already exists in the existing cart data (request.session['cart_data_obj'])
+            # * If the product is already in the cart ✅.: 
+                    # ?  updates the quantity of the existing product in the cart. It retrieves the quantity from the cart_product dictionary and converts it to an integer using int()
             cart_data = request.session['cart_data_obj']
             cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])]['qty'])
-            cart_data.update(cart_data)
-            request.session['cart_data_obj'] = cart_data
+            cart_data.update(cart_data) # ensures the changes are reflected in the cart_data dictionary.
+            request.session['cart_data_obj'] = cart_data #  updates the cart data stored in the user's session with the modified cart_data dictionary.
             
         else:
+                        # ! If the product is not already in the cart:
             cart_data = request.session['cart_data_obj']
-            cart_data.update(cart_product)
+            cart_data.update(cart_product) # The entire cart_product dictionary (containing the new product's information) is merged into the existing cart_data using cart_data.update(cart_product).
+
             request.session['cart_data_obj'] = cart_data
             
     else:
