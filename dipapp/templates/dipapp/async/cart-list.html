@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-{% load static %}
-{% block content %}
+
 
  <!--breadcrumbs area start-->
  <div class="breadcrumbs_area">
@@ -23,7 +21,7 @@
  <!--shopping cart area start -->
 <div class="shopping_cart_area" id="cart-list">
     <div class="container">  
-      
+        
             <div class="row">
                 <div class="col-12">
                     <div class="table_desc">
@@ -46,21 +44,19 @@
                             {% for product_id, item in cart_data.items %}
                         
                             <tr>
-
-            <td class="product_remove">
-            <button style="border: none; background: none;" class="delete-product" data-product="{{product_id}}">
-                <i class="fa fa-trash-o"></i>
-            </button>
-        </td>
-
-        <td class="product_refresh">
-            <button style="border: none; background: none;" class="update-product" data-product="{{product_id}}">
-                <i class="fa fa-refresh"></i>
-            </button>
-        </td>
-
-
-                            
+                                
+                                <td class="product_remove">
+                                    <button style="border: none; background: none;" class="delete-product" data-product="{{product_id}}">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </td>
+                        
+                                <td class="product_refresh">
+                                    <button style="border: none; background: none;" class="update-product" data-product="{{product_id}}">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                </td>
+                                
                                 <td class="product_thumb">
                                     <a href="#">
                                     <img src="{{item.image}}" alt="">
@@ -133,8 +129,7 @@
                 </div>
             </div>
             <!--coupon code area end-->
-
+     
     </div>     
 </div>
  <!--shopping cart area end -->
-{% endblock  %}
