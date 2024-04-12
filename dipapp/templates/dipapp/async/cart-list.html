@@ -68,7 +68,7 @@
             <td class="product-price">£{{ item.price|floatformat:2 }}</td>
             <td class="product_quantity">
                 <label>Quantity</label> 
-                <input placeholder="Qty" value="{{item.qty}}"  type="number">
+                <input placeholder="Qty" value="{{ item.qty }}"  type="number" class="product-qty-{{ product_id }}">
             </td>
             <td class="product_total">£{% widthratio item.price 1 item.qty  %}</td>
                             </tr>
@@ -77,9 +77,9 @@
                         </tbody>
                     </table>   
                         </div>  
-                        <div class="cart_submit">
+                        {% comment %} <div class="cart_submit">
                             <button type="submit">update cart</button>
-                        </div>      
+                        </div>       {% endcomment %}
                     </div>
                     
                  </div>
@@ -120,7 +120,7 @@
                                </div>
                                {% if totalcartitems %}
                                <div class="checkout_btn">
-                                   <a href="#">Proceed to Checkout</a>
+                                   <a href="{% url "checkout" %}">Proceed to Checkout</a>
                                </div>
                                {% endif %}
                             </div>
