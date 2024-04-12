@@ -220,40 +220,29 @@
                         <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                     </div>
                 </div>
+
+                {% for product_id, item in cart_data.items %}
                 <div class="cart_item">
                    <div class="cart_img">
-                       <a href="#"><img src="{% static 'assets/img/s-product/product.jpg' %}" alt=""></a>
+                       <a href="{% url "product_detail" item.pid %}"><img src="{{item.image}}" alt=""></a>
                    </div>
                     <div class="cart_info">
-                        <a href="#">Juicy Couture Tricot</a>
-                        <p>1 x <span> $30.00 </span></p>    
+                        <a href="{% url "product_detail" item.pid %}">{{item.title}}</a>
+                        <p>{{item.qty}} x <span> ${% widthratio item.price 1 item.qty  %}</span></p>    
                     </div>
-                    <div class="cart_remove">
-                        <a href="#"><i class="ion-ios-close-outline"></i></a>
-                    </div>
+                   
                 </div>
-                <div class="cart_item">
-                   <div class="cart_img">
-                       <a href="#"><img src="{% static 'assets/img/s-product/product2.jpg' %}" alt=""></a>
-                   </div>
-                    <div class="cart_info">
-                        <a href="#">Juicy Couture Juicy</a>
-                        <p>1 x <span> $29.00 </span></p>    
-                    </div>
-                    <div class="cart_remove">
-                        <a href="#"><i class="ion-ios-close-outline"></i></a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="mini_cart_table">
                 <div class="cart_table_border">
                     <div class="cart_total">
                         <span>Sub total:</span>
-                        <span class="price">$125.00</span>
+                        <span class="price">$ {{cart_total_amount|floatformat:2}}</span>
                     </div>
                     <div class="cart_total mt-10">
                         <span>total:</span>
-                        <span class="price">$125.00</span>
+                        <span class="price">${{cart_total_amount|floatformat:2}}</span>
                     </div>
                 </div>
             </div>
@@ -262,7 +251,7 @@
                     <a href="{% url "cart" %}"><i class="fa fa-shopping-cart"></i> View cart</a>
                 </div>
                 <div class="cart_button">
-                    <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>
+                    <a href="{% url "checkout" %}"><i class="fa fa-sign-in"></i> Checkout</a>
                 </div>
 
             </div>
