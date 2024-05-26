@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{% url "home" %}">home</a></li>
                             <li>{{ p.title }}</li>
                         </ul>
                     </div>
@@ -315,11 +315,11 @@
                                     <div class="price_box"> 
                             <span class="old_price">${{p.old_price}}</span>
                             <span>$</span>
-                            <span class="current_price current-product-price-{{ p.id }}" 
+    <span class="current_price current-product-price-{{ p.id }}" 
                                     id="current-product-price-{{ p.id }}">
                                 {{p.price}}
-                            </span>
-                                    </div>
+                </span>
+                    </div>
                                 </div>
                                 <div class="add_to_cart">
                                     <input type="hidden" value="{{p.id}}" id="product-quantity" class="product-quantity-{{p.id}}">

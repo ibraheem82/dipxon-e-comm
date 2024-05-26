@@ -54,7 +54,10 @@ INSTALLED_APPS = [
     'dipapp',
     'django.contrib.humanize',
     'taggit',
-    'ckeditor'
+    'ckeditor',
+    
+    # Payment integrations
+    "paypal.standard.ipn",
 ]
 
 MIDDLEWARE = [

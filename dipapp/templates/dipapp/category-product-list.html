@@ -114,7 +114,7 @@
                                         </ul>
                                     </div>
                                     <div class="product_desc">
-                                        <p>{{p.description}}</p>
+                                        <p>{{p.description|safe}}</p>
                                     </div>
                                     <div class="add_to_cart">
                                         <input type="hidden" value="{{p.id}}" id="product-quantity" class="product-quantity-{{p.id}}">
