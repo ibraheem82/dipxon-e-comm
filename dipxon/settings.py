@@ -29,13 +29,15 @@ SECRET_KEY = 'django-insecure-8s%q93n#vh+qf##=rj2#o&p5$xw%fn29jd=ts&xbs=63+o(fhv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-b7ljzni6fp2.ws-eu114.gitpod.io']
 # ALLOWED_HOSTS = ['dipxon-e-comm-production.up.railway.app', '127.0.0.1']
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://dipxon-e-comm-production.up.railway.app',
-#     'http://127.0.0.1:8000'
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    # 'https://dipxon-e-comm-production.up.railway.app',
+    # 'http://127.0.0.1:8000'
+    'https://8000-ibraheem82-dipxonecomm-b7ljzni6fp2.ws-eu114.gitpod.io'
+    '*'
+]
 
 
 # Application definition
