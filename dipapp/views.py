@@ -185,6 +185,7 @@ def add_to_cart(request):
         } # get the current product id.
 
     # check if there is cart data inside the session the user is using, :  checks if there's already a key named 'cart_data_obj' in the user's session. The session is a temporary storage area for data associated with the user's web browsing session.
+    
     # * If the key exists, the code proceeds to update the existing cart data.
 # If the key doesn't exist, the code creates a new cart in the session.
     if 'cart_data_obj' in request.session: # Get the current session.
