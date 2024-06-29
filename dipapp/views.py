@@ -258,7 +258,7 @@ def update_cart(request):
     if 'cart_data_obj' in request.session: 
         if product_id in request.session['cart_data_obj']: 
             cart_data = request.session['cart_data_obj']
-            cart_data[str(request.GET['id'])]['qty'] = product_qty
+            cart_data[str(request.GET['id'])]['qty'] = product_qty # get the id of the product
             
             request.session['cart_data_obj'] = cart_data 
 
