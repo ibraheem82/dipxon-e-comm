@@ -34,14 +34,12 @@ STATIC_DIR = BASE_DIR / 'static'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-b7ljzni6fp2.ws-eu114.gitpod.io']
+ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io']
 # ALLOWED_HOSTS = ['dipxon-e-comm-production.up.railway.app', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = [
     # 'https://dipxon-e-comm-production.up.railway.app',
-    # 'http://127.0.0.1:8000'
-    'https://8000-ibraheem82-dipxonecomm-b7ljzni6fp2.ws-eu114.gitpod.io'
-    '*'
+    'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io'
 ]
 
 
