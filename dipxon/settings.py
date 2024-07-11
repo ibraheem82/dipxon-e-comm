@@ -21,6 +21,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#  * Handle image uploading
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 TEMPLATES_DIR = BASE_DIR / 'templates'
 STATIC_DIR = BASE_DIR / 'static'
@@ -61,6 +66,8 @@ INSTALLED_APPS = [
     
     # Payment integrations
     "paypal.standard.ipn",
+    
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -339,3 +346,10 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+
+# * Integration of cloudinary in django application.
+cloudinary.config(
+    cloud_name = "doejgwpnr",
+    api_key = "564677617193364",
+    api_secret = "_UN3WNjhBHcK-iQu6CL8jkfQiJs"
+)
