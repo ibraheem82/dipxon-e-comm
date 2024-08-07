@@ -11,6 +11,13 @@ from taggit.models import Tag
 from django.contrib import messages
 from django.template.loader import render_to_string
 
+from django.urls import reverse
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from paypal.standard.forms import PayPalPaymentsForm
+
+
 def home(request):
     products = Product.objects.filter(product_status ="published", featured = True)
     categories = Category.objects.all()[:4]
@@ -30,6 +37,10 @@ def home(request):
 
     # Render the template with the context data
     return render(request, 'dipapp/home.html', context)
+
+
+def about(request):
+    return render(request, 'dipapp/about.html')
 
 
 def category_list_view(request):
@@ -274,8 +285,25 @@ def update_cart(request):
         "data": context,
         'totalcartitems': len(request.session['cart_data_obj']) 
     })
-        
+
+
+@login_required
 def checkout_view(request):
+    host = request.get_host() # will get the url(), 
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': '200',
+        'item_name': 'Order-Item-No-3',
+        'invoice': "INVOICE_NO-3",
+        'currency': 'USD',
+        
+        # 'notify_url':'http://{}{}'.format(host, reverse('dipapp:paypal-ipn')),
+        # 'return_url':request.build_absolute_uri(reverse('paypal-ipn')),
+        'notify_url':'http://{}{}'.format(host, reverse('paypal-ipn')),
+        'return_url':'http://{}{}'.format(host, reverse('payment-completed')),
+        'cancel_url':'http://{}{}'.format(host, reverse('payment-failed')),
+    }
+    paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
     cart_total_amount = 0
     if 'cart_data_obj' in request.session: 
         for p_id, item in request.session['cart_data_obj'].items():
@@ -285,11 +313,22 @@ def checkout_view(request):
         return render(request, 'dipapp/checkout.html', {
             "cart_data": request.session['cart_data_obj'],
             'totalcartitems': len(request.session['cart_data_obj']),
-            'cart_total_amount' : cart_total_amount
+            'cart_total_amount' : cart_total_amount,
+            'paypal_payment_button' : paypal_payment_button
         })
 
 
 
+
+def payment_completed_view(request):
+    # {'context': context}
+    return render(request, 'dipapp/payment-completed.html')
+
+
+def payment_failed_view(request):
+    return render(request, 'dipapp/payment-failed.html')
+
+    
 
 # def cart_view(request):
 #     cart_total_amount = 0
