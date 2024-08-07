@@ -14,28 +14,26 @@ def loginUser(request):
     page = 'login'
 
     if request.user.is_authenticated:
-        messages.warning(request, f'Hey you are already logged in.')
+        messages.warning(request, 'Hey, you are already logged in.')
         return redirect('home')
-        
+     
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
+     
         try:
-            # compare the email in model with the email that is been passed in from the frontend, NOTE[!] -> first email will get if is the email is in the database or not.
             user = User.objects.get(email=email)
             user = authenticate(request, email=email, password=password)
 
             if user is not None:
                 login(request, user)
-                messages.success(request, f'Welcome 🤝.')
+                messages.success(request, 'Welcome 🤝.')
                 return redirect('home')
             else:
-                messages.warning(request, f'User does not Exist, create an account.')
-        except:
+                messages.warning(request, 'User does not exist, create an account.')
+        except User.DoesNotExist:
             messages.warning(request, f'User with {email} does not exist')
-        
-
+     
     return render(request, 'accounts/login_register.html', {'page': page})
 
 
