@@ -10,6 +10,9 @@ urlpatterns = [
     path('category/<cid>/', views.category_product_list_view, name="category-product-list"),
     # Tags
     path('products/tag/<slug:tag_slug>/', views.tag_list, name="tags"),
+    
+    # About
+    path('about', views.about, name="about"),
     # Review
     path('ajax-add-review/<int:pid>/', views.ajax_add_review, name="ajax-add-review"),
     # SEARCH
@@ -25,5 +28,12 @@ urlpatterns = [
     
     
     # Paypal Route
-    path('paypal/', include('paypal.standard.ipn.urls'))
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    
+    # payment successfull
+    path('payment-completed/', views.payment_completed_view, name="payment-completed"),
+    
+    # payment failed
+    path('payment-failed/', views.payment_failed_view, name="payment-failed"),
+
 ]
