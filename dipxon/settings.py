@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -39,7 +40,8 @@ STATIC_DIR = BASE_DIR / 'static'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io']
+# ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io']
+ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['dipxon-e-comm-production.up.railway.app', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = [
@@ -104,14 +106,20 @@ WSGI_APPLICATION = 'dipxon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
+
+DATABASES = {}
+
+DATABASES['default'] = dj_database_url.parse("postgresql://dipxon_django_render_user:XkaIMz7FA9H9NJAiVI70mXB74502G0Gn@dpg-csgav5o8fa8c73ftpqdg-a.ohio-postgres.render.com/dipxon_django_render")
+
+# 
 
 
 # Password validation
@@ -353,3 +361,5 @@ cloudinary.config(
     api_key = "564677617193364",
     api_secret = "_UN3WNjhBHcK-iQu6CL8jkfQiJs"
 )
+PAYPAL_RECEIVER_EMAIL = "sb-emdob31896147@business.example.com"
+PAYPAL_TEST = True
