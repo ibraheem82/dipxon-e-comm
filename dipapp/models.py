@@ -132,11 +132,11 @@ class Product(models.Model):
                                            blank = True,
                                            default = "Porduct")
     
-    price               = models.DecimalField(max_digits=9999999999999999, 
+    price               = models.DecimalField(max_digits=10, 
                                               decimal_places = 2,
                                               default = "1.99")
     
-    old_price           = models.DecimalField(max_digits=9999999999999999, 
+    old_price           = models.DecimalField(max_digits=10, 
                                               decimal_places = 2,
                                               default = "2.99")
     specifications      = RichTextUploadingField(null = True,
@@ -195,7 +195,7 @@ class ProductImages(models.Model):
 
 class CartOrder(models.Model):
     user                = models.ForeignKey(User, on_delete = models.CASCADE)
-    price               = models.DecimalField(max_digits=9999999999999999, 
+    price               = models.DecimalField(max_digits=10, 
                                               decimal_places = 2,
                                               default = "1.99")
     paid_status         = models.BooleanField(default=False)
