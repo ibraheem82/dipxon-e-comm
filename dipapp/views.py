@@ -289,6 +289,13 @@ def update_cart(request):
 
 @login_required
 def checkout_view(request):
+    cart_data = request.session.get('cart_data_obj')
+    if not cart_data:
+        # Display a warning message and redirect to the home page if the cart is empty
+        messages.warning(request, "Your cart is empty.")
+        return redirect('home')
+
+
     host = request.get_host() # will get the url(), 
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
@@ -311,10 +318,10 @@ def checkout_view(request):
         
         
     return render(request, 'dipapp/checkout.html', {
-            "cart_data": request.session['cart_data_obj'],
-            'totalcartitems': len(request.session['cart_data_obj']),
-            'cart_total_amount' : cart_total_amount,
-            'paypal_payment_button' : paypal_payment_button
+            "cart_data": cart_data,
+        'totalcartitems': len(cart_data),
+        'cart_total_amount': cart_total_amount,
+        'paypal_payment_button': paypal_payment_button
         })
 
 
