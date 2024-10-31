@@ -57,4 +57,3 @@ urllib3==2.0.5
 websockets==12.0
 whitenoise==6.6.0
 youtube-dl==2021.12.17
-yt-dlp @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz#sha256=dd2eaeb0d08f81415c7c4c9f6659334db03883dba0cebc10258ddd1767839331
