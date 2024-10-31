@@ -43,7 +43,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io']
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-# ALLOWED_HOSTS = ['dipxon-e-comm-production.up.railway.app', '127.0.0.1']
+ALLOWED_HOSTS = ['dipxon-e-comm.onrender.com', '127.0.0.1', 'localhost']
 
 # CSRF_TRUSTED_ORIGINS = [
 #     # 'https://dipxon-e-comm-production.up.railway.app',
