@@ -38,7 +38,8 @@ STATIC_DIR = BASE_DIR / 'static'
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "True"
+# DEBUG = os.environ.get("DEBUG", "False").lower() == "True"
+DEBUG = True
 
 # ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io']
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
