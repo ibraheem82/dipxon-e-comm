@@ -42,8 +42,10 @@ STATIC_DIR = BASE_DIR / 'static'
 DEBUG = True
 
 # ALLOWED_HOSTS = ['*', 'https://8000-ibraheem82-dipxonecomm-aqtuft6izlo.ws-eu115.gitpod.io']
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-ALLOWED_HOSTS = ['dipxon-e-comm.onrender.com', '127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
+# ALLOWED_HOSTS = ['dipxon-e-comm.onrender.com', '127.0.0.1', 'localhost']
 
 # CSRF_TRUSTED_ORIGINS = [
 #     # 'https://dipxon-e-comm-production.up.railway.app',
@@ -116,9 +118,30 @@ WSGI_APPLICATION = 'dipxon.wsgi.application'
 
 
 
-DATABASES = {}
-database_url = os.environ.get("DATABASE_URL")
-DATABASES['default'] = dj_database_url.parse(database_url)
+
+# Load environment variables from .env in development
+if os.getenv("DJANGO_DEVELOPMENT"):
+    load_dotenv()
+
+# Set up the DATABASES configuration
+database_url = os.getenv("DATABASE_URL")
+
+DATABASES = {
+    'default': dj_database_url.parse(database_url)
+}
+
+
+
+
+# DATABASES = {}
+# if os.getenv("DJANGO_DEVELOPMENT"):
+#     load_dotenv()
+
+# DATABASES = {
+#     'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
+# }
+# database_url = os.environ.get("DATABASE_URL")
+# DATABASES['default'] = dj_database_url.parse(database_url)
 
 # 
 
