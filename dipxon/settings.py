@@ -133,19 +133,6 @@ DATABASES = {
 
 
 
-# DATABASES = {}
-# if os.getenv("DJANGO_DEVELOPMENT"):
-#     load_dotenv()
-
-# DATABASES = {
-#     'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
-# }
-# database_url = os.environ.get("DATABASE_URL")
-# DATABASES['default'] = dj_database_url.parse(database_url)
-
-# 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
