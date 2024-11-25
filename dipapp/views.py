@@ -226,7 +226,16 @@ def cart_view(request):
     cart_total_amount = 0
     if 'cart_data_obj' in request.session:
         for p_id, item in request.session['cart_data_obj'].items():
-            cart_total_amount += int(item['qty']) * float(item['price']) # getting the quantity of each products, multiplying each items. quantity multiply by it price
+            # print(item['price'])
+            try:
+                price = float(item['price']) if item['price'] else 0.0
+                qty = int(item['qty']) if item['qty'] else 0 
+                cart_total_amount += qty * price
+            except (ValueError, TypeError) as e:
+                # Log the error or handle it as needed
+                print(f"Error processing item {item}: {e}")
+                continue
+            
             
             
         return render(request, 'dipapp/cart.html', {
