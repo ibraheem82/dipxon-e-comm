@@ -12,3 +12,4 @@ accounts/__pycache__
 media
 sent_emails
 db.sqlite3
+.env
